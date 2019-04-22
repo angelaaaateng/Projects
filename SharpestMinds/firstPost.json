@@ -1,0 +1,39 @@
+{
+	"address": {
+			"components": {
+					"city":"Providence",
+					"country":"US",
+					"county":"Providence County",
+					"number":"158",
+					"state":"RI",
+					"street":"University Ave",
+					"zip_code":"02906"
+				},
+			"formatted": "158 University Ave, Providence, RI 02906, USA"
+		},
+	"archived_status":"live",
+	"category":"Cooking",
+	"content_type":"service",
+	"created_at": {
+		"$reql_type$":"TIME",
+		"epoch_time":1505340466,
+		"timezone":"+00:00"
+	},
+	"description":"I'm trying to broaden the repertoire of culinary dishes I can make. Please help! I'm surviving on chicken and pasta rn... I'll buy the ingredients.",
+	"id":"-Kty6gXaY-_wgIheV3LS",
+	"last_modified":"2018-09-07T23:08:39.964Z",
+	"location": {
+		"$reql_type$":"GEOMETRY",
+		"coordinates":[-71.3877064,41.8342705],
+		"type":"Point"
+	},
+	"owner_id":"RHCWoC5WnSTXi0JWJadv18ejPwy1",
+	"payment_type":"fixed",
+	"photos":[],
+	"post_type":"request",
+	"price":25,
+	"price_type":"flexible",
+	"status":"legacy",
+	"title":"Teach Me How To Cook!",
+	"visibility":"public"
+}
