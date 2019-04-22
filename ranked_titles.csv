@@ -1,0 +1,128 @@
+"                                 Title  Similarity Score
+0                Teach Me How To Cook!          1.000000
+1    Teach me how to cook quick meals!          0.850110
+2         Teach how to prepare steaks           0.743369
+3                        Private Cook           0.717745
+4                         Private cook          0.717745
+5                     Cooking Lessons           0.670795
+6                      Cooking Lessons          0.670795
+7                      Cooking lessons          0.670795
+8                              Cooking          0.663496
+9           Teach me how to play piano          0.647565
+10               Teach how to make tea          0.629968
+11                      Culinary tutor          0.593930
+12                     Baking Lessons           0.582271
+13         Mediterranean Cooking Class          0.570201
+14            Teach you how to shuffle          0.569913
+15   Teach Me How To Solve Rubiks Cube          0.556002
+16             Brazilian Cooking Class          0.549136
+17                    Learn To Juggle!          0.535593
+18             Chef Prepared Meal Prep          0.532709
+19       Help me learn Pop/Stars dance          0.510932
+20               Teach me meme culture          0.504013
+21                Pretend Dad for Hire          0.494830
+22                    Rice Cooking Pot          0.487511
+23                          Math Tutor          0.485789
+24                          Math tutor          0.485789
+25                         Sm4sh Tutor          0.468270
+26                          Mk8 Tutor           0.468270
+27                      Splatoon Tutor          0.468270
+28                     Mariokart tutor          0.468270
+29       Piano classes (for beginners)          0.458619
+..                                 ...               ...
+711                        Amazon Echo          0.024276
+712                                Fan          0.020109
+713               Removal of Waterbed           0.019101
+714                     Motion graphic          0.018890
+715    Pharmacology/Medication Reviews          0.015365
+716                     Metal machine           0.013168
+717                  Promotional Memes          0.013001
+718                      Web Developer          0.011461
+719                     Web developer           0.011461
+720                  Website developer          0.008464
+721         Image to vector conversion          0.007716
+722                         Python 101          0.007125
+723                          Headshots          0.006139
+724                      Pattern maker          0.005863
+725                        Bottle Caps          0.003278
+726                  Diamond snapback           0.002970
+727     Designer/photographer/brand ID          0.002542
+728                             Jeenne          0.000000
+729                          Dogsitter          0.000000
+730                          INSTAGRAM          0.000000
+731                         Dogsitting          0.000000
+732              Programmer/Consultant          0.000000
+733         Dogsitting And Catsitting           0.000000
+734               Proofreading/Editing          0.000000
+735                         Petsitting          0.000000
+736                            SCRIPPS          0.000000
+737                         Dogwalking          0.000000
+738               Full-Stack Developer         -0.014354
+739                 Back-end Developer         -0.014736
+740          RemoveSeniorPic Watermark         -0.073973
+
+[741 rows x 2 columns]"
+"                                 Title  Similarity Score
+0                Teach Me How To Cook!          1.000000
+1    Teach me how to cook quick meals!          0.850110
+2         Teach how to prepare steaks           0.743369
+3                        Private Cook           0.717745
+4                         Private cook          0.717745
+5                     Cooking Lessons           0.670795
+6                      Cooking Lessons          0.670795
+7                      Cooking lessons          0.670795
+8                              Cooking          0.663496
+9           Teach me how to play piano          0.647565
+10               Teach how to make tea          0.629968
+11                      Culinary tutor          0.593930
+12                     Baking Lessons           0.582271
+13         Mediterranean Cooking Class          0.570201
+14            Teach you how to shuffle          0.569913
+15   Teach Me How To Solve Rubiks Cube          0.556002
+16             Brazilian Cooking Class          0.549136
+17                    Learn To Juggle!          0.535593
+18             Chef Prepared Meal Prep          0.532709
+19       Help me learn Pop/Stars dance          0.510932
+20               Teach me meme culture          0.504013
+21                Pretend Dad for Hire          0.494830
+22                    Rice Cooking Pot          0.487511
+23                          Math Tutor          0.485789
+24                          Math tutor          0.485789
+25                         Sm4sh Tutor          0.468270
+26                          Mk8 Tutor           0.468270
+27                      Splatoon Tutor          0.468270
+28                     Mariokart tutor          0.468270
+29       Piano classes (for beginners)          0.458619
+..                                 ...               ...
+711                        Amazon Echo          0.024276
+712                                Fan          0.020109
+713               Removal of Waterbed           0.019101
+714                     Motion graphic          0.018890
+715    Pharmacology/Medication Reviews          0.015365
+716                     Metal machine           0.013168
+717                  Promotional Memes          0.013001
+718                      Web Developer          0.011461
+719                     Web developer           0.011461
+720                  Website developer          0.008464
+721         Image to vector conversion          0.007716
+722                         Python 101          0.007125
+723                          Headshots          0.006139
+724                      Pattern maker          0.005863
+725                        Bottle Caps          0.003278
+726                  Diamond snapback           0.002970
+727     Designer/photographer/brand ID          0.002542
+728                             Jeenne          0.000000
+729                          Dogsitter          0.000000
+730                          INSTAGRAM          0.000000
+731                         Dogsitting          0.000000
+732              Programmer/Consultant          0.000000
+733         Dogsitting And Catsitting           0.000000
+734               Proofreading/Editing          0.000000
+735                         Petsitting          0.000000
+736                            SCRIPPS          0.000000
+737                         Dogwalking          0.000000
+738               Full-Stack Developer         -0.014354
+739                 Back-end Developer         -0.014736
+740          RemoveSeniorPic Watermark         -0.073973
+
+[741 rows x 2 columns]"
