@@ -3,6 +3,13 @@
 
 # ## Recommender System - Marketplace Matching
 
+#from flask import Flask, abort, jsonify, request
+#import cPickle as pickle
+
+#app = Flask(__name__)
+
+#@app.route('/api', methods=['POST'])
+
 
 '''Importing Libraries'''
 import numpy as np
@@ -46,6 +53,7 @@ import string
 import pickle
 import operator
 import csv
+
 
 '''Loading the model'''
 model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary = True)
@@ -121,6 +129,11 @@ def rank_existing_titles(vectorized_title):
 
 '''Final function call API that puts together the prior 3 functions in a neat mega-function'''
 def generate_recommendations(user_post):
+    #error checking here
+    #data = request.get_json(force=True)
+    #convert json to df
+    #with open('firstPost.json') as fresh_data:
+    #    user_post = json.load(fresh_data)
     title = user_post["title"]
     vectorized_title = vectorize_new_title(user_post)
     ranked_titles = rank_existing_titles(vectorized_title)
@@ -128,6 +141,11 @@ def generate_recommendations(user_post):
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         for title in ranked_titles:
             wr.writerow([ranked_titles, title])
+    #return jsonify(ranked_titles)
     return(ranked_titles)
 
 generate_recommendations(user_post)
+
+
+#if __name__ == '__main__':
+#    app.run(debug=True)
