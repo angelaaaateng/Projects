@@ -137,7 +137,8 @@ Output: sorted title vectors (dict)
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     for index,row in other_titles.iterrows():
-        ranked_titles[row['Titles']] = sum(row['Vectors'][0]*vectorized_title['Vectors'][0][0]) # --> did the dot product using sum() and * because np.dot was behaving weirdly for some reason. Now it seems to work!
+        ranked_titles[row['Titles']] = sum(row['Vectors'][0]*vectorized_title['Vectors'][0][0])
+        # did the dot product using sum() and * because np.dot was behaving weirdly for some reason. 
     sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
     return(sorted_title_vecs)
 
