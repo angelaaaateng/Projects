@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# ## Recommender System - Marketplace Matching
-
-#from flask import Flask, abort, jsonify, request
-#import cPickle as pickle
-
-#app = Flask(__name__)
-
-#@app.route('/api', methods=['POST'])
+'''
+Recommender System - Marketplace Matching Script for Pangea.App
+'''
 
 
 '''Importing Libraries'''

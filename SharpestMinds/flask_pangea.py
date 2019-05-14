@@ -9,13 +9,21 @@ app = Flask(__name__)
 model = None
 
 def load_model():
-    # load the pre-trained word2vec model
+    '''
+    load the pre-trained word2vec model and define it as a global variable
+    that we can use after startup
+
+    input: none ; but maximum size of the model
+    '''
     global model
     model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary = True)
 
     print("* Model loaded successfully")
 
 def find_vocab():
+    '''
+    Returns a model vocuabulary (dict)
+    '''
     return model.vocab
     print("* Model Vocab Loaded")
     #return(None)
