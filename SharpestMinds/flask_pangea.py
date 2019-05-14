@@ -13,7 +13,11 @@ import flask
 import json
 from Pangea_Final_Script import generate_recommendations
 
+'''
+Import Flask class and create an instance of this class
+'''
 app = Flask(__name__)
+#for more information on flask easy startup see http://flask.pocoo.org/docs/1.0/quickstart/
 model = None
 
 def load_model():
@@ -36,6 +40,10 @@ def find_vocab():
     print("* Model Vocab Loaded")
     #return(None)
 
+'''
+Specify the app route using a route decorater to
+bind the predict function to a url.
+'''
 @app.route("/pangeaapp", methods=["POST"])
 def predict():
     # initialize the data dictionary that will be returned
@@ -60,16 +68,21 @@ def predict():
     # return the data dictionary as a JSON response
     return flask.jsonify(data)
 
+'''
+'''
+
 if __name__ == "__main__":
     print(("* Loading gensim model and Flask starting server..."
         "please wait until server has fully started"))
     app.debug = True
+    #set app debug to true so that whenever a change is made on .py code,
+    #it reflects on server/client terminal tools
     load_model()
     app.run()
 
-#check client and server side
-# need this command
-#curl -X POST -H "Content-Type: application/json" --data '{"word": "eggfd" }' http://localhost:5000/pangeaapp
-
-# curl localhost:5000/pangeaapp -d '{"title": "bar"}' -H 'Content-Type: application/json'
-#curl localhost:5000/pangeaapp -d '{"title": "Teach me how to cook!"}' -H 'Content-Type: application/json'
+'''
+Notes for running flask app:
+- remember to check both the client and server side
+- use the curl command to call on the flask app:
+curl localhost:5000/pangeaapp -d '{"title": "Teach me how to cook!"}' -H 'Content-Type: application/json'
+'''
