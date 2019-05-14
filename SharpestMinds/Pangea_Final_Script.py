@@ -34,6 +34,7 @@ from gensim.test.utils import common_texts
 from gensim.models import KeyedVectors
 import gensim.downloader as api
 
+#these packages mostly used for visualization submitted to team on ipynb
 import re
 from sklearn.feature_extraction.text import CountVectorizer
 from operator import itemgetter, attrgetter, add
@@ -59,6 +60,9 @@ import csv
 def vectorize_and_store_existing_titles(model):
 '''
 Vectorize and store existing titles in legacy Pangea database
+
+Input: Word2Vec Model (.bin)
+Output: Vectorized Titles (.pkl)
 '''
     raw = pd.read_csv("allPostData.csv", header=0);
     titles = raw['title'];

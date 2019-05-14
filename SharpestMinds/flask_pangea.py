@@ -64,6 +64,7 @@ Output: JSON with title and cosine similarity score (dict)
             #not using encode('ascii','ignore') as it throws an error
             print("*Input Title: ")
             print(title)
+            #using generate recommendations from pangea python script 
             data["recommendations"] = generate_recommendations(title, model)
             # indicate that the request was a success
             data["success"] = True
