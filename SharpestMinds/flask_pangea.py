@@ -50,7 +50,8 @@ def predict():
 Specify the app route using a route decorater to
 bind the predict function to a url, and then check
 to ensure the json req was properly uploaded to endpoint.
-Use POST method to send HTML from data to server in encrypted manner.
+Use POST method to send HTML from data to server. Note that we used
+POST instead of GET since information is contained in the message body rather than the URL. 
 
 Output: JSON with title and cosine similarity score (dict)
 '''
@@ -64,7 +65,7 @@ Output: JSON with title and cosine similarity score (dict)
             #not using encode('ascii','ignore') as it throws an error
             print("*Input Title: ")
             print(title)
-            #using generate recommendations from pangea python script 
+            #using generate recommendations from pangea python script
             data["recommendations"] = generate_recommendations(title, model)
             # indicate that the request was a success
             data["success"] = True

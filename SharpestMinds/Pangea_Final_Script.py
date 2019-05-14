@@ -63,6 +63,8 @@ Vectorize and store existing titles in legacy Pangea database
 
 Input: Word2Vec Model (.bin)
 Output: Vectorized Titles (.pkl)
+
+Note: can split this up into two different functions later
 '''
     raw = pd.read_csv("allPostData.csv", header=0);
     titles = raw['title'];
@@ -90,9 +92,15 @@ Output: Vectorized Titles (.pkl)
 def vectorize_new_title(title, model):
 '''
 Vectorize each new title as a user/student/company creates a new post
+
+Input:
+- title from user query curl command (str)
+- model (.bin)
+
+Output: json_vectorized_title_df (dict)
+
 '''
     #uncomment this if using this script as stand alone
-
     #ranked_titles_load = pd.read_csv("./ranked_titles.csv")
     #json_df = pd.DataFrame.from_dict(json_normalize(title), orient='columns')
     #title = json_df["title"][0]
@@ -122,6 +130,9 @@ def rank_existing_titles(vectorized_title):
 '''
 Load the current titles in the Pangea database,
 and then rank them by similarity to the latest user query
+
+Input: vectorized titles (.pkl)
+Output: sorted title vectors (dict)
 '''
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
@@ -135,6 +146,14 @@ def generate_recommendations(title, model):
 '''
 Final function call API that puts together the
 prior 3 functions in a neat mega-function
+
+Input:
+- User inputted titles via curl command (str)
+- Google News Vectors Model (.bin)
+
+Output:
+- ranked titles (dict)
+note that this will print in the terminal on the client side
 '''
     #error checking here
     #data = request.get_json(force=True)
