@@ -1,3 +1,11 @@
+'''
+Recommender System - Flask App for Pangea.App
+'''
+
+'''
+Importing modules and initializing flask
+'''
+
 import gensim
 from flask import Flask
 import io

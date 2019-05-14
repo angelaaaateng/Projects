@@ -6,7 +6,9 @@ Recommender System - Marketplace Matching Script for Pangea.App
 '''
 
 
-'''Importing Libraries'''
+'''
+Importing Libraries
+'''
 import numpy as np
 import pandas as pd
 from pandas import DataFrame
@@ -50,11 +52,14 @@ import operator
 import csv
 
 
-'''Loading the model'''
+#we load the model in the flask app, but can load it here if stand alone
 #model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary = True)
 
-'''Vectorize and store existing titles in legacy Pangea database'''
+
 def vectorize_and_store_existing_titles(model):
+'''
+Vectorize and store existing titles in legacy Pangea database
+'''
     raw = pd.read_csv("allPostData.csv", header=0);
     titles = raw['title'];
     post_titles = [title for title in titles];
@@ -73,23 +78,21 @@ def vectorize_and_store_existing_titles(model):
         else:
             title_vec = normalize(sum(word_vecs).reshape(1, -1))
         vectorized_titles = vectorized_titles.append({'Titles': title, 'Vectors': title_vec}, ignore_index=True)
+    #note that we are saving the df with the original raw (not cleaned) titles
     vectorized_titles.to_pickle("/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/vectorized_titles.pkl")
     return(vectorized_titles)
 
-'''Print a dataframe to show how these titles and their vectors will be saved'''
-'''Also note that we are saving the df with the original raw (not cleaned) titles'''
-#vectorize_and_store_existing_titles()
 
-#'''Read a JSON file when a new user pings with a request'''
-#with open('firstPost.json') as fresh_data:
-#    user_post = json.load(fresh_data)
-
-'''Vectorize each new title as a user/student/company creates a new post'''
 def vectorize_new_title(title, model):
+'''
+Vectorize each new title as a user/student/company creates a new post
+'''
+    #uncomment this if using this script as stand alone
+
     #ranked_titles_load = pd.read_csv("./ranked_titles.csv")
     #json_df = pd.DataFrame.from_dict(json_normalize(title), orient='columns')
     #title = json_df["title"][0]
-    #print(title)
+
     json_tokens = [word for word in title.lower().split()]
     json_clean_words = [word.translate(str.maketrans('', '', string.punctuation)) for word in json_tokens]
     stoplist = set(stopwords.words('english'));
@@ -98,24 +101,24 @@ def vectorize_new_title(title, model):
     json_title_vectors = {}
     json_vectorized_title_df = pd.DataFrame(columns=["Titles", "Vectors"])
     json_word_vecs = [model[word] for word in json_preprocessed]
+    #manually normalizing the word vectors here since normalize command here didn't work
     if len(json_preprocessed) == 0:
             json_title_vec = [np.zeros(300)]
     else:
         json_title_vec = normalize(sum(json_word_vecs).reshape(1, -1))
     json_vectorized_title_df = json_vectorized_title_df.append({'Titles': title, 'Vectors': json_title_vec}, ignore_index = True)
-    #export_csv = json_vectorized_title_df.to_csv (r'/Users/angelateng/Dropbox/AMBER/SharpestMinds/ranked_titles.csv', index = None, header=True) #Don't forget to add '.csv' at the end of the path
     if not os.path.isfile('/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv'):
         json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', index = None, header=True)
     else:
         json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', mode='a', index = None, header=False)
-
     return(json_vectorized_title_df)
 
-#'''Append new user-post title to csv'''
-#vectorized_title = vectorize_new_title(user_post)
 
-'''Load the current titles in the Pangea database, and then rank them by similarity to the latest user query'''
 def rank_existing_titles(vectorized_title):
+'''
+Load the current titles in the Pangea database,
+and then rank them by similarity to the latest user query
+'''
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     for index,row in other_titles.iterrows():
@@ -123,8 +126,12 @@ def rank_existing_titles(vectorized_title):
     sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
     return(sorted_title_vecs)
 
-'''Final function call API that puts together the prior 3 functions in a neat mega-function'''
+
 def generate_recommendations(title, model):
+'''
+Final function call API that puts together the
+prior 3 functions in a neat mega-function
+'''
     #error checking here
     #data = request.get_json(force=True)
     #convert json to df
@@ -147,9 +154,3 @@ def generate_recommendations(title, model):
 
     return(ranked_titles)
     print("*COMPLETE")
-
-#generate_recommendations(user_post)
-
-
-#if __name__ == '__main__':
-#    app.run(debug=True)
