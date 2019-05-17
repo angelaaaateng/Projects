@@ -18,15 +18,9 @@ from sklearn.decomposition import PCA
 import csv
 
 import gensim
-from gensim import corpora
 from gensim.models.word2vec import Word2Vec
-from gensim.test.utils import common_texts, get_tmpfile
 from collections import defaultdict
 from pprint import pprint
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
-from gensim.test.utils import common_texts
-from gensim.models import KeyedVectors
-import gensim.downloader as api
 
 #these packages mostly used for visualization submitted to team on ipynb
 import re
