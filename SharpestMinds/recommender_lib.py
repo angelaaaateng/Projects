@@ -2,14 +2,7 @@
 # coding: utf-8
 #generate requirements: pip freeze > requirements.txt
 
-'''
-Recommender System - Marketplace Matching Script for Pangea.App
-'''
 
-
-'''
-Importing Libraries
-'''
 import numpy as np
 import pandas as pd
 from pandas import DataFrame
@@ -51,7 +44,7 @@ import string
 
 import pickle
 import operator
-import csv
+
 
 
 #we load the model in the flask app, but can load it here if stand alone
@@ -59,14 +52,14 @@ import csv
 
 
 def vectorize_and_store_existing_titles(model):
-'''
-Vectorize and store existing titles in legacy Pangea database
+    '''
+    Vectorize and store existing titles in legacy Pangea database
 
-Input: Word2Vec Model (.bin)
-Output: Vectorized Titles (.pkl)
+    Input: Word2Vec Model (gensim model - dict object with .bin extension)
+    Output: Vectorized Titles (titles.dict, which is saved as a .pkl)
 
-Note: can split this up into two different functions later
-'''
+    Note: can split this up into two different functions later
+    '''
     raw = pd.read_csv("allPostData.csv", header=0);
     titles = raw['title'];
     post_titles = [title for title in titles];
@@ -91,16 +84,16 @@ Note: can split this up into two different functions later
 
 
 def vectorize_new_title(title, model):
-'''
-Vectorize each new title as a user/student/company creates a new post
+    '''
+    Vectorize each new title as a user/student/company creates a new post
 
-Input:
-- title from user query curl command (str)
-- model (.bin)
+    Input:
+    - title from user query curl command (str)
+    - model (.bin)
 
-Output: json_vectorized_title_df (dict)
+    Output: json_vectorized_title_df (dict)
 
-'''
+    '''
     #uncomment this if using this script as stand alone
     #ranked_titles_load = pd.read_csv("./ranked_titles.csv")
     #json_df = pd.DataFrame.from_dict(json_normalize(title), orient='columns')
@@ -128,13 +121,13 @@ Output: json_vectorized_title_df (dict)
 
 
 def rank_existing_titles(vectorized_title):
-'''
-Load the current titles in the Pangea database,
-and then rank them by similarity to the latest user query
+    '''
+    Load the current titles in the Pangea database,
+    and then rank them by similarity to the latest user query
 
-Input: vectorized titles (.pkl)
-Output: sorted title vectors (dict)
-'''
+    Input: vectorized titles (dictionary .pkl)
+    Output: sorted title vectors (dict)
+    '''
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     for index,row in other_titles.iterrows():
@@ -145,18 +138,18 @@ Output: sorted title vectors (dict)
 
 
 def generate_recommendations(title, model):
-'''
-Final function call API that puts together the
-prior 3 functions in a neat mega-function
+    '''
+    Final function call API that puts together the
+    prior 3 functions in a neat mega-function
 
-Input:
-- User inputted titles via curl command (str)
-- Google News Vectors Model (.bin)
+    Input:
+    - User inputted titles via curl command (str)
+    - Google News Vectors Model (gensim model .bin)
 
-Output:
-- ranked titles (dict)
-note that this will print in the terminal on the client side
-'''
+    Output:
+    - ranked titles (dict)
+    note that this will print in the terminal on the client side
+    '''
     #error checking here
     #data = request.get_json(force=True)
     #convert json to df
@@ -176,6 +169,5 @@ note that this will print in the terminal on the client side
 
     #print(ranked_titles)
     #ranked_titles = pd.DataFrame(rank_existing_titles(vectorized_title), columns = ["Title", "Similarity Score"])
-
-    return(ranked_titles)
     print("*COMPLETE")
+    return(ranked_titles)
