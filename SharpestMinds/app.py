@@ -7,16 +7,19 @@ import flask
 import json
 from reommender_lib import generate_recommendations
 
-'''
-Import Flask class and create an instance of this class
-Note that __name__ is the name of the current class, function,
-method, descriptor or generator instance.
-'''
+
 app = Flask(__name__)
 #for more information on flask easy startup see
 #http://flask.pocoo.org/docs/1.0/quickstart/ ;
 #https://teamtreehouse.com/community/can-someone-help-me-understand-flaskname-a-little-better
 model = None
+
+'''
+Import Flask class and create an instance of this class
+Note that __name__ is the name of the current class, function,
+method, descriptor or generator instance.
+'''
+
 
 def load_model():
     '''
