@@ -5,7 +5,7 @@ from flask import Flask
 import io
 import flask
 import json
-from reommender_lib import generate_recommendations
+from recommender_lib import generate_recommendations
 
 
 app = Flask(__name__)
