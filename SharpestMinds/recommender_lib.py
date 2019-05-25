@@ -40,11 +40,6 @@ import pickle
 import operator
 
 
-
-#we load the model in the flask app, but can load it here if stand alone
-#model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary = True)
-
-
 def vectorize_and_store_existing_titles(model):
     '''
     Vectorize and store existing titles in legacy Pangea database
@@ -88,10 +83,6 @@ def vectorize_new_title(title, model):
     Output: json_vectorized_title_df (dict)
 
     '''
-    #uncomment this if using this script as stand alone
-    #ranked_titles_load = pd.read_csv("./ranked_titles.csv")
-    #json_df = pd.DataFrame.from_dict(json_normalize(title), orient='columns')
-    #title = json_df["title"][0]
 
     json_tokens = [word for word in title.lower().split()]
     json_clean_words = [word.translate(str.maketrans('', '', string.punctuation)) for word in json_tokens]
@@ -144,12 +135,7 @@ def generate_recommendations(title, model):
     - ranked titles (dict)
     note that this will print in the terminal on the client side
     '''
-    #error checking here
-    #data = request.get_json(force=True)
-    #convert json to df
-    #with open('firstPost.json') as fresh_data:
-    #    user_post = json.load(fresh_data)
-    #title = user_post["title"]
+
     vectorized_title = vectorize_new_title(title, model)
     ranked_titles = rank_existing_titles(vectorized_title)
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
@@ -161,7 +147,5 @@ def generate_recommendations(title, model):
             wr.writerow([ranked_titles, title])
 
 
-    #print(ranked_titles)
-    #ranked_titles = pd.DataFrame(rank_existing_titles(vectorized_title), columns = ["Title", "Similarity Score"])
     print("*COMPLETE")
     return(ranked_titles)
