@@ -40,24 +40,28 @@ import pickle
 import operator
 
 
-def vectorize_and_store_existing_titles(model):
-    '''
-    Vectorize and store existing titles in legacy Pangea database
 
-    Input: Word2Vec Model (gensim model - dict object with .bin extension)
-    Output: Vectorized Titles (titles.dict, which is saved as a .pkl)
-
-    Note: can split this up into two different functions later
-    '''
-    raw = pd.read_csv("allPostData.csv", header=0);
+def get_titles(raw):
     titles = raw['title'];
     post_titles = [title for title in titles];
     post_titles = set(post_titles);
-    tokens = [[word for word in title.lower().split()] for title in post_titles];
-    clean_words = [[word.translate(str.maketrans('', '', string.punctuation)) for word in title] for title in tokens]
+    return(post_titles);
+
+def tokenize_title(title):
+    tokens = [word for word in title.lower().split()];
+    return(tokens);
+
+def remove_punctuation(tokens):
+    clean_words = [word.translate(str.maketrans('', '', string.punctuation)) for word in tokens];
+    return(clean_words);
+
+def clean_text(clean_words):
     stoplist = set(stopwords.words('english'));
     titles_nostopwords = [[word for word in title if word not in stoplist] for title in clean_words];
     filtered_word_list = [[word for word in title if word in model.vocab] for title in titles_nostopwords];
+    return(filtered_word_list);
+
+def vectorize_filtered_words(post_titles, filtered_word_list):
     dictionary = dict(zip(post_titles, filtered_word_list))
     vectorized_titles = pd.DataFrame(columns=["Titles", "Vectors"])
     for title in post_titles:
@@ -67,11 +71,43 @@ def vectorize_and_store_existing_titles(model):
         else:
             title_vec = normalize(sum(word_vecs).reshape(1, -1))
         vectorized_titles = vectorized_titles.append({'Titles': title, 'Vectors': title_vec}, ignore_index=True)
-    #note that we are saving the df with the original raw (not cleaned) titles
+    return(vectorized_titles);
+
+def pickle_titles(vectorized_titles):
     vectorized_titles.to_pickle("/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/vectorized_titles.pkl")
     return(vectorized_titles)
 
 
+def vectorize_and_store_existing_titles(model):
+    '''
+    Vectorize and store existing titles in legacy Pangea database
+
+    Input: Word2Vec Model (gensim model - dict object with .bin extension)
+    Output: Vectorized Titles (titles.dict, which is saved as a .pkl)
+
+    Note: can split this up into two different functions later
+    '''
+
+    raw = pd.read_csv("allPostData.csv", header=0);
+    post_titles = get_titles(raw);
+    #tokenization
+    tokens = [tokenize_title(title) for title in post_titles];
+    #clean_words
+    clean_words = remove_punctuation(tokens);
+    #clean_text
+    clean_text = clean_text(clean_words);
+    #vectorize_filtered_words
+    vectorized_titles = vectorize_filtered_words(post_titles, clean_text);
+    #pickle_titles
+    pickled_titles = pickle_titles(vectorized_titles);
+
+#hmmm i think im defining this 2x
+def json_clean_text(json_clean_words):
+    stoplist = set(stopwords.words('english'));
+    json_titles_nostopwords = [word for word in json_clean_words if word not in stoplist];
+    json_preprocessed = [word for word in json_titles_nostopwords if word in model.vocab];
+
+#ef vectorize_new_title(title):
 def vectorize_new_title(title, model):
     '''
     Vectorize each new title as a user/student/company creates a new post
@@ -84,11 +120,28 @@ def vectorize_new_title(title, model):
 
     '''
 
-    json_tokens = [word for word in title.lower().split()]
-    json_clean_words = [word.translate(str.maketrans('', '', string.punctuation)) for word in json_tokens]
-    stoplist = set(stopwords.words('english'));
-    json_titles_nostopwords = [word for word in json_clean_words if word not in stoplist]
-    json_preprocessed = [word for word in json_titles_nostopwords if word in model.vocab]
+    #json_tokens = [word for word in title.lower().split()]
+
+    #tokenization of one new title
+    json_tokens = tokenize_title(title)
+
+    #clean_words
+    json_clean_words = remove_punctuation(json_tokens);
+
+    #clean_text
+    json_preprocessed = json_clean_text(json_clean_words);
+
+    #json_preprocessed = clean_text(json_clean_words);
+        #stoplist = set(stopwords.words('english'));
+        #titles_nostopwords = [[word for word in title if word not in stoplist] for title in clean_words];
+        #filtered_word_list = [[word for word in title if word in model.vocab] for title in titles_nostopwords];
+        #return(filtered_word_list);
+    #stoplist = set(stopwords.words('english'));
+    #json_titles_nostopwords = [word for word in json_clean_words if word not in stoplist]
+
+    #json_preprocessed = [word for word in json_titles_nostopwords if word in model.vocab]
+
+
     json_title_vectors = {}
     json_vectorized_title_df = pd.DataFrame(columns=["Titles", "Vectors"])
     json_word_vecs = [model[word] for word in json_preprocessed]
@@ -135,8 +188,8 @@ def generate_recommendations(title, model):
     - ranked titles (dict)
     note that this will print in the terminal on the client side
     '''
-
-    vectorized_title = vectorize_new_title(title, model)
+    vectorized_title = vectorize_new_title(title,model)
+    #vectorized_title = vectorize_new_title(title, model)
     ranked_titles = rank_existing_titles(vectorized_title)
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     other_titles.append({"Titles": title, "Vectors": vectorized_title}, ignore_index=True)
