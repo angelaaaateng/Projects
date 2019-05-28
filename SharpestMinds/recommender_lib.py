@@ -160,12 +160,6 @@ def vectorize_new_title(title, model):
     #pickle_titles
     json_vectorized_title_df = store_title_csv(normalized_title);
 
-    #if not os.path.isfile('/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv'):
-    #    json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', index = None, header=True)
-    #else:
-    #    json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', mode='a', index = None, header=False)
-    #return(json_vectorized_title_df)
-
 
 def rank_existing_titles(vectorized_titles):
     '''
@@ -177,11 +171,14 @@ def rank_existing_titles(vectorized_titles):
     '''
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
+    print("this works")
     for index,row in other_titles.iterrows():
         ranked_titles[row['Titles']] = sum(row['Vectors'][0]*vectorized_titles['Vectors'][0][0])
         # did the dot product using sum() and * because np.dot was behaving weirdly for some reason.
+    print("this works")
 
     sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
+    #sorted_title_vecs = (ranked_titles.items().sort(), key=operator.itemgetter(1), reverse=True)
     return(sorted_title_vecs)
 
 
