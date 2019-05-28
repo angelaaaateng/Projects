@@ -40,7 +40,7 @@ import pickle
 import operator
 
 
-
+#function 1
 def get_titles(raw):
     titles = raw['title'];
     post_titles = [title for title in titles];
@@ -55,7 +55,7 @@ def remove_punctuation(tokens):
     clean_words = [word.translate(str.maketrans('', '', string.punctuation)) for word in tokens];
     return(clean_words);
 
-def clean_text(clean_words):
+def clean_text(model, clean_words):
     stoplist = set(stopwords.words('english'));
     titles_nostopwords = [[word for word in title if word not in stoplist] for title in clean_words];
     filtered_word_list = [[word for word in title if word in model.vocab] for title in titles_nostopwords];
@@ -87,7 +87,6 @@ def vectorize_and_store_existing_titles(model):
 
     Note: can split this up into two different functions later
     '''
-
     raw = pd.read_csv("allPostData.csv", header=0);
     post_titles = get_titles(raw);
     #tokenization
@@ -101,13 +100,44 @@ def vectorize_and_store_existing_titles(model):
     #pickle_titles
     pickled_titles = pickle_titles(vectorized_titles);
 
+
+#function 2
+
+def json_tokenize_title(title):
+    json_tokens = [word for word in title.lower().split()];
+    return(json_tokens);
+
+def json_remove_punctuation(json_tokens):
+    json_clean_words = [word.translate(str.maketrans('', '', string.punctuation)) for word in json_tokens];
+    return(json_clean_words);
+
 #hmmm i think im defining this 2x
-def json_clean_text(json_clean_words):
+def json_clean_text(model, json_clean_words):
     stoplist = set(stopwords.words('english'));
     json_titles_nostopwords = [word for word in json_clean_words if word not in stoplist];
     json_preprocessed = [word for word in json_titles_nostopwords if word in model.vocab];
+    return(json_preprocessed)
 
-#ef vectorize_new_title(title):
+def normalize_title_vecs(model, json_preprocessed, title):
+    json_title_vectors = {}
+    normalized_title = pd.DataFrame(columns=["Titles", "Vectors"])
+    json_word_vecs = [model[word] for word in json_preprocessed]
+    #manually normalizing the word vectors here since normalize command here didn't work
+    if len(json_preprocessed) == 0:
+        json_title_vec = [np.zeros(300)]
+    else:
+        json_title_vec = normalize(sum(json_word_vecs).reshape(1, -1))
+    normalized_title = normalized_title.append({'Titles': title, 'Vectors': json_title_vec}, ignore_index = True)
+    return(normalized_title);
+
+def store_title_csv(normalized_title):
+#can path be an input?
+    if not os.path.isfile('/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv'):
+        normalized_title.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', index = None, header=True)
+    else:
+        normalized_title.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', mode='a', index = None, header=False)
+    return(normalized_title)
+
 def vectorize_new_title(title, model):
     '''
     Vectorize each new title as a user/student/company creates a new post
@@ -119,46 +149,25 @@ def vectorize_new_title(title, model):
     Output: json_vectorized_title_df (dict)
 
     '''
-
-    #json_tokens = [word for word in title.lower().split()]
-
     #tokenization of one new title
-    json_tokens = tokenize_title(title)
-
+    json_tokens = json_tokenize_title(title);
     #clean_words
-    json_clean_words = remove_punctuation(json_tokens);
-
+    json_clean_words = json_remove_punctuation(json_tokens);
     #clean_text
-    json_preprocessed = json_clean_text(json_clean_words);
+    json_preprocessed = json_clean_text(model, json_clean_words);
+    #vectorize_new_title
+    normalized_title = normalize_title_vecs(model, json_preprocessed, title);
+    #pickle_titles
+    json_vectorized_title_df = store_title_csv(normalized_title);
 
-    #json_preprocessed = clean_text(json_clean_words);
-        #stoplist = set(stopwords.words('english'));
-        #titles_nostopwords = [[word for word in title if word not in stoplist] for title in clean_words];
-        #filtered_word_list = [[word for word in title if word in model.vocab] for title in titles_nostopwords];
-        #return(filtered_word_list);
-    #stoplist = set(stopwords.words('english'));
-    #json_titles_nostopwords = [word for word in json_clean_words if word not in stoplist]
-
-    #json_preprocessed = [word for word in json_titles_nostopwords if word in model.vocab]
-
-
-    json_title_vectors = {}
-    json_vectorized_title_df = pd.DataFrame(columns=["Titles", "Vectors"])
-    json_word_vecs = [model[word] for word in json_preprocessed]
-    #manually normalizing the word vectors here since normalize command here didn't work
-    if len(json_preprocessed) == 0:
-            json_title_vec = [np.zeros(300)]
-    else:
-        json_title_vec = normalize(sum(json_word_vecs).reshape(1, -1))
-    json_vectorized_title_df = json_vectorized_title_df.append({'Titles': title, 'Vectors': json_title_vec}, ignore_index = True)
-    if not os.path.isfile('/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv'):
-        json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', index = None, header=True)
-    else:
-        json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', mode='a', index = None, header=False)
-    return(json_vectorized_title_df)
+    #if not os.path.isfile('/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv'):
+    #    json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', index = None, header=True)
+    #else:
+    #    json_vectorized_title_df.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', mode='a', index = None, header=False)
+    #return(json_vectorized_title_df)
 
 
-def rank_existing_titles(vectorized_title):
+def rank_existing_titles(vectorized_titles):
     '''
     Load the current titles in the Pangea database,
     and then rank them by similarity to the latest user query
@@ -169,8 +178,9 @@ def rank_existing_titles(vectorized_title):
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     for index,row in other_titles.iterrows():
-        ranked_titles[row['Titles']] = sum(row['Vectors'][0]*vectorized_title['Vectors'][0][0])
+        ranked_titles[row['Titles']] = sum(row['Vectors'][0]*vectorized_titles['Vectors'][0][0])
         # did the dot product using sum() and * because np.dot was behaving weirdly for some reason.
+
     sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
     return(sorted_title_vecs)
 
@@ -189,7 +199,6 @@ def generate_recommendations(title, model):
     note that this will print in the terminal on the client side
     '''
     vectorized_title = vectorize_new_title(title,model)
-    #vectorized_title = vectorize_new_title(title, model)
     ranked_titles = rank_existing_titles(vectorized_title)
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     other_titles.append({"Titles": title, "Vectors": vectorized_title}, ignore_index=True)
