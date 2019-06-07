@@ -158,4 +158,4 @@ def clean_and_store_text(title, model):
     '''
     vectorized_title = vectorize_new_title(title,model)
     print("*COMPLETE")
-    return(ranked_titles)
+    return(vectorized_title)
