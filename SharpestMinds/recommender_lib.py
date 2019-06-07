@@ -178,19 +178,25 @@ def rank_existing_titles(vectorized_titles):
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     print("this works")
-    for index,row in other_titles.iterrows():
-        try:
-            ranked_titles[row['Titles']] = np.dot(vectorized_titles[row['Vectors'][0]], vectorized_titles[['Vectors'][0][0]])
+    #for index,row in other_titles.iterrows():
+        #try:
+            #ranked_titles[row['Titles']] = np.dot([row['Vectors'][0]], vectorized_titles['Vectors'][0][0])
+            #ranked_titles[row['Titles']] = np.dot(vectorized_titles[row['Vectors'][0]], vectorized_titles[['Vectors'][0][0]])
             #ranked_titles[row['Titles']] = sum(vectorized_titles[row['Vectors'][0]]*vectorized_titles[['Vectors'][0][0]])
-        except TypeError:
-            print("this works")
-            pass
+        #except TypeError:
+            #print("this works")
+            #pass
     #for index,row in other_titles.iterrows():
     #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles['Vectors'][0][0])
     #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles.loc['Vectors'][0][0])
         # did the dot product using sum() and * because np.dot was behaving weirdly for some reason.
-    sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
+    #sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
     #sorted_title_vecs = (ranked_titles.items().sort(), key=operator.itemgetter(1), reverse=True)
+    for index,row in other_titles.iterrows():
+        ranked_titles[row['Titles']] = sum(other_titles['Vectors'][0]*(vectorized_title.loc[0][1])) # --> did the dot product using sum() and * because np.dot was behaving weirdly for some reason. Now it seems to work!
+    sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
+    sorted_title_vecs = sorted_title_vecs.all()
+    return(sorted_title_vecs)
     return(sorted_title_vecs)
 
 
