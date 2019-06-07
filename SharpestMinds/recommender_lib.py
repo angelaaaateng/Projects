@@ -156,15 +156,10 @@ def vectorize_new_title(title, model):
     Output: json_vectorized_title_df (dict)
 
     '''
-    #tokenization of one new title
     json_tokens = json_tokenize_title(title);
-    #clean_words
     json_clean_words = json_remove_punctuation(json_tokens);
-    #clean_text
     json_preprocessed = json_clean_text(model, json_clean_words);
-    #vectorize_new_title
     normalized_title = normalize_title_vecs(model, json_preprocessed, title);
-    #pickle_titles
     json_vectorized_title_df = store_title_csv(normalized_title);
     return(json_vectorized_title_df)
 
@@ -179,32 +174,10 @@ def rank_existing_titles(vectorized_titles):
     '''
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
-    #print("this works")
-    #for index,row in other_titles.iterrows():
-        #try:
-            #ranked_titles[row['Titles']] = np.dot([row['Vectors'][0]], vectorized_titles['Vectors'][0][0])
-            #ranked_titles[row['Titles']] = np.dot(vectorized_titles[row['Vectors'][0]], vectorized_titles[['Vectors'][0][0]])
-            #ranked_titles[row['Titles']] = sum(vectorized_titles[row['Vectors'][0]]*vectorized_titles[['Vectors'][0][0]])
-        #except TypeError:
-            #print("this works")
-            #pass
-    #for index,row in other_titles.iterrows():
-    #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles['Vectors'][0][0])
-    #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles.loc['Vectors'][0][0])
-        # did the dot product using sum() and * because np.dot was behaving weirdly for some reason.
-    #sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
-    #sorted_title_vecs = (ranked_titles.items().sort(), key=operator.itemgetter(1), reverse=True)
-    #for index,row in other_titles.iterrows():
-        #ranked_titles[row['Titles']] = sum(other_titles['Vectors'][0]*(vectorized_titles.loc[0][1])) # --> did the dot product using sum() and * because np.dot was behaving weirdly for some reason. Now it seems to work!
-    #sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
-    #sorted_title_vecs = sorted_title_vecs.all()
     for index,row in other_titles.iterrows():
         ranked_titles[row['Titles']] = sum(row['Vectors'][0]*json_vectorized_title_df['Vectors'][0][0])
     sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
     return(sorted_title_vecs)
-
-
-
 
 def generate_recommendations(title, model):
     '''
