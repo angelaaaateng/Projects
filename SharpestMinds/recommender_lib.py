@@ -14,7 +14,6 @@ from pandas.io.json import json_normalize
 
 from sklearn.preprocessing import normalize
 from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 import csv
 
 import gensim
@@ -40,7 +39,12 @@ import pickle
 import operator
 
 
-#function 1
+
+'''
+Mini Functions
+'''
+
+# function 1
 def get_titles(raw):
     titles = raw['title'];
     post_titles = [title for title in titles];
@@ -77,32 +81,7 @@ def pickle_titles(vectorized_titles):
     vectorized_titles.to_pickle("/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/vectorized_titles.pkl")
     return(vectorized_titles)
 
-
-def vectorize_and_store_existing_titles(model):
-    '''
-    Vectorize and store existing titles in legacy Pangea database
-
-    Input: Word2Vec Model (gensim model - dict object with .bin extension)
-    Output: Vectorized Titles (titles.dict, which is saved as a .pkl)
-
-    Note: can split this up into two different functions later
-    '''
-    raw = pd.read_csv("allPostData.csv", header=0);
-    post_titles = get_titles(raw);
-    #tokenization
-    tokens = [tokenize_title(title) for title in post_titles];
-    #clean_words
-    clean_words = remove_punctuation(tokens);
-    #clean_text
-    clean_text = clean_text(clean_words);
-    #vectorize_filtered_words
-    vectorized_titles = vectorize_filtered_words(post_titles, clean_text);
-    #pickle_titles
-    pickled_titles = pickle_titles(vectorized_titles);
-
-
-#function 2
-
+# function 2
 def json_tokenize_title(title):
     json_tokens = [word for word in title.lower().split()];
     return(json_tokens);
@@ -137,6 +116,33 @@ def store_title_csv(normalized_title):
     else:
         normalized_title.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', mode='a', index = None, header=False)
     return(normalized_title)
+
+'''
+Compilation of Mini-Functions into Larger Functions
+'''
+
+def vectorize_and_store_existing_titles(model):
+    '''
+    Vectorize and store existing titles in legacy Pangea database
+
+    Input: Word2Vec Model (gensim model - dict object with .bin extension)
+    Output: Vectorized Titles (titles.dict, which is saved as a .pkl)
+
+    Note: can split this up into two different functions later
+    '''
+    raw = pd.read_csv("allPostData.csv", header=0);
+    post_titles = get_titles(raw);
+    #tokenization
+    tokens = [tokenize_title(title) for title in post_titles];
+    #clean_words
+    clean_words = remove_punctuation(tokens);
+    #clean_text
+    clean_text = clean_text(clean_words);
+    #vectorize_filtered_words
+    vectorized_titles = vectorize_filtered_words(post_titles, clean_text);
+    #pickle_titles
+    pickled_titles = pickle_titles(vectorized_titles);
+
 
 def vectorize_new_title(title, model):
     '''
@@ -173,10 +179,16 @@ def rank_existing_titles(vectorized_titles):
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
     print("this works")
     for index,row in other_titles.iterrows():
-        ranked_titles[row['Titles']] = sum(row['Vectors'][0]*vectorized_titles['Vectors'][0][0])
+        try:
+            ranked_titles[row['Titles']] = np.dot(vectorized_titles[row['Vectors'][0]], vectorized_titles[['Vectors'][0][0]])
+            #ranked_titles[row['Titles']] = sum(vectorized_titles[row['Vectors'][0]]*vectorized_titles[['Vectors'][0][0]])
+        except TypeError:
+            print("this works")
+            pass
+    #for index,row in other_titles.iterrows():
+    #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles['Vectors'][0][0])
+    #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles.loc['Vectors'][0][0])
         # did the dot product using sum() and * because np.dot was behaving weirdly for some reason.
-    print("this works")
-
     sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
     #sorted_title_vecs = (ranked_titles.items().sort(), key=operator.itemgetter(1), reverse=True)
     return(sorted_title_vecs)
@@ -204,7 +216,5 @@ def generate_recommendations(title, model):
         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
         for title in ranked_titles:
             wr.writerow([ranked_titles, title])
-
-
     print("*COMPLETE")
     return(ranked_titles)
