@@ -4,11 +4,11 @@
 ## Recommender System - Marketplace Matching Script for Pangea.App
 
 
-- Recommender_lib.py - Python Script containing Word2Vec model and recommender system
-- app.py - flask application for deploying the recommender system; Flask App for Pangea.App
-- requirements.txt - requirements needed to run the model
-- Pangea_RS_Cleaned.ipnyb - Jupyter Notebook that outlines word2vec model and data output line by line
-- annotated_APP.ipynb - Jupyter notebook with more detailed explanation of each part of the code. 
+- **Recommender_lib.py** - Python Script containing Word2Vec model and recommender system
+- **app.py** - flask application for deploying the recommender system; Flask App for Pangea.App
+- **requirements.txt** - requirements needed to run the model
+- **Pangea_RS_Cleaned.ipnyb** - Jupyter Notebook that outlines word2vec model and data output line by line
+- **annotated_APP.ipynb** - Jupyter notebook with more detailed explanation of each part of the code. 
 
 
 ## Notes for running flask app:
