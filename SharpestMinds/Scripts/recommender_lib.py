@@ -13,38 +13,28 @@ import json
 from pandas.io.json import json_normalize
 
 from sklearn.preprocessing import normalize
-from sklearn.preprocessing import StandardScaler
 import csv
 
 import gensim
 from gensim.models.word2vec import Word2Vec
 from collections import defaultdict
-from pprint import pprint
 
-#these packages mostly used for visualization submitted to team on ipynb
 import re
-from sklearn.feature_extraction.text import CountVectorizer
+import operator
 from operator import itemgetter, attrgetter, add
-from pprint import pprint
+
 
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 nltk.download('stopwords')
-from nltk.tokenize import RegexpTokenizer
-from adjustText import adjust_text
 import string
 
 import pickle
-import operator
 
 
 
-'''
-Mini Functions
-'''
 
-# function 1
 def get_titles(raw):
     titles = raw['title'];
     post_titles = [title for title in titles];
@@ -82,15 +72,6 @@ def pickle_titles(vectorized_titles):
     return(vectorized_titles)
 
 # function 2
-def json_tokenize_title(title):
-    json_tokens = [word for word in title.lower().split()];
-    return(json_tokens);
-
-def json_remove_punctuation(json_tokens):
-    json_clean_words = [word.translate(str.maketrans('', '', string.punctuation)) for word in json_tokens];
-    return(json_clean_words);
-
-#hmmm i think im defining this 2x
 def json_clean_text(model, json_clean_words):
     stoplist = set(stopwords.words('english'));
     json_titles_nostopwords = [word for word in json_clean_words if word not in stoplist];
@@ -110,7 +91,6 @@ def normalize_title_vecs(model, json_preprocessed, title):
     return(normalized_title);
 
 def store_title_csv(normalized_title):
-#can path be an input?
     if not os.path.isfile('/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv'):
         normalized_title.to_csv (r'/Users/angelateng/Google_Drive/SharpestMinds_dropbox/SharpestMinds/ranked_titles.csv', index = None, header=True)
     else:
@@ -157,9 +137,9 @@ def vectorize_new_title(title, model):
 
     '''
     #tokenization of one new title
-    json_tokens = json_tokenize_title(title);
+    json_tokens = tokenize_title(title);
     #clean_words
-    json_clean_words = json_remove_punctuation(json_tokens);
+    json_clean_words = remove_punctuation(json_tokens);
     #clean_text
     json_preprocessed = json_clean_text(model, json_clean_words);
     #vectorize_new_title
@@ -179,25 +159,6 @@ def rank_existing_titles(json_vectorized_title_df):
     '''
     ranked_titles = {}
     other_titles = pd.read_pickle("./vectorized_titles.pkl")
-    #print("this works")
-    #for index,row in other_titles.iterrows():
-        #try:
-            #ranked_titles[row['Titles']] = np.dot([row['Vectors'][0]], vectorized_titles['Vectors'][0][0])
-            #ranked_titles[row['Titles']] = np.dot(vectorized_titles[row['Vectors'][0]], vectorized_titles[['Vectors'][0][0]])
-            #ranked_titles[row['Titles']] = sum(vectorized_titles[row['Vectors'][0]]*vectorized_titles[['Vectors'][0][0]])
-        #except TypeError:
-            #print("this works")
-            #pass
-    #for index,row in other_titles.iterrows():
-    #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles['Vectors'][0][0])
-    #    ranked_titles[row['Titles']] = sum((row['Vectors'][0])*vectorized_titles.loc['Vectors'][0][0])
-        # did the dot product using sum() and * because np.dot was behaving weirdly for some reason.
-    #sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
-    #sorted_title_vecs = (ranked_titles.items().sort(), key=operator.itemgetter(1), reverse=True)
-    #for index,row in other_titles.iterrows():
-        #ranked_titles[row['Titles']] = sum(other_titles['Vectors'][0]*(vectorized_titles.loc[0][1])) # --> did the dot product using sum() and * because np.dot was behaving weirdly for some reason. Now it seems to work!
-    #sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
-    #sorted_title_vecs = sorted_title_vecs.all()
     for index,row in other_titles.iterrows():
         ranked_titles[row['Titles']] = sum(row['Vectors'][0]*json_vectorized_title_df['Vectors'][0][0])
     sorted_title_vecs = sorted(ranked_titles.items(), key=operator.itemgetter(1), reverse=True)
