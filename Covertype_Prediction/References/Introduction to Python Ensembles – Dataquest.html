@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+		<!--[if lt IE 9]>
+	<script src="https://www.dataquest.io/wp-content/themes/ignition/js/html5/dist/html5shiv.js"></script>
+	<script src="//css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+	<![endif]-->
+	<!--[if IE 8]>
+	<link rel="stylesheet" type="text/css" href="https://www.dataquest.io/wp-content/themes/ignition/css/ie8.css"/>
+	<![endif]-->
+	<!--[if IE 7]>
+	<link rel="stylesheet" type="text/css" href="https://www.dataquest.io/wp-content/themes/ignition/css/ie7.css"/>
+	<![endif]-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta charset="UTF-8">
+	
+			<link rel="stylesheet" href="https://use.typekit.net/nmj4kuc.css">
+
+
+<style>.async-hide { opacity: 0 !important} </style>
+<script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+(a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+})(window,document.documentElement,'async-hide','dataLayer',4000,
+{'GTM-WTLJ6TB':true});</script>
+<!-- Modified Analytics tracking code with Optimize plugin -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-41411988-3', 'auto');
+    ga('require', 'GTM-WTLJ6TB');
+    ga('send', 'pageview');
+    </script>			<title>Introduction to Python Ensembles &ndash; Dataquest</title>
+
+<!-- This site is optimized with the Yoast SEO Premium plugin v11.7 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="This post takes you through the basics of ensembles — what they are and why they work so well — and provides a hands-on tutorial for building basic ensembles."/>
+<link rel="canonical" href="https://www.dataquest.io/blog/introduction-to-ensembles/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Introduction to Python Ensembles &ndash; Dataquest" />
+<meta property="og:description" content="This post takes you through the basics of ensembles — what they are and why they work so well — and provides a hands-on tutorial for building basic ensembles." />
+<meta property="og:url" content="https://www.dataquest.io/blog/introduction-to-ensembles/" />
+<meta property="og:site_name" content="Dataquest" />
+<meta property="article:publisher" content="https://www.facebook.com/dataquestio" />
+<meta property="article:tag" content="Data Science" />
+<meta property="article:tag" content="Learn Python" />
+<meta property="article:section" content="Data Science Tutorials" />
+<meta property="article:published_time" content="2018-01-11T18:51:04+00:00" />
+<meta property="article:modified_time" content="2019-06-10T08:52:34+00:00" />
+<meta property="og:updated_time" content="2019-06-10T08:52:34+00:00" />
+<meta property="og:image" content="https://www.dataquest.io/wp-content/uploads/2018/01/python-ensembles.png" />
+<meta property="og:image:secure_url" content="https://www.dataquest.io/wp-content/uploads/2018/01/python-ensembles.png" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="512" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="This post takes you through the basics of ensembles — what they are and why they work so well — and provides a hands-on tutorial for building basic ensembles." />
+<meta name="twitter:title" content="Introduction to Python Ensembles &ndash; Dataquest" />
+<meta name="twitter:site" content="@dataquestio" />
+<meta name="twitter:image" content="https://www.dataquest.io/wp-content/uploads/2018/01/python-ensembles.png" />
+<meta name="twitter:creator" content="@dataquestio" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.dataquest.io/#organization","name":"Dataquest","url":"https://www.dataquest.io/","sameAs":["https://www.facebook.com/dataquestio","https://www.linkedin.com/company/dataquest-io","https://twitter.com/dataquestio"],"logo":{"@type":"ImageObject","@id":"https://www.dataquest.io/#logo","url":"https://www.dataquest.io/wp-content/uploads/2019/01/Logo-On-Light-BLUE.png","width":2001,"height":427,"caption":"Dataquest"},"image":{"@id":"https://www.dataquest.io/#logo"}},{"@type":"WebSite","@id":"https://www.dataquest.io/#website","url":"https://www.dataquest.io/","name":"Dataquest","publisher":{"@id":"https://www.dataquest.io/#organization"},"potentialAction":{"@type":"SearchAction","target":"https://www.dataquest.io/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"https://www.dataquest.io/blog/introduction-to-ensembles/#primaryimage","url":"https://www.dataquest.io/wp-content/uploads/2018/01/python-ensembles.png","width":1024,"height":512},{"@type":"WebPage","@id":"https://www.dataquest.io/blog/introduction-to-ensembles/#webpage","url":"https://www.dataquest.io/blog/introduction-to-ensembles/","inLanguage":"en-US","name":"Introduction to Python Ensembles &ndash; Dataquest","isPartOf":{"@id":"https://www.dataquest.io/#website"},"primaryImageOfPage":{"@id":"https://www.dataquest.io/blog/introduction-to-ensembles/#primaryimage"},"datePublished":"2018-01-11T18:51:04+00:00","dateModified":"2019-06-10T08:52:34+00:00","description":"This post takes you through the basics of ensembles \u2014 what they are and why they work so well \u2014 and provides a hands-on tutorial for building basic ensembles."},{"@type":"Article","@id":"https://www.dataquest.io/blog/introduction-to-ensembles/#article","isPartOf":{"@id":"https://www.dataquest.io/blog/introduction-to-ensembles/#webpage"},"author":{"@id":"https://www.dataquest.io/#/schema/person/ff4773950db0e21bc37d61094987a7b3"},"headline":"Introduction to Python Ensembles","datePublished":"2018-01-11T18:51:04+00:00","dateModified":"2019-06-10T08:52:34+00:00","commentCount":0,"mainEntityOfPage":{"@id":"https://www.dataquest.io/blog/introduction-to-ensembles/#webpage"},"publisher":{"@id":"https://www.dataquest.io/#organization"},"image":{"@id":"https://www.dataquest.io/blog/introduction-to-ensembles/#primaryimage"},"keywords":"Data Science,Learn Python","articleSection":"Data Science Tutorials"},{"@type":["Person"],"@id":"https://www.dataquest.io/#/schema/person/ff4773950db0e21bc37d61094987a7b3","name":"Sebastian Flennerhag","image":{"@type":"ImageObject","@id":"https://www.dataquest.io/#authorlogo","url":"https://www.dataquest.io/wp-content/uploads/2018/10/Sebastian_Flennerhag-1.jpg","caption":"Sebastian Flennerhag"},"description":"Machine learning researcher and predictive modeler. Writes about exciting open source projects, predictive modeling and the latest in deep learning.","sameAs":[]}]}</script>
+<!-- / Yoast SEO Premium plugin. -->
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link href='https://cdn.shortpixel.ai' rel='preconnect' />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.dataquest.io\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.2"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.dataquest.io/wp-includes/css/dist/block-library/style.min.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='searchandfilter-css'  href='https://www.dataquest.io/wp-content/plugins/search-filter/style.css?ver=1' type='text/css' media='all' />
+<link rel='stylesheet' id='bodhi-svgs-attachment-css'  href='https://www.dataquest.io/wp-content/plugins/svg-support/css/svgs-attachment.css?ver=5.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='l2h_style-css'  href='https://www.dataquest.io/wp-content/plugins/latex2html/inc/css/latex.min.css?ver=2.3.7' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='l2h_print_style-css'  href='https://www.dataquest.io/wp-content/plugins/latex2html/inc/css/print.min.css?ver=2.3.7' type='text/css' media='print' />
+<link rel='stylesheet' id='ignition-style-css'  href='https://www.dataquest.io/wp-content/themes/ignition-child/style.css?ver=1.401.2.1550684985' type='text/css' media='all' />
+<link rel='stylesheet' id='thrive-reset-css'  href='https://www.dataquest.io/wp-content/themes/ignition/css/reset.css' type='text/css' media='all' />
+<link rel='stylesheet' id='thrive-main-style-css'  href='https://www.dataquest.io/wp-content/themes/ignition/css/main_navy.css?ver=2014123' type='text/css' media='all' />
+<link rel='stylesheet' id='chld_thm_cfg_separate-css'  href='https://www.dataquest.io/wp-content/themes/ignition-child/ctc-style.css?ver=1.401.2.1550684985' type='text/css' media='all' />
+<link rel='stylesheet' id='thrive-apprentice-style-css'  href='https://www.dataquest.io/wp-content/themes/ignition/appr/css/apprentice_green.css?ver=20120208' type='text/css' media='all' />
+<link rel='stylesheet' id='jquery-data-tables-css'  href='https://www.dataquest.io/wp-content/plugins/posts-data-table/assets/js/datatables/datatables.min.css?ver=1.10.18' type='text/css' media='all' />
+<link rel='stylesheet' id='posts-data-table-css'  href='https://www.dataquest.io/wp-content/plugins/posts-data-table/assets/css/posts-data-table.min.css?ver=1.2' type='text/css' media='all' />
+<link rel='stylesheet' id='prism-theme-css'  href='https://www.dataquest.io/wp-content/plugins/ank-prism-for-wp/out/prism-css.min.css?ver=1550607458' type='text/css' media='all' />
+<script type='text/javascript'>
+/* <![CDATA[ */
+var THO_Head = {"variations":[],"post_id":"1999","element_tag":"thrive_headline","woo_tag":"tho_woo"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/thrive-headline-optimizer/frontend/js/header.min.js?ver=1.1.26'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-includes/js/jquery/jquery.js'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-includes/js/jquery/jquery-migrate.min.js'></script>
+<link rel='https://api.w.org/' href='https://www.dataquest.io/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.dataquest.io/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.dataquest.io/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.2.2" />
+<link rel='shortlink' href='https://www.dataquest.io/?p=1999' />
+<link rel="alternate" type="application/json+oembed" href="https://www.dataquest.io/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.dataquest.io%2Fblog%2Fintroduction-to-ensembles%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.dataquest.io/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.dataquest.io%2Fblog%2Fintroduction-to-ensembles%2F&#038;format=xml" />
+<style type="text/css" id="tve_global_variables">:root{--tcb-color-0:rgb(35, 42, 61);--tcb-color-1:rgb(132, 132, 157);--tcb-color-2:rgb(77, 127, 223);--tcb-color-3:rgb(97, 209, 153);--tcb-color-4:rgb(0, 0, 0);--tcb-color-5:rgb(0, 0, 0);--tcb-color-6:rgb(0, 0, 0);--tcb-color-7:rgb(212, 212, 212);--tcb-color-8:rgb(137, 138, 142);--tcb-color-9:rgb(242, 243, 247);--tcb-color-10:rgba(35, 42, 61, 0.77);--tcb-gradient-0:linear-gradient(90deg, rgb(97, 209, 153) 0%, rgb(78, 126, 222) 98%);}</style>	<script>
+		/************* Helper functions ******************/
+		function isInArray(value, array) {
+		  return array.indexOf(value) > -1;
+		}
+		function getHostFromUrl(url) {
+			var a=document.createElement('a');
+			a.href=url;
+			return a.hostname;
+		}
+		function getUrlVar(key){
+			var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search); 
+			return result && unescape(result[1]) || ""; 
+		}
+		/************* End of Helper Functions ******************/
+		
+		
+		/******************** Cookie helper functions ************************/
+		function checkCookieExists(cookie_name) {
+			return document.cookie.indexOf(cookie_name + '=') !== -1;
+		}
+		function setCookie(name,value,domain,days) {
+			var expires = "";
+			if (days) {
+				var date = new Date();
+				date.setTime(date.getTime() + (days*24*60*60*1000));
+				expires = "; expires=" + date.toUTCString();
+			}
+			document.cookie = name + "=" + (value || "")  + expires +  ";domain=" + domain + "; path=/";
+		}
+		/******************** End Of Cookie helper functions ******************/
+		
+		function setRefererUrlCookie() {
+			var cookie_domain = '.dataquest.io'
+			var internal_hosts =  ['www.dataquest.io', 'dataquest.io', ]
+
+			/* Set Landing page cookie if it doesnot exist */
+			if (!checkCookieExists('dataquest-cac-landing-page')) {
+				setCookie('dataquest-cac-landing-page', window.location.pathname, cookie_domain, 7)
+			}
+			
+			var referrer = document.referrer
+			if (!referrer) {
+				return
+			}
+			host = getHostFromUrl(referrer)
+			
+			/* If referrer is not coming from dataquest, set it in cookie and override landing_page cookie */
+			if (!isInArray(host, internal_hosts)) {
+				setCookie('dataquest-cac-referer-url', referrer, cookie_domain, 365)
+				setCookie('dataquest-cac-landing-page', window.location.pathname, cookie_domain, 365)
+			}
+		}
+
+		function setUTMCodesCookies() {
+			var utm_codes = ['utm_source','utm_campaign','utm_content','utm_term','utm_medium']
+			var cookie_prefix = 'dataquest-cac-'
+			var cookie_domain = '.dataquest.io'
+			
+			for (code in utm_codes) {
+				var utm_code = utm_codes[code]
+				var code_value = getUrlVar(utm_code)
+				var cookie_name = cookie_prefix + utm_code.replace('_', '-')
+				
+				if (code_value) {
+					setCookie(cookie_name, code_value, cookie_domain, 365)
+				}
+			}
+		}
+									
+		
+		function setLandingPageLastTouchCookie() {
+			var cookie_domain = '.dataquest.io'
+			setCookie('dataquest-cac-landing-page-last-touch', window.location.pathname, cookie_domain, 365)
+
+		}
+		
+		setUTMCodesCookies()
+		setRefererUrlCookie()
+		setLandingPageLastTouchCookie()
+
+	</script>
+<style>
+.latex_thm, .latex_lem, .latex_cor, .latex_defn, .latex_prop, .latex_rem{
+  margin:0;padding:5px;
+  background: lightcyan;
+  border: solid 3px green;
+  -moz-border-radius: 1.0em;
+  -webkit-border-radius: 7px;
+  box-shadow: 0 0 0 green;
+}
+.latex_em{
+  font-style: italic;
+}
+.bibtex_title{
+  font-weight:bold;
+  color: #004b33;
+}
+a.bibtex_title{
+  text-decoration: none;
+}
+.latex_proof::after{
+  content: "\220E";
+  color: gray;
+  text-align: right;
+  display: block;
+  font-size: 1.2em;
+}
+</style>
+		<style type="text/css">body { background:#ffffff; }.cnt article h1.entry-title a { color:#0a0a0a; }.cnt article h2.entry-title a { color:#0a0a0a; }.bSe h1 { color:#0a0a0a; }.bSe h2 { color:#0a0a0a; }.bSe h3 { color:#0a0a0a; }.bSe h4 { color:#0a0a0a; }.bSe h5 { color:#0a0a0a; }.bSe h6 { color:#0a0a0a; }.cnt article p { color:#0a0a0a; }.cnt .bSe article { color:#0a0a0a; }.cnt article h1 a, .tve-woocommerce .bSe .awr .entry-title, .tve-woocommerce .bSe .awr .page-title{font-family:Open Sans,sans-serif;}.bSe h1{font-family:Open Sans,sans-serif;}.bSe h2,.tve-woocommerce .bSe h2{font-family:Open Sans,sans-serif;}.bSe h3,.tve-woocommerce .bSe h3{font-family:Open Sans,sans-serif;}.bSe h4{font-family:Open Sans,sans-serif;}.bSe h5{font-family:Open Sans,sans-serif;}.bSe h6{font-family:Open Sans,sans-serif;}.cnt, .bp-t, .tve-woocommerce .product p, .tve-woocommerce .products p{font-family:Open Sans,sans-serif;font-weight:400;}article strong {font-weight: bold;}.bSe h1, .bSe .entry-title { font-size:36px; }.cnt { font-size:14px; }.out { font-size:14px; }.thrivecb { font-size:14px; }.aut p { font-size:14px; }.cnt p { line-height:2em; }.lhgh { line-height:2em; }.dhgh { line-height:2em; }.dhgh { font-size:14px; }.lhgh { font-size:14px; }.thrivecb { line-height:2em; }.cnt .cmt, .cnt .acm { background-color:#4d7fdf; }.trg { border-color:#4d7fdf transparent transparent; }.str { border-color: transparent #4d7fdf transparent transparent; }.brd ul li { color:#4d7fdf; }.bSe a { color:#4d7fdf; }.bSe .faq h4{font-family:Open Sans,sans-serif;font-weight:400;}article strong {font-weight: bold;}header ul.menu > li > a { color:#ffffff; }header .phone .apnr, header .phone .apnr:before, header .phone .fphr { color:#ffffff; }header ul.menu > li > a:hover { color:#ffffff; }header .phone:hover .apnr, header .phone:hover .apnr:before, header .phone:hover .fphr { color:#ffffff; }header nav > ul > li.current_page_item > a:hover { color:#ffffff; }header nav > ul > li.current_menu_item > a:hover { color:#ffffff; }header nav > ul > li.current_menu_item > a:hover { color:#ffffff; }header nav > ul > li > a:active { color:#ffffff; }header #logo > a > img { max-width:180px; }header ul.menu > li.h-cta > a { color:#FFFFFF!important; }header ul.menu > li.h-cta >a  { background:#ffffff; }header ul.menu > li.h-cta > a { border-color:#ffffff; }header ul.menu > li.h-cta > a:hover { color:#FFFFFF!important; }header ul.menu > li.h-cta > a:hover { background:#ffffff; }.product.woocommerce.add_to_cart_inline a.button.product_type_simple.ajax_add_to_cart { background-color:#FFFFFF; }.product.woocommerce.add_to_cart_inline a.button.product_type_simple.ajax_add_to_cart { border-color:#4d7fdf; }.product.woocommerce.add_to_cart_inline a.button.product_type_simple.ajax_add_to_cart { color:#4d7fdf; }.product.woocommerce.add_to_cart_inline a.button.product_type_simple.ajax_add_to_cart:hover { background-color:#4d7fdf; }.woocommerce p.return-to-shop a.button.wc-backward { border-color:#4d7fdf; }.woocommerce p.return-to-shop a.button.wc-backward { color:#4d7fdf; }.woocommerce p.return-to-shop a.button.wc-backward:hover { background:#4d7fdf; }.woocommerce p.return-to-shop a.button.wc-backward:hover { color:#FFFFFF; }</style>
+		      <meta name="onesignal" content="wordpress-plugin"/>
+          <link rel="manifest"
+            href="https://www.dataquest.io/wp-content/plugins/onesignal-free-web-push-notifications/sdk_files/manifest.json.php?gcm_sender_id="/>
+          <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>    <script>
+
+      window.OneSignal = window.OneSignal || [];
+
+      OneSignal.push( function() {
+        OneSignal.SERVICE_WORKER_UPDATER_PATH = "OneSignalSDKUpdaterWorker.js.php";
+        OneSignal.SERVICE_WORKER_PATH = "OneSignalSDKWorker.js.php";
+        OneSignal.SERVICE_WORKER_PARAM = { scope: '/' };
+
+        OneSignal.setDefaultNotificationUrl("https://www.dataquest.io");
+        var oneSignal_options = {};
+        window._oneSignalInitOptions = oneSignal_options;
+
+        oneSignal_options['wordpress'] = true;
+oneSignal_options['appId'] = '4a9522c8-9682-4893-ae7f-3a98a81e9bb0';
+oneSignal_options['autoRegister'] = true;
+oneSignal_options['welcomeNotification'] = { };
+oneSignal_options['welcomeNotification']['title'] = "Dataquest";
+oneSignal_options['welcomeNotification']['message'] = "";
+oneSignal_options['path'] = "https://www.dataquest.io/wp-content/plugins/onesignal-free-web-push-notifications/sdk_files/";
+oneSignal_options['persistNotification'] = true;
+oneSignal_options['promptOptions'] = { };
+oneSignal_options['promptOptions']['exampleNotificationTitleDesktop'] = 'This is an example data science notification';
+oneSignal_options['promptOptions']['siteName'] = 'https://dataquest.io';
+oneSignal_options['notifyButton'] = { };
+oneSignal_options['notifyButton']['enable'] = true;
+oneSignal_options['notifyButton']['position'] = 'bottom-right';
+oneSignal_options['notifyButton']['theme'] = 'inverse';
+oneSignal_options['notifyButton']['size'] = 'medium';
+oneSignal_options['notifyButton']['prenotify'] = true;
+oneSignal_options['notifyButton']['displayPredicate'] = function() {
+              return OneSignal.isPushNotificationsEnabled()
+                      .then(function(isPushEnabled) {
+                          return !isPushEnabled;
+                      });
+            };
+oneSignal_options['notifyButton']['showCredit'] = true;
+oneSignal_options['notifyButton']['text'] = {};
+oneSignal_options['notifyButton']['colors'] = {};
+oneSignal_options['notifyButton']['colors']['circle.background'] = '#656693';
+oneSignal_options['notifyButton']['colors']['circle.foreground'] = '#61D199';
+oneSignal_options['notifyButton']['colors']['badge.background'] = '#ffffff';
+oneSignal_options['notifyButton']['colors']['badge.foreground'] = 'white';
+oneSignal_options['notifyButton']['colors']['badge.bordercolor'] = 'white';
+oneSignal_options['notifyButton']['colors']['dialog.button.background'] = '#61D199';
+oneSignal_options['notifyButton']['colors']['dialog.button.background.hovering'] = '#6f7582';
+              oneSignal_options['autoRegister'] = false;
+              OneSignal.showHttpPrompt();
+              OneSignal.init(window._oneSignalInitOptions);
+                    });
+
+      function documentInitOneSignal() {
+        var oneSignal_elements = document.getElementsByClassName("OneSignal-prompt");
+
+        var oneSignalLinkClickHandler = function(event) { OneSignal.push(['registerForPushNotifications']); event.preventDefault(); };        for(var i = 0; i < oneSignal_elements.length; i++)
+          oneSignal_elements[i].addEventListener('click', oneSignalLinkClickHandler, false);
+      }
+
+      if (document.readyState === 'complete') {
+           documentInitOneSignal();
+      }
+      else {
+           window.addEventListener("load", function(event){
+               documentInitOneSignal();
+          });
+      }
+    </script>
+
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #ffffff; }
+</style>
+	<link rel="icon" href="https://www.dataquest.io/wp-content/uploads/2019/01/cropped-rocket-icon-50x50.jpg" sizes="32x32" />
+<link rel="icon" href="https://www.dataquest.io/wp-content/uploads/2019/01/cropped-rocket-icon-300x300.jpg" sizes="192x192" />
+<link rel="apple-touch-icon-precomposed" href="https://www.dataquest.io/wp-content/uploads/2019/01/cropped-rocket-icon-300x300.jpg" />
+<meta name="msapplication-TileImage" content="https://www.dataquest.io/wp-content/uploads/2019/01/cropped-rocket-icon-300x300.jpg" />
+		<style type="text/css" id="wp-custom-css">
+			body  {font-family: ingra, sans-serif; color: #232a3d;}
+
+button, input, select, textarea, h4, h5, h6, .widget-area.sidebar, nav, p, .thrv-styled-list-item, .bSe h4, ol li, ul li  {font-family: ingra, sans-serif; font-weight: 300; color: #232a3d; }
+
+.single-post article, .single-post article ul, .single-post article p, .single-post article blockquote, .single-post article ol li {line-height: 1.8em; font-size: 15px; font-family: merriweather;}
+
+.page-template-fullwidth-page p, .page-template-default p, .page-template-default ul li, .page-template-default ol li {font-family: ingra, sans-serif; line-height: 1.7em; margin: 0px 0px; font-size: 16px; color: #232a3d!important; font-weight: 300;}
+
+.tcb-button-text {font-family: industry, sans-serif!important; font-weight: 700; letter-spacing: 1px;}
+
+h1, h2, h3 {font-family: industry, sans-serif!important; color: #232a3d!important; font-weight: 700!important;}
+
+.bSe h1 {font-size: 36px!important;}
+
+.scn>ul a:hover, section[id*='nav_menu-'] .scn ul a:hover, .scn ul[id*='menu'] a:hover {margin: 0px;}
+
+.path-box h3 {font-size: 17px!important; font-weight: 900; margin: 0px 0px 5px 0px; line-height: 1em}
+
+.path-box p {line-height: 1.6em; font-size: 14px;}
+
+.path-box a {text-decoration: none!important;}
+
+.path-box-button-text {text-transform: uppercase!important; letter-spacing: 1px;}
+
+
+.post-template-default h1, .post-template-default h2, .post-template-default h3 {padding: 40px 0px 20px}
+
+.post-template-default h4, .post-template-default h5, .post-template-default h6 {padding: 10px 0px 20px}
+
+
+#floating_menu header {padding: 2px;}
+
+
+
+.menu, .page_item a, .menu-item a {font-size: 12px; text-transform: UPPERCASE; text-decoration: none; font-weight: 100; }
+
+header #logo > a > img {padding: 10px 0px 10px 0px;}
+
+header nav>ul>li.menu-item-has-children:hover>a:after, 
+header nav>ul>li.menu-item-has-children>a:after {color: #ffffff!important; font-weight: 100; }
+
+header nav>ul.menu li.current-menu-item>a, header nav>ul.menu li.current_page_item>a, header nav ul#menu li.current-menu-item>a, header nav ul#menu li.current_page_item>a {color: #ffffff;}
+
+header nav li.col-no-4>ul.sub-menu, header nav li.col-no-4 ul.sub-menu.position_menu {margin-top: 20px;}
+
+header nav>ul>li.menu-item-has-children>a:after {display: none;}
+
+header nav li.has-extended>ul.sub-menu {background: #ffffff;}
+
+header nav li.has-extended>ul.sub-menu li.menu-item {background: transparent; }
+
+header nav li.has-extended>ul.sub-menu li.menu-item a[href] {color: #232a3d;}
+
+header nav li.has-extended>ul.sub-menu li.menu-item a[href]:hover {color: #4d7fdf; background-color: rgb(242, 243, 247);}
+
+#menu-item-11096 a.colch {padding: 18px 8px 8px 8px; font-size: 14px; font-weight: 900;}
+
+#menu-item-11069 a.colch, #menu-item-11053 a.colch, #menu-item-11054 a.colch {color: #ffffff;}
+ 
+
+li.has-extended>ul.sub-menu>li ul.sub-menu li {margin: 0px 0px 0px 0px;}
+
+header nav li.has-extended>ul.sub-menu>li ul.sub-menu li a {line-height: 1.6em; padding: 10px 0px 10px 10px; font-size: 12px;}
+
+@media only screen and (max-width: 769px) {
+	header .hmn .rmn {background-image: none; border: 0px;}
+}
+
+@media only screen and (min-width: 769px) {
+	#menu-item-11031 a {background-color: #61D199; border-radius: 5px; padding-left: 10px; padding-right: 10px; padding-top: 2px;}}
+
+@media only screen and (max-width: 768px) {
+	header nav li.has-extended ul.sub-menu li a {display: none;} 
+
+li#menu-item-11094	ul.sub-menu {display: none!important;}
+}
+
+
+.csbwfs-social-widget {
+    z-index: 100!important;
+}
+
+.page-template-default .csbwfs-social-widget, .blog .csbwfs-social-widget {display: none;}
+
+:not(pre) > code[class*="language-"], pre[class*="language-"] {background-color: #000000; border-radius: 3px;}
+
+p code {
+background-color: #e5eff5;
+padding: 1px 3px;
+border-radius: 3px;
+font-size: .95em;
+color: #000000;}
+
+pre {background: #000000; margin-top: -10px;}
+pre code {font-size: 13px; padding: 0px; color: #ffffff; background: #000000;}
+
+code[class*="language-"], pre[class*="language-"] {font-size: 15px; margin-bottom: 20px; margin-top: -10px;}
+
+
+
+.single-post table {width: 85%; margin: 30px auto; }
+
+.single-post table th {background-color: #f4f8fb; text-transform: lowercase; color: #232a3d!important;}
+
+.single-post table td, article table th {font-size: 15px; border: 1px solid #e3ecf3; font-family: ingra, sans-serif; }
+
+.single-post h1, .single-post h2, .single-post h3, .single-post h4, .single-post h5 {font-family: merriweather!important;}
+
+.single-post .bSe h1.entry-title {font-size: 38px!important; color: #232a3d!important;}
+.single-post h2 {font-size: 32px; color: #232a3d!important;}
+.single-post h3 {font-size: 29px; color: #232a3d!important;}
+.single-post h4 {font-size: 26px; color: #232a3d!important;}
+.single-post h5 {font-size: 23px; color: #232a3d!important;}
+
+.page-header .page-title {text-transform: none; color: #ffffff; font-weight: normal; letter-spacing: 0em; font-size: 18px; line-height: 24px;}
+
+
+.widgets-list-layout-links  {line-height: 1.3; font-size: 14px}
+
+
+.sidebar .widget .widget-title {font-family: ingra, sans-serif; letter-spacing: 1.5px; padding-bottom: 15px; border-top: 1px solid #e9e9e9!important; padding-top: 25px;}
+
+.site-branding .site-title, .site-branding .site-text-logo {font-size: 20px; color: #ffffff; font-weight: normal; text-transform: none;}
+
+#content img {display: block; margin: 0px auto;}
+
+div table{
+    overflow-x:auto;
+}
+
+.scn ul li a {color: #232a3d;}
+.scn ul li a:hover {color: #4d7fdf;}
+
+
+.err {text-align: center;}
+.err h1 {display: none;}
+.err h4 {display: none;}
+form.lost {
+	display: inline-block; width: 80%;}
+
+.err .csc {text-align: left;}
+
+
+.sAs .srh input.search-field, .sAs .srh .search_field {
+	width: 285px;}
+
+ .srh input.search-field,  .srh .search_field {background-color: #ffffff; box-shadow: none; border-top: 2px solid #31394a; border-left: 2px solid #31394a; border-bottom: 2px solid #31394a; border-right: 0px;}
+
+input.search-field {font-size: 13px; line-height: 15px; padding: 10px;}
+
+input.search-field::-webkit-input-placeholder { 
+  color: transparent;
+}
+input.search-field::-moz-placeholder {
+  color: transparent;
+}
+input.search-field:-ms-input-placeholder { /* IE 10+ */
+  color: transparent;
+}
+	
+input.search-field:-moz-placeholder {
+  color: transparent;
+}
+
+form.srh {margin-left: 0px; padding-top: 5px; }
+
+input.search-field, .search_field {font-size: 1em; font-weight: 100; }
+
+input.search-field, .search-button, .submit_btn {
+    height: 40px; margin: 0px; padding: 0px 0px 0px 5px;
+	}
+
+.search-button, .submit_btn {background-color: #31394a!important; background-image:none; border: none; height: 47px!important;}
+
+.sAs .search-button, .sAs .submit_btn { 
+    width: 50px; z-index: 1000; position: relative;  top: -47px; left: 292px; }
+
+@media only screen and (max-width: 1080px) {
+.sAs .search-button, .sAs .submit_btn { 
+	width: 50px; z-index: 1000; position: relative;  top: -0px; left: 0px; }
+	form.srh {margin-bottom: 20px;}
+	
+	.sAs .srh input.search-field, .sAs .srh .search_field {
+    height: 43px;
+}
+}
+
+
+svg.tcb-icon {
+	color: #61d199; 
+}
+
+.gmt-edd-slack-row {
+	text-align: center;
+}
+
+input#gmt_edd_slack_email {
+  width: 280px;
+	text-align: left;
+	padding: 10px 30px 10px 15px; 
+}
+
+button.gmt-edd-slack-form-button {
+font-size: 16px; line-height: 15px; padding: 14px 30px; background-color: #61D199; color: #ffffff;  margin: 5px 10px; border: 0px; border-radius: 3px; text-transform: uppercase; width: 250px;
+}
+
+.thrv_wrapper.thrv-pricing-table .tcb-pricing-table-box-container .tcb-pt-featured-box .tve-content-box-background {
+    border-top-color: #61d199;
+}
+
+
+.tvo-set12-template.tve_teal .tvo-testimonial-quote {color: #4d7fdf!important;}
+
+.tvo-set12-template.tve_teal .tvo-testimonial-name {color: #4d7fdf!important;}
+
+
+.directory-coursebox p {margin-top: 0px; font-size: 14px; margin-bottom: 22px!important; }
+
+.directory-coursebox .tcb--cols--2 {margin-top: 5px;}
+
+.directory-course-label p {margin: 3px 0px; }
+
+a .thrv-content-box p {color: #ffffff!important; text-decoration: none!important;}
+
+@media only screen and (max-width: 769px) {
+	.directory-coursebox .tcb--cols--2, .directory-coursebox .tcb--cols--2 p { text-align: center!important; }}
+
+@media only screen and (max-width: 769px) {
+	.directory-coursebox .tcb--cols--2 .directory-course-label p { margin-top: -20px;}}
+
+@media only screen and (max-width: 769px) {
+	.directory-coursebox .tcb--cols--2 .thrv-button a { margin-top: -20px;}}
+
+.directory-coursebox .tcb-button-texts {padding: 0px 20px;}
+
+@media only screen and (max-width: 767px){.thrv_wrapper.thrv-columns.directory-course-columns {margin-top: -40px;}}
+
+.path-box-button-text p {font-family: industry!important; font-weight: 700;}
+
+.course-box-course-info p {font-family: industry!important; font-weight: 700; font-size: 14px}
+
+.course-box h2 {font-size: 22px;}
+
+.course-box p {font-size: 13px;}
+
+.course-box a {text-decoration: none!important;}
+
+.scn.aut {
+    box-shadow: none;
+    background: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #d4d4d4;
+    margin-bottom: 10px;
+}
+
+.scn h5 {font-family: industry, sans-serif; font-weight: 900;}
+
+.blog .awr h2.entry-title, .archive .awr h2.entry-title, .search .awr h2.entry-title  { font-size: 24px!important; font-weight: 900; line-height: 1.4em!important; margin-top: 10px; margin-bottom: 10px; font-family: ingra, serif!important; text-align: left;}
+.cnt article h2.entry-title a {color: #232a3d!important;}
+
+.cnt article h2.entry-title a:hover {color: #4d7fdf!important;}
+
+.blog .awr .category a, .archive .awr .category a, .search .awr .category a {font-family: ingra, sans-serif; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; font-weight: 300; line-height: 2em; }
+
+.blog .awr p, .archive .awr p, .search .awr p {font-family: merriweather, serif!important; margin-bottom: 0px!important; line-height: 1.9em; color: #232a3d!important;}
+
+.blog footer, .archive footer, .search footer  {margin: 5px!important;}
+
+
+
+
+.cnt .rltp p, .cnt .rltp h5, .cnt .rltpi a p, .cnt .rltpi h5  {font-family: ingra, sans-serif;  font-weight: 500; font-size: 15px; color: #232a3d; }
+
+
+
+.cnt .rltp p:before, .cnt .rltpi p:before {display: none;}
+
+.cnt .rltp h5, .cnt .rltpi h5 {margin: 5px 0px;}
+
+.cnt article ul {
+    list-style: disc;
+}
+
+
+
+.cnt section footer {}
+
+
+
+footer .ftw {background-color: #232a3d; padding: 40px 0px 0px 0px;}
+
+footer .ftw ul li a, footer .ftw .textwidget  {color: #ffffff;  font-size: 12px;}
+
+footer .copy {display: none;}
+
+.tvo-set12-template.tvo-testimonials-display-single .tvo-testimonial-quote {font-family: industry!important; font-size: 168px!important; margin-left: -10px;}
+
+.tvo-testimonials-display.tvo-set12-template .tvo-testimonial-display-item h4, .tvo-testimonials-display.tvo-set12-template .tvo-testimonial-display-item p {font-family: ingra!important;  font-size: 15px!important; font-weight: 100!important; font-style: normal!important; color: #0C0A48!important;}
+
+
+
+.tvo-testimonial-info svg {display: none; }
+
+.tvo-testimonial-info .tvo-testimonial-name, .tvo-testimonial-info .tvo-testimonial-role {
+font-family: ingra!important;  font-size: 15px!important;
+color: #232a3d!important;}
+
+.tvo-testimonial-info .tvo-testimonial-name {font-weight: 700!important;;}
+
+
+
+.tvo-set12-template.tvo-testimonials-display-single .tvo-testimonial-quote:before, .tvo-set12-template.tvo-testimonials-display-single .tvo-testimonial-quote:after {display: none;}
+
+@media only screen and (min-width: 768px) {
+	.why-p, .mission-two-columns {column-count: 2; column-gap: 40px; }}
+
+.why-p p, .why-p ul li {font-size: 15px; margin-bottom: 20px!important; font-weight: 300;}
+
+.gmt-edd-slack-alert-success {border: 1px solid #000000; padding: 20px; text-align: center;}
+
+.sub-picker .tve_scT .tve_scTC {background: transparent; border: 0px;}
+
+.sub-picker .tve_scT>ul li {border: 1px solid #cccccc; text-transform: capitalize; }
+
+.sub-picker .tve_scT>ul li.annual {border-radius: 5px;}
+
+.sub-picker .tve_scT>ul li.monthly {border-radius: 5px; margin-bottom: 5px!important;}
+
+.thrv_wrapper.thrv-tabbed-content div.tve_scT>ul li span {width: 70px; font-size: 12px; font-family: industry; letter-spacing: 1px; line-height: 1em; }
+
+.sub-picker ul.mon-ann {display: block; margin: auto auto!important; width: 200px; }
+
+.sub-picker ul li.annual, .sub-picker ul li.monthly {padding: 10px!important; }
+
+.thrv-pricing-table {margin-top: -40px}
+
+.thrv_wrapper.thrv-tabbed-content div.tve_scT>ul li:hover {color: #232a3d; }
+
+.main-testimonial .tvo-testimonials-display.tvo-set12-template .tvo-testimonial-display-item p {font-size: 20px!important;}
+
+.mission-ppp-horizontal {display: none;}
+
+.mission-outline p {font-size: 14px;  line-height: 1.6em; padding-top: 8px;}
+
+.mission-outline br {line-height: 3em}
+
+.mission-outline {column-count: 1; column-gap: 10px; }
+
+.ctb {border: none;}
+.ctb h5  {display: none;}
+
+#comments {border: none;}
+
+.cmc {margin: 0 auto 20px auto; }
+.cmc .awe {display: none;}
+.cmc, .cmc p {font-family: ingra!important; color: #232a3d!important; }
+
+.cmb {margin: 0px;}
+
+.lrp p {font-family: industry, sans-serif!important; font-size: 18px!important; color: #232a3d!important;}
+
+textarea:not(.editor-post-title__input) {background: #ffffff; box-shadow: none; border: 2px solid #e9e9e9; }
+
+.lrp input[type="submit"] {
+    background: #61D199;
+    border-radius: 5px;
+	border: 0px;
+    color: #ffffff;
+    font-size: 1em;
+    font-family: industry, sans-serif;
+    margin: 20px 0;
+    padding: 12px 36px 12px 36px;
+    text-align: center;
+}
+
+.lrp input[type="text"] {
+    box-sizing: border;
+    border-radius: 5px;
+	box-shadow: none;
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    color: #232a3d;
+    float: left;
+    font-size: 1em;
+    font-weight: 700;
+    font-family: ingra, sans-serif;
+    height: 32px;
+    margin: 0% 4.2% 3% 0%;
+    padding: 0% 0% 0% 2%;
+    width: 30.3%;
+}
+
+.lrp textarea::-webkit-input-placeholder {
+   color:transparent;
+}
+
+.lrp textarea:-moz-placeholder { /* Firefox 18- */
+   color:transparent; 
+}
+
+.lrp textarea::-moz-placeholder {  /* Firefox 19+ */
+   color:transparent; 
+}
+
+.lrp textarea:-ms-input-placeholder {  
+   color:transparent;
+}
+
+.footer-links a {color: #ffffff; line-height: 2}
+
+
+#tve_tcb2_set-021 {display: none;}
+
+a.tcb-button-link {background-color: #61D199; text-transform: uppercase; padding: 12px 30px; border-radius: 5px!important;}
+
+a.tcb-button-link:hover {background-color: rgb(97, 209, 153) !important; }
+
+
+.industry p {font-family: industry, sans-serif!important; }
+
+body.home {background-color: #232a3d;}
+
+.course-header p strong, .mission-header p strong {font-size: 12px!important;}
+
+.directory-coursebox h3 {margin-top: 5px}
+
+.post-template-default .sidebar-blog-title h2 {font-family: industry!important; margin-top: -10px; margin-bottom: 0px;}
+
+.post-template-default .sidebar-blog-subtitle { margin-bottom: 20px;}
+
+#signup_form .error {
+    display: block;
+    line-height: .7em;
+    padding: 0;
+    color: #a94342;
+    font-family: ingra,sans-serif;
+    font-weight: 400;
+	border: 1px solid #990000;
+}
+
+
+.cnt .sAs .ttl {font-family: industry; color: #31394a; border: 0px; margin-bottom: 0px; font-size: 22px; margin-left: 5px;}
+
+section[id*='nav_menu-'] .scn ul li, .scn ul[id*='menu'] li {border-bottom: 0px; padding: 10px 0px; list-style-type: disc; margin-left: 40px; color: #31394a; font-family: ingra; letter-spacing: 1px;}
+
+.scn ul li a {font-size: 13px;}
+
+.scn>ul li:after, section[id*='nav_menu-'] .scn ul li:after, .scn ul[id*='menu'] li:after {content: none; }
+
+
+.cnt .sAs>section {margin-bottom: 20px!important;}
+
+#nav_menu-3 {margin-top: -20px;}
+
+.cnt .sAs.right {border: 0px;}
+
+.tve_flt .tve_contents_table .tve_ct_title {font-family: industry; text-align: left; display: block; margin: 0px ; padding: 0px 0px 10px; font-weight: bold; font-size: 24px;}
+
+blockquote {
+	padding: 20px;
+	color: #428bca;
+	border-left: 5px solid #428bca;
+}
+		</style>
+					</head>
+<body class="post-template-default single single-post postid-1999 single-format-standard custom-background locale-en-us">
+
+<div class="flex-cnt">
+	<div id="floating_menu" >
+				<header class="hbc" style="background-image:none; background-color:#232a3d">
+						<div class="wrp side_logo clearfix has_phone" id="head_wrp">
+				<div class="h-i">
+																	<div id="logo"
+							     class="left">
+								<a class="lg" href="https://www.dataquest.io/">
+									<noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/dq-1.png"
+									     alt="Dataquest"/></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait/https://www.dataquest.io/wp-content/uploads/2019/01/dq-1.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/dq-1.png"
+									     alt="Dataquest"/>
+								</a>
+							</div>
+																						<div class="hmn">
+							<div class="awe rmn right">&#xf0c9;</div>
+							<div class="clear"></div>
+						</div>
+						<div class="mhl" id="nav_right">
+																													<!-- Cart Dropdown -->
+								<nav class="right"><ul id="menu-primary" class="menu"><li  id="menu-item-11094" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children has-extended col-no-4 has-heading "><a  href="https://www.dataquest.io/directory/">Courses</a><ul class="sub-menu">	<li  id="menu-item-11096" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a  href="https://www.dataquest.io/directory/" class=" colch ">Directory (View All)</a><ul class="sub-menu">		<li  id="menu-item-10970" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/apis-and-scraping/">APIs and Web Scraping</a></li>
+		<li  id="menu-item-10969" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/algorithms-and-data-structures/">Algorithms and Data Structures</a></li>
+		<li  id="menu-item-10971" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/building-a-data-pipeline/">Building a Data Pipeline</a></li>
+		<li  id="menu-item-10972" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/calculus-for-machine-learning/">Calculus For Machine Learning</a></li>
+		<li  id="menu-item-10974" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/command-line-intermediate/">Command Line Intermediate</a></li>
+		<li  id="menu-item-10975" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/python-datacleaning/">Data Cleaning and Analysis</a></li>
+		<li  id="menu-item-17029" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/python-data-cleaning-advanced/">Data Cleaning In Python: Advanced</a></li>
+		<li  id="menu-item-10976" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/r-data-cleaning/">Data Cleaning in R</a></li>
+		<li  id="menu-item-10977" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/data-exploration/">Data Cleaning Project Walkthrough</a></li>
+		<li  id="menu-item-10978" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/data-structures-algorithms/">Data Structures and Algorithms</a></li>
+		<li  id="menu-item-10979" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/r-data-viz/">Data Visualization in R</a></li>
+</ul></li>
+	<li  id="menu-item-11069" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a  class=" colch ">Course</a><ul class="sub-menu">		<li  id="menu-item-10982" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/exploratory-data-visualization/">Exploratory Data Visualization</a></li>
+		<li  id="menu-item-17853" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/command-line-elements/">Elements of the Command Line</a></li>
+		<li  id="menu-item-10981" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/deep-learning-fundamentals/">Deep Learning Fundamentals</a></li>
+		<li  id="menu-item-10980" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/decision-trees/">Decision Trees</a></li>
+		<li  id="menu-item-10983" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/exploring-topics/">Exploring Topics in Data Science</a></li>
+		<li  id="menu-item-10984" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/git-and-vcs/">Git and Version Control</a></li>
+		<li  id="menu-item-10985" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/intermediate-r-programming/">Intermediate R Programming</a></li>
+		<li  id="menu-item-10986" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/intro-to-r/">Introduction to Programming in R</a></li>
+		<li  id="menu-item-10987" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/kaggle-fundamentals/">Kaggle Fundamentals</a></li>
+		<li  id="menu-item-10988" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/linear-algebra-for-machine-learning/">Linear Algebra for Machine Learning</a></li>
+		<li  id="menu-item-10989" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/linear-regression-for-machine-learning/">Linear Regression for Machine Learning</a></li>
+		<li  id="menu-item-10990" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/machine-learning-fundamentals/">Machine Learning Fundamentals</a></li>
+</ul></li>
+	<li  id="menu-item-11053" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a  class=" colch ">Course</a><ul class="sub-menu">		<li  id="menu-item-10991" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/machine-learning-intermediate/">Machine Learning in Python</a></li>
+		<li  id="menu-item-10992" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/machine-learning-project/">Machine Learning Project</a></li>
+		<li  id="menu-item-10993" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/natural-language-processing/">Natural Language Processing</a></li>
+		<li  id="menu-item-10994" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/improving-code-performance/">Optimizing Code Performance: Large Datasets</a></li>
+		<li  id="menu-item-10995" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/optimizing-postgres-databases-data-engineering/">Optimizing Postgres Databases</a></li>
+		<li  id="menu-item-10996" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/pandas-fundamentals/">Pandas and NumPy Fundamentals</a></li>
+		<li  id="menu-item-10997" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/postgres-for-data-engineers/">Postgres For Data Engineers</a></li>
+		<li  id="menu-item-17454" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/probability-fundamentals/">Probability: Fundamentals</a></li>
+		<li  id="menu-item-10998" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/probability-statistics-intermediate/">Probability and Statistics in Python</a></li>
+		<li  id="menu-item-10999" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/pandas-large-datasets/">Processing Large Datasets In Pandas</a></li>
+		<li  id="menu-item-11000" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/python-for-data-science-fundamentals/">Python for Data Science: Fundamentals</a></li>
+</ul></li>
+	<li  id="menu-item-11054" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a  class=" colch ">Course</a><ul class="sub-menu">		<li  id="menu-item-11001" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/python-for-data-science-intermediate/">Python for Data Science: Intermediate</a></li>
+		<li  id="menu-item-11002" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/python-programming-advanced/">Python Programming Advanced</a></li>
+		<li  id="menu-item-11003" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/recursion-and-tree-structures/">Recursion and Trees</a></li>
+		<li  id="menu-item-11004" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/spark-map-reduce/">Spark and Map-Reduce</a></li>
+		<li  id="menu-item-11005" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/sql-databases-advanced/">SQL and Databases Advanced</a></li>
+		<li  id="menu-item-11006" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/sql-fundamentals/">SQL: Fundamentals</a></li>
+		<li  id="menu-item-15428" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/sql-fundamentals-r/">SQL Fundamentals for R Users</a></li>
+		<li  id="menu-item-17300" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/sql-intermediate-r/">SQL Intermediate in R</a></li>
+		<li  id="menu-item-11007" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/sql-joins-relations/">SQL: Table Relations and Joins</a></li>
+		<li  id="menu-item-11008" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/statistics-fundamentals/">Statistics: Fundamentals</a></li>
+		<li  id="menu-item-11009" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/statistics-intermediate/">Statistics: Averages and Variability</a></li>
+		<li  id="menu-item-11010" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/storytelling-data-visualization/">Storytelling Through Data Visualization</a></li>
+		<li  id="menu-item-17852" class="menu-item menu-item-type-post_type menu-item-object-page"><a  href="https://www.dataquest.io/course/text-processing-cli/">Text Processing in the Command Line</a></li>
+</ul></li>
+</ul></li>
+<li  id="menu-item-2412" class="menu-item menu-item-type-taxonomy menu-item-object-category"><a  href="https://www.dataquest.io/blog/topics/student-stories/">Students</a></li>
+<li  id="menu-item-6033" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent"><a  href="https://www.dataquest.io/blog/">Blog</a></li>
+<li  id="menu-item-5724" class="menu-item menu-item-type-custom menu-item-object-custom"><a  href="/subscribe">Pricing</a></li>
+<li  id="menu-item-2417" class="menu-item menu-item-type-custom menu-item-object-custom"><a  href="/about-us">About</a></li>
+<li  id="menu-item-11032" class="menu-item menu-item-type-custom menu-item-object-custom"><a  href="http://app.dataquest.io/login">LOGIN</a></li>
+<li  id="menu-item-11031" class="menu-item menu-item-type-custom menu-item-object-custom"><a  href="http://app.dataquest.io/signup">LEARN FREE</a></li>
+</ul></nav>														<div class="clear"></div>
+						</div>
+												<div class="clear"></div>
+														</div>
+			</div>
+		</header>
+			</div>
+	
+			
+
+
+
+			<div class="bspr"></div>
+<div class="wrp cnt">
+			<div class="bSeCont">
+				<section class="bSe left">
+
+																	
+<article>
+	<div class="awr">
+					<h1 class="entry-title">Introduction to Python Ensembles</h1>
+							<noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2018/01/python-ensembles.png" alt=""
+			     title="python-ensembles"
+			     class="fwI"/></noscript><img src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait/https://www.dataquest.io/wp-content/uploads/2018/01/python-ensembles.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2018/01/python-ensembles.png" alt=""
+			     title="python-ensembles"
+			     class="lazyload fwI"/>
+		
+		<div class="kg-card-markdown">
+<h2 id="stackingmodelsinpythonefficiently">
+    Stacking models in Python efficiently</h2>
+<p>Ensembles have rapidly become one of the hottest and most popular methods in applied machine learning. Virtually <a href="http://blog.kaggle.com/category/winners-interviews/">every winning Kaggle solution</a> features them, and many data science pipelines have ensembles in them. Put simply, ensembles combine predictions from different models to generate a final prediction, and the more models we include the better it performs. Better still, because ensembles combine baseline predictions, they perform at least as well as the best baseline model. Ensembles give us a performance boost almost for free! <noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/network-1.png" alt="network"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/network-1.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/network-1.png" alt="network"> <em>Example schematics of an ensemble. An input array \(X\) is fed through two preprocessing pipelines and then to a set of base learners \(f^{(i)}\). The ensemble combines all base learner predictions into a final prediction array \(P\). <a href="http://ml-ensemble.com/">Source</a></em> In this post, we&#8217;ll take you through the basics of ensembles — what they are and why they work so well — and provide a hands-on tutorial for building basic ensembles. By the end of this post, you will:</p>
+<ul>
+<li>
+      understand the fundamentals of ensembles</li>
+<li>
+      know how to code them</li>
+<li>
+      understand the main pitfalls and drawbacks of ensembles</li>
+</ul>
+<h2 id="predictingrepublicananddemocraticdonations">
+    Predicting Republican and Democratic donations</h2>
+<p>To illustrate how ensembles work, we&#8217;ll use a data set on U.S. political contributions. The <a href="https://github.com/fivethirtyeight/data/tree/master/science-giving">original data set</a> was prepared by <a href="https://fivethirtyeight.com/contributors/ben-wieder/">Ben Wieder</a> at <a href="https://fivethirtyeight.com/">FiveThirtyEight</a>, who dug around the U.S. government&#8217;s political contribution registry and found that when <a href="https://fivethirtyeight.com/features/when-scientists-donate-to-politicians-its-usually-to-democrats/">scientists donate to politician, it&#8217;s usually to Democrats</a>. This claim is based on the observation on the share of donations being made to Republicans and Democrats. However, there&#8217;s plenty more that can be said: for instance, which scientific discipline is most likely to make a Republican donation, and which state is most likely to make Democratic donations? We will go one step further and <em>predict</em> whether a donation is most likely to be a to a Republican or Democrat. The <a href="https://s3.amazonaws.com/dq-blog-files/input.csv">data</a> we use here is slightly adapted. We remove any donations to party affiliations other than Democrat or Republican to make our exposition a little clearer and drop some duplicate and less interesting features. The data script can be found <a href="https://s3.amazonaws.com/dq-blog-files/gen_data.py">here</a>. Here&#8217;s the data:</p>
+<pre class="language-python"><code class="language-python">
+import numpy as np
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+
+### Import data
+# Always good to set a seed for reproducibility
+SEED = 222
+np.random.seed(SEED)
+
+df = pd.read_csv('input.csv')
+
+### Training and test set
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+
+def get_train_test(test_size=0.95):
+    """Split Data into train and test sets."""
+    y = 1 * (df.cand_pty_affiliation == "REP")
+    X = df.drop(["cand_pty_affiliation"], axis=1)
+    X = pd.get_dummies(X, sparse=True)
+    X.drop(X.columns[X.std() == 0], axis=1, inplace=True)
+    return train_test_split(X, y, test_size=test_size, random_state=SEED)
+
+xtrain, xtest, ytrain, ytest = get_train_test()
+
+# A look at the data
+print("\nExample data:")
+df.head()
+</code></pre>
+<div style="overflow-x:auto;">
+<style>
+      .dataframe thead tr:only-child th {        text-align: right;    }</p>
+<pre class="language-python"><code>.dataframe thead th {    text-align: left;}.dataframe tbody tr th {    vertical-align: top;}</code></pre>
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>
+            cand_pty_affiliation</th>
+<th>
+            cand_office_st</th>
+<th>
+            cand_office</th>
+<th>
+            cand_status</th>
+<th>
+            rpt_tp</th>
+<th>
+            transaction_tp</th>
+<th>
+            entity_tp</th>
+<th>
+            state</th>
+<th>
+            classification</th>
+<th>
+            cycle</th>
+<th>
+            transaction_amt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+            0</th>
+<td>
+            REP</td>
+<td>
+            US</td>
+<td>
+            P</td>
+<td>
+            C</td>
+<td>
+            Q3</td>
+<td>
+            15</td>
+<td>
+            IND</td>
+<td>
+            NY</td>
+<td>
+            Engineer</td>
+<td>
+            2016.0</td>
+<td>
+            500.0</td>
+</tr>
+<tr>
+<th>
+            1</th>
+<td>
+            DEM</td>
+<td>
+            US</td>
+<td>
+            P</td>
+<td>
+            C</td>
+<td>
+            M5</td>
+<td>
+            15E</td>
+<td>
+            IND</td>
+<td>
+            OR</td>
+<td>
+            Math-Stat</td>
+<td>
+            2016.0</td>
+<td>
+            50.0</td>
+</tr>
+<tr>
+<th>
+            2</th>
+<td>
+            DEM</td>
+<td>
+            US</td>
+<td>
+            P</td>
+<td>
+            C</td>
+<td>
+            M3</td>
+<td>
+            15</td>
+<td>
+            IND</td>
+<td>
+            TX</td>
+<td>
+            Scientist</td>
+<td>
+            2008.0</td>
+<td>
+            250.0</td>
+</tr>
+<tr>
+<th>
+            3</th>
+<td>
+            DEM</td>
+<td>
+            US</td>
+<td>
+            P</td>
+<td>
+            C</td>
+<td>
+            Q2</td>
+<td>
+            15E</td>
+<td>
+            IND</td>
+<td>
+            IN</td>
+<td>
+            Math-Stat</td>
+<td>
+            2016.0</td>
+<td>
+            250.0</td>
+</tr>
+<tr>
+<th>
+            4</th>
+<td>
+            REP</td>
+<td>
+            US</td>
+<td>
+            P</td>
+<td>
+            C</td>
+<td>
+            12G</td>
+<td>
+            15</td>
+<td>
+            IND</td>
+<td>
+            MA</td>
+<td>
+            Engineer</td>
+<td>
+            2016.0</td>
+<td>
+            184.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="language-python"><code class="language-python">df.cand_pty_affiliation.value_counts(normalize=True).plot(    kind="bar", title="Share of No. donations")
+plt.show()</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_2_0.png" alt="donations"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_2_0.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_2_0.png" alt="donations"><br />
+The figure above is the data underlying Ben&#8217;s claim. Indeed, between Democrats and Republicans, about 75% of all contributions are made to democrats. Let&#8217;s go through the features at our disposal. We have data about the donor, the transaction, and the recipient: <noscript><img src="https://www.dataquest.io/wp-content/uploads/2018/01/features.svg" alt="features"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_2_0.png' data-src="https://www.dataquest.io/wp-content/uploads/2018/01/features.svg" alt="features"> To measure how well our models perform, we use the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve">ROC-AUC</a> score, which trades off having high precision and high recall (if these concepts are new to you, see the Wikipedia entry on <a href="https://en.wikipedia.org/wiki/Precision_and_recall">precision and recall</a> for a quick introduction). If you haven&#8217;t used this metric before, a random guess has a score of 0.5 and perfect recall and precision yields 1.0.</p>
+<h2 id="whatisanensemble">
+    What is an ensemble?</h2>
+<p>Imagine that you are playing trivial pursuit. When you play alone, there might be some topics you are good at, and some that you know next to nothing about. If we want to maximize our trivial pursuit score, we need build a team to cover all topics. This is the basic idea of an ensemble: combining predictions from several models averages out idiosyncratic errors and yield better overall predictions. An important question is how to combine predictions. In our trivial pursuit example, it is easy to imagine that team members might make their case and majority voting decides which to pick. Machine learning is remarkably similar in classification problems: taking the most common class label prediction is equivalent to a majority voting rule. But there are many other ways to combine predictions, and more generally we can use a model to <em>learn</em> how to best combine predictions. <noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/ensemble_network.png" alt="ensemble network"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/ensemble_network.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/ensemble_network.png" alt="ensemble network"> <em>Basic ensemble structure. Data is fed to a set of models, and a meta learner combine model predictions. <a href="http://flennerhag.com/2017-04-18-introduction-to-ensembles/">Source</a></em></p>
+<h3 id="understandingensemblesbycombiningdecisiontrees">
+    Understanding ensembles by combining decision trees</h3>
+<p>To illustrate the machinery of ensembles, we&#8217;ll start off with a simple interpretable model: a decision tree, which is a tree of <code>if-then</code> rules. If you&#8217;re unfamiliar with decision trees or would like to dive deeper, check out the <a href="https://www.dataquest.io/course/decision-trees">decision trees course</a> on Dataquest. The deeper the tree, the more complex the patterns it can capture, but the more prone to overfitting it will be. Because of this, we will need an alternative way of building complex models of decision trees, and an ensemble of different decision trees is one such way. We&#8217;ll use the below helper function to visualize our decision rules:</p>
+<pre class="language-python"><code class="language-python">
+import pydotplus  # you can install pydotplus with: pip install pydotplus 
+from IPython.display import Image
+from sklearn.metrics import roc_auc_score
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
+
+def print_graph(clf, feature_names):
+    """Print decision tree."""
+    graph = export_graphviz(
+        clf,
+        label="root",
+        proportion=True,
+        impurity=False, 
+        out_file=None, 
+        feature_names=feature_names,
+        class_names={0: "D", 1: "R"},
+        filled=True,
+        rounded=True
+    )
+    graph = pydotplus.graph_from_dot_data(graph)  
+    return Image(graph.create_png())</code></pre>
+<p>Let&#8217;s fit a decision tree with a single node (decision rule) on our training data and see how it perform on the test set:</p>
+<pre class="language-python"><code class="language-python">
+t1 = DecisionTreeClassifier(max_depth=1, random_state=SEED)
+t1.fit(xtrain, ytrain)
+p = t1.predict_proba(xtest)[:, 1]
+
+print("Decision tree ROC-AUC score: %.3f" % roc_auc_score(ytest, p))
+print_graph(t1, xtrain.columns)
+</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_6_1.png" alt="dc1"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_6_1.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_6_1.png" alt="dc1"><br />
+<em>Decision tree ROC-AUC score: 0.672</em></p>
+<p>Each of the two leaves register their share of training samples, the class distribution within their share, and the class label prediction. Our decision tree bases its prediction on whether the size of the contribution is above 101.5: but it makes <em>the same</em> prediction regardless! This is not too surprising given that 75% of all donations are to Democrats. But it&#8217;s not making use of the data we have. Let&#8217;s use three levels of decision rules and see what we can get:</p>
+<pre class="language-python"><code class="language-python">
+t2 = DecisionTreeClassifier(max_depth=3, random_state=SEED)
+t2.fit(xtrain, ytrain)
+p = t2.predict_proba(xtest)[:, 1]
+
+print("Decision tree ROC-AUC score: %.3f" % roc_auc_score(ytest, p))
+print_graph(t2, xtrain.columns)</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_8_1.png" alt="dc2"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_8_1.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_8_1.png" alt="dc2"> <em>Decision tree ROC-AUC score: 0.751</em></p>
+<p>This model is not much better than the simple decision tree: a measly 5% of all donations are predicted to go to Republicans–far short of the 25% we would expect. A closer look tells us that the decision tree uses some dubious splitting rules. A whopping 47.3% of all observations end up in the left-most leaf, while another 35.9% end up in the leaf second to the right. The vast majority of leaves are therefore irrelevant. Making the model deeper just causes it to overfit. Fixing depth, a decision tree can be made more complex by increasing &#8220;width&#8221;, that is, creating several decision trees and combining them. In other words, an ensemble of decision trees. To see why such a model would help, consider how we may force a decision tree to investigate other patterns than those in the above tree. The simplest solution is to remove features that appear early in the tree. Suppose for instance that we remove the transaction amount feature (<code>transaction_amt</code>), the root of the tree. Our new decision tree would look like this:</p>
+<pre class="language-python"><code class="language-python">
+drop = ["transaction_amt"]
+xtrain_slim = xtrain.drop(drop, 1)
+xtest_slim = xtest.drop(drop, 1)
+
+t3 = DecisionTreeClassifier(max_depth=3, random_state=SEED)
+t3.fit(xtrain_slim, ytrain)p = t3.predict_proba(xtest_slim)[:, 1]
+
+print("Decision tree ROC-AUC score: %.3f" % roc_auc_score(ytest, p))
+print_graph(t3, xtrain_slim.columns)</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_10_1.png" alt="dc3"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_10_1.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_10_1.png" alt="dc3"> <em>Decision tree ROC-AUC score: 0.740</em>.</p>
+<p>The ROC-AUC score is similar, but the share of Republican donation increased to 7.3%. Still too low, but higher than before. Importantly, in contrast to the first tree, where most of the rules related to the transaction itself, this tree is more focused on the residency of the candidate. We now have two models that by themselves have similar predictive power, but operate on different rules. Because of this, they are likely to make different prediction errors, which we can average out with an ensemble.</p>
+<h4 id="interludewhyaveragingpredictionswork">
+    Interlude: why averaging predictions work</h4>
+<p>Why would we expect averaging predictions to work? Consider a toy example with two observations that we want to generate predictions for. The true label for the first observation is Republican, and the true label for the second observation is Democrat. In this toy example, suppose model 1 is prone to predicting Democrat while model 2 is prone to predicting Republican, as in the below table:</p>
+<table>
+<thead>
+<tr>
+<th>
+          Model</th>
+<th>
+          Observation 1</th>
+<th>
+          Observation 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+          True label</td>
+<td>
+          R</td>
+<td>
+          D</td>
+</tr>
+<tr>
+<td>
+          Model prediction: \(P(R)\)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>
+          Model 1</td>
+<td>
+          0.4</td>
+<td>
+          0.2</td>
+</tr>
+<tr>
+<td>
+          Model 2</td>
+<td>
+          0.8</td>
+<td>
+          0.6</td>
+</tr>
+</tbody>
+</table>
+<p>If we use the standard 50% cutoff rule for making a class prediction, each decision tree gets one observation right and one wrong. We create an ensemble by averaging the model&#8217;s class probabilities, which is a majority vote weighted by the strength (probability) of model&#8217;s prediction. In our toy example, model 2 is certain of its prediction for observation 1, while model 1 is relatively uncertain. Weighting their predictions, the ensemble favors model 2 and correctly predicts Republican. For the second observation, tables are turned and the ensemble correctly predicts Democrat:</p>
+<table>
+<thead>
+<tr>
+<th>
+          Model</th>
+<th>
+          Observation 1</th>
+<th>
+          Observation 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+          True label</td>
+<td>
+          R</td>
+<td>
+          D</td>
+</tr>
+<tr>
+<td>
+          Ensemble</td>
+<td>
+          0.6</td>
+<td>
+          0.4</td>
+</tr>
+</tbody>
+</table>
+<p>With more than two decision trees, the ensemble predicts in accordance with the majority. For that reason, an ensemble that averages classifier predictions is known as a <strong>majority voting classifier</strong>. When an ensembles averages based on probabilities (as above), we refer to it as <strong>soft voting</strong>, averaging final class label predictions is known as <strong>hard voting</strong>. Of course, ensembles are no silver bullet. You might have noticed in our toy example that for averaging to work, prediction errors must be <strong>uncorrelated</strong>. If both models made incorrect predictions, the ensemble would not be able to make any corrections. Moreover, in the soft voting scheme, if one model makes an incorrect prediction with a high probability value, the ensemble would be overwhelmed. Generally, ensembles don&#8217;t get every observation right, but the expectation is will do better than the underlying models.</p>
+<h4 id="aforestisanensembleoftrees">
+    A forest is an ensemble of trees</h4>
+<p>Returning to our prediction problem, let&#8217;s see if we can build an ensemble out of our two decision trees. We first check error correlation: highly correlated errors makes for poor ensembles.</p>
+<pre class="language-python"><code class="language-python">
+p1 = t2.predict_proba(xtest)[:, 1]
+p2 = t3.predict_proba(xtest_slim)[:, 1]
+
+pd.DataFrame({"full_data": p1,
+              "red_data": p2}).corr()</code></pre>
+<div>
+<style>
+      .dataframe thead tr:only-child th {        text-align: right;    }</p>
+<pre class="language-python"><code>.dataframe thead th {    text-align: left;}.dataframe tbody tr th {    vertical-align: top;}</code></pre>
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>
+            full_data</th>
+<th>
+            red_data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+            full_data</th>
+<td>
+            1.000000</td>
+<td>
+            0.669128</td>
+</tr>
+<tr>
+<th>
+            red_data</th>
+<td>
+            0.669128</td>
+<td>
+            1.000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>There is some correlation, but not overly so: there&#8217;s still a good deal of prediction variance to exploit. To build our first ensemble, we simply average the two model&#8217;s predictions.</p>
+<pre class="language-python"><code class="language-python">
+p1 = t2.predict_proba(xtest)[:, 1]
+p2 = t3.predict_proba(xtest_slim)[:, 1]
+p = np.mean([p1, p2], axis=0)
+print("Average of decision tree ROC-AUC score: %.3f" % roc_auc_score(ytest, p))</code></pre>
+<p><em>Average of decision tree ROC-AUC score: 0.783</em></p>
+<p>Indeed, the ensemble procedure leads to an increased score. But maybe if we had more diverse trees, we could get an even greater gain. How should we choose which features to exclude when designing the decision trees? A fast approach that works well in practice is to randomly select a subset of features, fit one decision tree on each draw and average their predictions. This process is known as <strong>bootstrapped averaging</strong> (often abbreviated <em>bagging</em>), and when applied to decision trees, the resultant model is a <strong>Random Forest</strong>. Let&#8217;s see what a random forest can do for us. We use the <a href="http://scikit-learn.org/stable/modules/ensemble.html#forest">Scikit-learn</a> implementation and build an ensemble of 10 decision trees, each fitted on a subset of 3 features.</p>
+<pre class="language-python"><code class="language-python">
+from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(
+    n_estimators=10,
+    max_features=3,
+    random_state=SEED)
+
+rf.fit(xtrain, ytrain)
+p = rf.predict_proba(xtest)[:, 1]
+print("Average of decision tree ROC-AUC score: %.3f" % roc_auc_score(ytest, p))</code></pre>
+<p><em>Average of decision tree ROC-AUC score: 0.844</em></p>
+<p>The Random Forest yields a significant improvement upon our previous models. We&#8217;re on to something! But there is only so much you can do with decision trees. It&#8217;s time we expand our horizon.</p>
+<h2 id="ensemblesasaveragedpredictions">
+    Ensembles as averaged predictions</h2>
+<p>Our foray into ensembles so far has shown us two important aspects of ensembles:</p>
+<ol>
+<li>
+      The less correlation in prediction errors, the better</li>
+<li>
+      The more models, the better</li>
+</ol>
+<p>For this reason, it&#8217;s a good idea to use as different models as possible (as long as they perform decently). So far, we have relied on simple averaging, but later we will see to how use more complex combinations. To keep track of our progress, it is helpful to formalize our ensemble as \(n\) models \(f_i\) averaged into an ensemble \(e\): \( e(x) = \frac1n \sum_{i=1}^n f_i(x). \) There&#8217;s no limitation on what models to include: decision trees, linear models, kernel-based models, non-parametric models, neural networks or even other ensembles! Keep in mind though that the more models we include, the slower the ensemble becomes. To build an ensemble of various models, we begin by benchmarking a set of Scikit-learn classifiers on the dataset. To avoid repeating code, we use the below helper functions:</p>
+<pre class="language-python"><code class="language-python">
+# A host of Scikit-learn models
+from sklearn.svm import SVC, LinearSVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.kernel_approximation import Nystroem
+from sklearn.kernel_approximation import RBFSampler
+from sklearn.pipeline import make_pipeline
+
+
+def get_models():
+    """Generate a library of base learners."""
+    nb = GaussianNB()
+    svc = SVC(C=100, probability=True)
+    knn = KNeighborsClassifier(n_neighbors=3)
+    lr = LogisticRegression(C=100, random_state=SEED)
+    nn = MLPClassifier((80, 10), early_stopping=False, random_state=SEED)
+    gb = GradientBoostingClassifier(n_estimators=100, random_state=SEED)
+    rf = RandomForestClassifier(n_estimators=10, max_features=3, random_state=SEED)
+
+    models = {'svm': svc,
+              'knn': knn,
+              'naive bayes': nb,
+              'mlp-nn': nn,
+              'random forest': rf,
+              'gbm': gb,
+              'logistic': lr,
+              }
+
+    return models
+
+
+def train_predict(model_list):
+    """Fit models in list on training set and return preds"""
+    P = np.zeros((ytest.shape[0], len(model_list)))
+    P = pd.DataFrame(P)
+
+    print("Fitting models.")
+    cols = list()
+    for i, (name, m) in enumerate(models.items()):
+        print("%s..." % name, end=" ", flush=False)
+        m.fit(xtrain, ytrain)
+        P.iloc[:, i] = m.predict_proba(xtest)[:, 1]
+        cols.append(name)
+        print("done")
+
+    P.columns = cols
+    print("Done.\n")
+    return P
+
+
+def score_models(P, y):
+    """Score model in prediction DF"""
+    print("Scoring models.")
+    for m in P.columns:
+        score = roc_auc_score(y, P.loc[:, m])
+        print("%-26s: %.3f" % (m, score))
+    print("Done.\n")
+</code></pre>
+<p>We&#8217;re now ready to create a prediction matrix \(P\), where each feature corresponds to the predictions made by a given model, and score each model against the test set:</p>
+<pre class="language-python"><code class="language-python">
+models = get_models()
+P = train_predict(models)
+score_models(P, ytest)</code></pre>
+<table>
+<thead>
+<tr>
+<th>
+          Model</th>
+<th>
+          Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+          svm</td>
+<td>
+          0.850</td>
+</tr>
+<tr>
+<td>
+          knn</td>
+<td>
+          0.779</td>
+</tr>
+<tr>
+<td>
+          naive bayes</td>
+<td>
+          0.803</td>
+</tr>
+<tr>
+<td>
+          mlp-nn</td>
+<td>
+          0.851</td>
+</tr>
+<tr>
+<td>
+          random forest</td>
+<td>
+          0.844</td>
+</tr>
+<tr>
+<td>
+          gbm</td>
+<td>
+          0.878</td>
+</tr>
+<tr>
+<td>
+          logistic</td>
+<td>
+          0.854</td>
+</tr>
+</tbody>
+</table>
+<p>That&#8217;s our baseline. The Gradient Boosting Machine (GBM) does best, followed by a simple logistic regression. For our ensemble strategy to work, prediction errors must be relatively uncorrelated. Checking that this holds is our first order of business:</p>
+<pre class="language-python"><code class="language-python">
+
+# You need ML-Ensemble for this figure: you can install it with: pip install mlens
+from mlens.visualization import corrmat
+
+corrmat(P.corr(), inflate=False)
+plt.show()</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_22_0.png" alt="corr1"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_22_0.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_22_0.png" alt="corr1"> Errors are significantly correlated, which is to be expected for models that perform well, since it&#8217;s typically the outliers that are hard to get right. Yet most correlations are in the 50-80% span, so there is decent room for improvement. In fact, if we look at error correlations on a class prediction basis things look a bit more promising:</p>
+<pre class="language-python"><code class="language-python">
+
+corrmat(P.apply(lambda pred: 1*(pred &gt;= 0.5) - ytest.values).corr(), inflate=False)
+plt.show()</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_24_0.png" alt="corr2"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_24_0.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_24_0.png" alt="corr2"></p>
+<p>To create an ensemble, we proceed as before and average predictions, and as we might expect the ensemble outperforms the baseline. Averaging is a simple process, and if we store model predictions, we can start with a simple ensemble and increase its size on the fly as we train new models.</p>
+<pre class="language-python"><code>print("Ensemble ROC-AUC score: %.3f" % roc_auc_score(ytest, P.mean(axis=1)))</code></pre>
+<p><em>Ensemble ROC-AUC score: 0.884</em></p>
+<h3 id="visualizinghowensembleswork">
+    Visualizing how ensembles work</h3>
+<p>We&#8217;ve understood the power of ensembles as an error correction mechanism. This means that ensembles smooth out decision boundaries by averaging out irregularities. A decision boundary shows us how an estimator carves up feature space into neighborhood within which all observations are predicted to have the same class label. By averaging out base learner decision boundaries, the ensemble is endowed with a smoother boundary that generalize more naturally. The figure below shows this in action. Here, the example is the iris data set, where the estimators try to classify three types of flowers. The base learners all have some undesirable properties in their boundaries, but the ensemble has a relatively smooth decision boundary that aligns with observations. Amazingly, ensembles both increase model complexity and acts as a regularizer!</p>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/ensemble_decision_regions_2d.jpg" alt="ensemble_decision_regions_2d"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/ensemble_decision_regions_2d.jpg' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/ensemble_decision_regions_2d.jpg" alt="ensemble_decision_regions_2d"> <em>Example decision boundaries for three models and an ensemble of the three. <a href="https://github.com/rasbt/mlxtend">Source</a></em></p>
+<p>Another way to understand what is going on in an ensemble when the task is classification, is to inspect the Receiver Operator Curve (ROC). This curve shows us how an estimator trades off precision and recall. Typically, different base learners make different trade offs: some have higher precision by sacrificing recall, and other have higher recall by sacrificing precision. A non-linear meta learner, on the other hand, is able to, for each training point, adjust which models it relies on. This means that it can significantly reduce necessary sacrifices and retain high precision while increasing recall (or vice versa). In the figure below, the ensemble is making a much smaller sacrifice in precision to increase recall (the ROC is further in the &#8220;northeast&#8221; corner).</p>
+<pre class="language-python"><code class="language-python">from sklearn.metrics import roc_curve
+
+def plot_roc_curve(ytest, P_base_learners, P_ensemble, labels, ens_label):
+    """Plot the roc curve for base learners and ensemble."""
+    plt.figure(figsize=(10, 8))
+    plt.plot([0, 1], [0, 1], 'k--')
+    
+    cm = [plt.cm.rainbow(i)
+      for i in np.linspace(0, 1.0, P_base_learners.shape[1] + 1)]
+    
+    for i in range(P_base_learners.shape[1]):
+        p = P_base_learners[:, i]
+        fpr, tpr, _ = roc_curve(ytest, p)
+        plt.plot(fpr, tpr, label=labels[i], c=cm[i + 1])
+
+    fpr, tpr, _ = roc_curve(ytest, P_ensemble)
+    plt.plot(fpr, tpr, label=ens_label, c=cm[0])
+        
+    plt.xlabel('False positive rate')
+    plt.ylabel('True positive rate')
+    plt.title('ROC curve')
+    plt.legend(frameon=False)
+    plt.show()
+
+
+plot_roc_curve(ytest, P.values, P.mean(axis=1), list(P.columns), "ensemble")
+</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_28_0.png" alt="roc1"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_28_0.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_28_0.png" alt="roc1"></p>
+<h3 id="beyondensemblesasasimpleaverage">
+    Beyond ensembles as a simple average</h3>
+<p>But wouldn&#8217;t you expect more of a boost given the variation in prediction errors? Well, one thing is a bit nagging. Some of the models perform considerably worse than others, yet their influence is just large as better performing models. This can be quite devastating with unbalanced data sets: recall that with soft voting, if a model makes an extreme prediction (i.e close to 0 or 1), that prediction has a strong pull on the prediction average. An important factor for us is whether models are able to capture the full share of Republican denotations. A simple check shows that all models underrepresent Republican donations, but some are considerably worse than others.</p>
+<pre class="language-python"><code class="language-python">
+p = P.apply(lambda x: 1*(x &gt;= 0.5).value_counts(normalize=True))
+p.index = ["DEM", "REP"]
+p.loc["REP", :].sort_values().plot(kind="bar")
+plt.axhline(0.25, color="k", linewidth=0.5)plt.text(0., 0.23, "True share republicans")
+plt.show()</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_30_0.png" alt="share rep"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_30_0.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_30_0.png" alt="share rep"></p>
+<p>We can try to improve the ensemble by removing the worst offender, say the Multi-Layer Perceptron (MLP):</p>
+<pre class="language-python"><code class="language-python">
+include = [c for c in P.columns if c not in ["mlp-nn"]]
+print("Truncated ensemble ROC-AUC score: %.3f" % roc_auc_score(ytest, P.loc[:, include].mean(axis=1)))</code></pre>
+<p><em>Truncated ensemble ROC-AUC score: 0.883</em></p>
+<p>Not really an improvement: we need a smarter way of prioritizing between models. Clearly, removing models from an ensemble is rather drastic as there may be instances where the removed model carried important information. What we really want is to <em>learn</em> a sensible set of weights to use when averaging predictions. This turns the ensemble into a parametric model that needs to be trained.</p>
+<h2 id="learningtocombinepredictions">
+    Learning to combine predictions</h2>
+<p>Learning a weighted average means that for each model \(f_i\), we have a weight parameter \(\omega_i \in (0, 1)\) that assigns our weight to that model&#8217;s predictions. Weighted averaging requires all weights to sum to 1. The ensemble is now defined as \( e(x) = \sum_{i=1}^n \omega_i \ f_i(x). \) This is a minor change from our previous definition, but is interesting since, once the models have generated predictions \(p_i = f_i(x)\), learning the weights is the same as fitting a linear regression on those predictions: \( e(p_1, &#8230;, p_n) = \omega_1 p_1 + &#8230; + \ \omega_n p_n, \) with some constraints on the weights. Then again, there is no reason to restrict ourself to fitting just a linear model. Suppose instead that we fit a nearest neighbor model. The ensemble would then take local averages based on the nearest neighbors of a given observation, empowering the ensemble to adapt to changes in model performance as the input varies.</p>
+<h3 id="implementinganensemble">
+    Implementing an ensemble</h3>
+<p>To build this type of ensemble, we need three things:</p>
+<ol>
+<li>
+      a library of <strong>base learners</strong> that generate predictions</li>
+<li>
+      a <strong>meta learner</strong> that learns how to best combine these predictions</li>
+<li>
+      a method for splitting the training data between the base learners and the meta learner.</li>
+</ol>
+<p>Base learners are the ingoing models that take the original input and generate a set of predictions. If we have an original data set ordered as a matrix \(X\) of shape <code>(n_samples, n_features)</code>, the library of base learners output a new prediction matrix \(P_{\text{base}}\) of size <code>(n_samples, n_base_learners)</code>, where each column represent the predictions made by one of the base learners. The meta learner is trained on \(P_{\text{base}}\). This means that it is absolutely crucial to handle the training set \(X\) in an appropriate way. In particular, if we both train the base learners on \(X\) and have them predict \(X\), the meta learner will be training on the base learner&#8217;s <em>training error</em>, but at test time it will face their <em>test errors</em>. We need a strategy for generating a prediction matrix \(P\) that reflects test errors. The simplest strategy is to split the full data set \(X\) in two: train the base learners on one half and have them predict the other half, which then becomes the input to the meta learner. While simple and relatively fast, we loose quite a bit of data. For small and medium sized data sets, the loss of information can be severe, causing the base learners and the meta learner to perform poorly. To ensure the full data set is covered, we can use <em>cross-validation</em>, a method initially developed for validating test-set performance during model selection. There are many ways to perform cross-validation, and before we delve into that, let&#8217;s get a feel for this type of ensemble by implementing one ourselves, step by step.</p>
+<h4 id="step1definealibraryofbaselearners">
+    Step 1: define a library of base learners</h4>
+<p>These are the models that take the raw input data and generates predictions, and can be anything from linear regression to a neural network to another ensemble. As always, there&#8217;s strength in diversity! The only thing to consider is that the more models we add, the slower the ensemble will be. Here, we&#8217;ll use our set of models from before:</p>
+<pre class="language-python"><code>base_learners = get_models()</code></pre>
+<h4 id="step2defineametalearner">
+    Step 2: define a meta learner</h4>
+<p>Which meta learner to use is not obvious, but popular choices are linear models, kernel-based models (SVMs and KNNS) and decision tree based models. But you could also use another ensemble as &#8220;meta learner&#8221;: in this special case, you end up with a two-layer ensemble, akin to a feed-forward neural network. Here, we&#8217;ll use a Gradient Boosting Machine. To ensure the GBM explores local patterns, we are restricting each of the 1000 decision trees to train on a random subset of 4 base learners and 50% of input data. This way, the GBM will be exposed to each base learner&#8217;s strength in different neighborhoods of the input space.</p>
+<pre class="language-python"><code class="language-python">
+meta_learner = GradientBoostingClassifier(
+    n_estimators=1000,
+    loss="exponential",
+    max_features=4,
+    max_depth=3,
+    subsample=0.5,
+    learning_rate=0.005,
+    random_state=SEED)</code></pre>
+<h4 id="step3defineaprocedureforgeneratingtrainandtestsets">
+    Step 3: define a procedure for generating train and test sets</h4>
+<p>To keep things simple, we split the full training set into a training and prediction set of the base learners. This method is sometimes referred to as <strong>Blending</strong>. Unfortunately, the terminology differs between communities, so it&#8217;s not always easy to know what type of cross-validation the ensemble is using.</p>
+<pre class="language-python"><code class="language-python">xtrain_base, xpred_base, ytrain_base, ypred_base = train_test_split(
+    xtrain, ytrain, test_size=0.5, random_state=SEED)</code></pre>
+<p>We now have one training set of the base learners \((X_{\text{train_base}}, y_{\text{train_base}})\) and one prediction set \((X_{\text{pred_base}}, y_{\text{pred_base}})\) and are ready to generate the prediction matrix for the meta learner.</p>
+<h4 id="step4trainthebaselearnersonatrainingset">
+    Step 4: train the base learners on a training set</h4>
+<p>To train the library of base learners on the base-learner training data, we proceed as usual:</p>
+<pre class="language-python"><code class="language-python">
+def train_base_learners(base_learners, inp, out, verbose=True):
+    """
+    Train all base learners in the library.
+    """
+    if verbose: print("Fitting models.")
+    for i, (name, m) in enumerate(base_learners.items()):
+        if verbose: print("%s..." % name, end=" ", flush=False)
+        m.fit(inp, out)
+        if verbose: print("done")</code></pre>
+<p>To train the base learners, execute</p>
+<pre class="language-python"><code>train_base_learners(base_learners, xtrain_base, ytrain_base)</code></pre>
+<h4 id="step5generatebaselearnerpredictions">
+    Step 5: generate base learner predictions</h4>
+<p>With the base learners fitted, we can now generate a set of predictions for the meta learner to train on. Note that we generate predictions for observations <em>not</em> used to train the base learners. For each observation \(x_{\text{pred}}^{(i)} \in X_{\text{pred_base}}\) in the base learner prediction set, we generate a set of base learner predictions: \( p_{\text{base}}^{(i)} = \left( \ f_1(x_{\text{pred}}^{(i)}) \ , &#8230;, \ f_n(x_{\text{pred}}^{(i)} ) \ \right). \) If you implement your own ensemble, pay special attention to how you index the rows and columns of the prediction matrix. When we split the data in two, this is not so hard, but with cross-validation things are more challenging.</p>
+<pre class="language-python"><code class="language-python">
+def predict_base_learners(pred_base_learners, inp, verbose=True):
+    """
+    Generate a prediction matrix.
+    """
+    P = np.zeros((inp.shape[0], len(pred_base_learners)))
+
+    if verbose: print("Generating base learner predictions.")
+    for i, (name, m) in enumerate(pred_base_learners.items()):
+        if verbose: print("%s..." % name, end=" ", flush=False)
+        p = m.predict_proba(inp)
+        # With two classes, need only predictions for one class
+        P[:, i] = p[:, 1]
+        if verbose: print("done")
+
+    return P</code></pre>
+<p>To generate predictions, execute</p>
+<pre class="language-python"><code>P_base = predict_base_learners(base_learners, xpred_base)</code></pre>
+<h4 id="6trainthemetalearner">
+    6. Train the meta learner</h4>
+<p>The prediction matrix \(P_{\text{base}}\) reflects test-time performance and can be used to train the meta learner:</p>
+<pre class="language-python"><code>meta_learner.fit(P_base, ypred_base)</code></pre>
+<p>That&#8217;s it! We now have a fully trained ensemble that can be used to predict new data. To generate a prediction for some observation \(x^{(j)}\), we first feed it to the base learners. These output a set of predictions \( p_{\text{base}}^{(j)} = \left( \ f_1(x^{(j)}) \ , &#8230;, \ f_n(x^{(j)}) \ \right) \) that we feed to the meta learner. The meta learner then gives us the ensemble&#8217;s final prediction \( p^{(j)} = m\left(p_{\text{base}}^{(j)} \right). \) Now that we have a firm understanding of ensemble learning, it&#8217;s time to see what it can do to improve our prediction performance on the political contributions data set:</p>
+<pre class="language-python"><code class="language-python">
+def ensemble_predict(base_learners, meta_learner, inp, verbose=True):
+    """
+    Generate predictions from the ensemble.
+    """
+    P_pred = predict_base_learners(base_learners, inp, verbose=verbose)
+    return P_pred, meta_learner.predict_proba(P_pred)[:, 1]</code></pre>
+<p>To generate predictions, execute</p>
+<pre class="language-python"><code class="language-python">
+P_pred, p = ensemble_predict(base_learners, meta_learner, xtest)
+print("\nEnsemble ROC-AUC score: %.3f" % roc_auc_score(ytest, p))</code></pre>
+<p><em>Ensemble ROC-AUC score: 0.881</em></p>
+<p>As expected, the ensemble beats the best estimator from our previous benchmark, but it doesn&#8217;t beat the simple average ensemble. That&#8217;s because we trained the base learners and the meta learner on only half the data, so a lot of information is lost. To prevent this, we need to use a cross-validation strategy.</p>
+<h2 id="trainingwithcrossvalidation">
+    Training with cross-validation</h2>
+<p>During cross-validated training of the base learners, a copy of each base learner is fitted on \(K-1\) folds, and predict the left-out fold. This process is iterated until every fold has been predicted. The more folds we specify, the less data is being left out in each training pass. This makes cross-validated predictions less noisy and a better reflection of performance during test time. The cost is significantly increased training time. Fitting an ensemble with cross-validation is often referred to as <strong>stacking</strong>, while the ensemble itself is known as the <strong>Super Learner</strong>. To understand how cross-validation works, we can think of it as an outer loop over our previous ensemble. The outer loop iterates over \(K\) distinct test folds, with the remaining data used for training. The inner loop trains the base learners and generate predictions for the held-out data. Here&#8217;s a simple stacking implementation:</p>
+<pre class="language-python"><code class="language-python">
+from sklearn.base import clone
+
+def stacking(base_learners, meta_learner, X, y, generator):
+    """Simple training routine for stacking."""
+
+    # Train final base learners for test time
+    print("Fitting final base learners...", end="")
+    train_base_learners(base_learners, X, y, verbose=False)
+    print("done")
+
+    # Generate predictions for training meta learners
+    # Outer loop:
+    print("Generating cross-validated predictions...")
+    cv_preds, cv_y = [], []
+    for i, (train_idx, test_idx) in enumerate(generator.split(X)):
+
+        fold_xtrain, fold_ytrain = X[train_idx, :], y[train_idx]
+        fold_xtest, fold_ytest = X[test_idx, :], y[test_idx]
+
+        # Inner loop: step 4 and 5
+        fold_base_learners = {name: clone(model)
+                              for name, model in base_learners.items()}
+        train_base_learners(
+            fold_base_learners, fold_xtrain, fold_ytrain, verbose=False)
+
+        fold_P_base = predict_base_learners(
+            fold_base_learners, fold_xtest, verbose=False)
+
+        cv_preds.append(fold_P_base)
+        cv_y.append(fold_ytest)
+        print("Fold %i done" % (i + 1))
+
+    print("CV-predictions done")
+    
+    # Be careful to get rows in the right order
+    cv_preds = np.vstack(cv_preds)
+    cv_y = np.hstack(cv_y)
+
+    # Train meta learner
+    print("Fitting meta learner...", end="")
+    meta_learner.fit(cv_preds, cv_y)
+    print("done")
+
+    return base_learners, meta_learner</code></pre>
+<p>Let&#8217;s go over the steps involved here. First, we fit our final base learners on <em>all</em> data: in contrast with our previous blend ensemble, base learners used at test time are trained on all available data. We then loop over all folds, then loop over all base learners to generate cross-validated predictions. These predictions are stacked to build the training set for the meta learner, which too sees all data. The basic difference between blending and stacking is therefore that stacking allows both base learners and the meta learner to train on the full data set. Using 2-fold cross-validation, we can measure the difference this makes in our case:</p>
+<pre class="language-python"><code class="language-python">
+from sklearn.model_selection import KFold
+
+# Train with stacking
+cv_base_learners, cv_meta_learner = stacking(
+    get_models(), clone(meta_learner), xtrain.values, ytrain.values, KFold(2))
+
+P_pred, p = ensemble_predict(cv_base_learners, cv_meta_learner, xtest, verbose=False)
+print("\nEnsemble ROC-AUC score: %.3f" % roc_auc_score(ytest, p))</code></pre>
+<p><em>Ensemble ROC-AUC score: 0.889</em></p>
+<p>Stacking yields a sizeable increase in performance: in fact, it gives us our best score so far. This outcome is typical for small and medium-sized data sets, where the effect of blending can be severe. As the data set size increases, blending and stacking performs similarly. Stacking comes with its own set of shortcomings, particularly speed. In general, we need to be aware of there important issues when it comes to implementing ensembles with cross-validation:</p>
+<ol>
+<li>
+      Computational complexity</li>
+<li>
+      Structural complexity (risk of information leakage)</li>
+<li>
+      Memory consumption</li>
+</ol>
+<p>It&#8217;s important to understand these in order to work with ensembles efficiently, so let&#8217;s go through each in turn.</p>
+<h4 id="1computationalcomplexity">
+    1. Computational complexity</h4>
+<p>Suppose we want to use 10 folds for stacking. This would require training all base learners 10 times on 90% of the data, and once on all data. With 4 base learners, the ensemble would roughly be 40 times slower than using the best base learner. But each cv-fit is independent, so we don&#8217;t need to fit models sequentially. If we could fit all folds in parallel, the ensemble would only be roughly 4 times slower than the best base learner, a dramatic improvement. Ensembles are prime candidates for <strong>parallelization</strong>, and it is critical to leverage this capability to the greatest extent possible. Fitting all folds for all models in parallel, the time penalty for the ensemble would be negligible. To hone this point in, below is a benchmark from <a href="http://ml-ensemble.com">ML-Ensemble</a> that shows the time it takes to fit an ensemble via stacking or blending either sequentially or in parallel on 4 threads.</p>
+<div>
+    <noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_480,h_480/https://www.dataquest.io/wp-content/uploads/2019/01/scale_cpu-1.png" ,="" width="480," height="480"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait,w_480,h_480//wp-content/uploads/2019/01/scale_cpu-1.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_480,h_480/https://www.dataquest.io/wp-content/uploads/2019/01/scale_cpu-1.png" ,="" width="480," height="480"></div>
+<p>Even with this moderate degree of parallelism, we can realize a sizeable reduction in computation time. But parallelization is associated with a whole host of potentially thorny issues such as race conditions, deadlocks and memory explosion.</p>
+<h4 id="2structuralcomplexity">
+    2. Structural complexity</h4>
+<p>Once we decide to use the entire training set to meta learner, we must worry about <strong>information leakage</strong>. This phenomena arises when we mistakenly predict samples that were used during training, for instance by mixing up our folds or using a model trained on the wrong subset. When there&#8217;s information leakage in the training set of the meta learner, it will not learn to properly correct for base learner predictions errors: garbage in, garbage out. Spotting such bugs though is extremely difficult.</p>
+<h4 id="3memoryconsumption">
+    3. Memory consumption</h4>
+<p>The final issue arises with parallelization, especially by multi-processing as is often the case in Python. In this case, each sub-process has its own memory and therefore needs to copy all data from the parent process. A naive implementation will therefore copy all data to all processes, eating up memory and wasting time on data serialization. Preventing this requires sharing data memory, which in turns easily cause data corruption.</p>
+<h4 id="upshotusepackages">
+    Upshot: use packages</h4>
+<p>The upshot is that you should use a unit-tested package and focus on building your machine learning pipeline. In fact, once you&#8217;ve settled on an ensemble package, building ensembles become <em>really</em> easy: all you need to do is specify the base learners, the meta learner, and a method for training the ensemble. Fortuntately, there are many packages available in all popular programming languages, though they come in different flavors. At the end of this post, we list some as reference. For now, let&#8217;s pick one and see how a stacked ensemble does on our political contributions data set. Here, we use <a href="http://ml-ensemble.com">ML-Ensemble</a> and build our previous generalized ensemble, but now using 10-fold cross-validation:</p>
+<pre class="language-python"><code class="language-python">
+from mlens.ensemble import SuperLearner
+
+# Instantiate the ensemble with 10 folds
+sl = SuperLearner(
+    folds=10,
+    random_state=SEED,
+    verbose=2,
+    backend="multiprocessing"
+)
+
+# Add the base learners and the meta learner
+sl.add(list(base_learners.values()), proba=True) 
+sl.add_meta(meta_learner, proba=True)
+
+# Train the ensemble
+sl.fit(xtrain, ytrain)
+
+# Predict the test set
+p_sl = sl.predict_proba(xtest)
+
+print("\nSuper Learner ROC-AUC score: %.3f" % roc_auc_score(ytest, p_sl[:, 1]))
+</code></pre>
+<pre><code class="language-vim">
+Fitting 2 layers
+Processing layer-1             done | 00:02:03
+Processing layer-2             done | 00:00:03
+Fit complete                        | 00:02:08
+
+Predicting 2 layers
+Processing layer-1             done | 00:00:50
+Processing layer-2             done | 00:00:02
+Predict complete                    | 00:00:54
+
+Super Learner ROC-AUC score: 0.890
+</code></pre>
+<p>It&#8217;s as simple as that! Inspecting the ROC-curve of the super learner against the simple average ensemble reveals how leveraging the full data enables the super learner to sacrifice less recall for a given level of precision.</p>
+<pre class="language-python"><code>plot_roc_curve(ytest, p.reshape(-1, 1), P.mean(axis=1), ["Simple average"], "Super Learner")</code></pre>
+<p><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_59_0.png" alt="output_59_0"></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait//wp-content/uploads/2019/01/output_59_0.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/01/output_59_0.png" alt="output_59_0"></p>
+<h2 id="wheretogofromhere">
+    Where to go from here</h2>
+<p>There are many other types of ensembles than those presented here. However the basic ingredients are always the same: a library of base learners, a meta learner, and a training procedure. By playing around with these components, various specialized forms of ensembles can be created. A good starting point for more advanced material on ensemble learning is this excellent <a href="https://mlwave.com/kaggle-ensembling-guide/">post</a> by mlware. When it comes to software, it&#8217;s a matter of taste. As the popularity of ensembles have risen, so has the number of packages available. Ensembles were traditionally developed in the statistics community, so R has had a lead on purpose-built libraries. Several packages have recently been developed in Python and other languages, with more on the way. Each package caters to different needs and are at different stages of maturity, so we recommend shopping around until you find what you are looking for. Here are a few packages to get you started:</p>
+<table>
+<thead>
+<tr>
+<th>
+          Language</th>
+<th>
+          Name</th>
+<th>
+          Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+          Python</td>
+<td>
+          <a href="http://ml-ensemble.com">ML-Ensemble</a></td>
+<td>
+          General ensemble learning</td>
+</tr>
+<tr>
+<td>
+          Python</td>
+<td>
+          <a href="http://scikit-learn.org/stable/modules/ensemble.html">Scikit-learn</a></td>
+<td>
+          Bagging, majority voting classifiers. API for stacking in development</td>
+</tr>
+<tr>
+<td>
+          Python</td>
+<td>
+          <a href="http://rasbt.github.io/mlxtend/">mlxtend</a></td>
+<td>
+          Regression and Classification ensembles</td>
+</tr>
+<tr>
+<td>
+          R</td>
+<td>
+          <a href="https://cran.r-project.org/web/packages/SuperLearner/index.html">SuperLearner</a></td>
+<td>
+          Super Learner ensembles</td>
+</tr>
+<tr>
+<td>
+          R</td>
+<td>
+          <a href="https://cran.r-project.org/web/packages/subsemble/index.html">Subsemble</a></td>
+<td>
+          Subsembles</td>
+</tr>
+<tr>
+<td>
+          R</td>
+<td>
+          <a href="https://cran.r-project.org/web/packages/caretEnsemble/index.html">caretEnsemble</a></td>
+<td>
+          Ensembles of Caret estimators</td>
+</tr>
+<tr>
+<td>
+          Mutliple</td>
+<td>
+          <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/stacked-ensembles.html">H20</a></td>
+<td>
+          Distributed stacked ensemble learning. Limited to estimators in the H20 library</td>
+</tr>
+<tr>
+<td>
+          Java</td>
+<td>
+          <a href="https://github.com/kaz-Anova/StackNet">StackNet</a></td>
+<td>
+          Empowered by H20</td>
+</tr>
+<tr>
+<td>
+          Web-based</td>
+<td>
+          <a href="https://github.com/reiinakano/xcessiv">xcessiv</a></td>
+<td>
+          Web-based ensemble learning</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<span id="tho-end-content" style="display: block; visibility: hidden;"></span><div class="saboxplugin-wrap" itemtype="http://schema.org/Person" itemscope itemprop="author"><div class="saboxplugin-gravatar"><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_100,h_100/https://www.dataquest.io/wp-content/uploads/2018/10/Sebastian_Flennerhag-1-150x150.jpg" width="100" height="100" alt="Sebastian Flennerhag" class="avatar avatar-100 wp-user-avatar wp-user-avatar-100 alignnone photo" /></noscript><img src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait,w_100,h_100/https://www.dataquest.io/wp-content/uploads/2018/10/Sebastian_Flennerhag-1-150x150.jpg' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_100,h_100/https://www.dataquest.io/wp-content/uploads/2018/10/Sebastian_Flennerhag-1-150x150.jpg" width="100" height="100" alt="Sebastian Flennerhag" class="lazyload avatar avatar-100 wp-user-avatar wp-user-avatar-100 alignnone photo" /></div><div class="saboxplugin-authorname"><a href="https://www.dataquest.io/blog/author/sebastian-flennerhag/" class="vcard author" rel="author" itemprop="url"><span class="fn" itemprop="name">Sebastian Flennerhag</span></a></div><div class="saboxplugin-desc"><div itemprop="description"><p>Machine learning researcher and predictive modeler. Writes about exciting open source projects, predictive modeling and the latest in deep learning.</p>
+</div></div><div class="clearfix"></div></div>
+		<div class="clear"></div>
+				<div class="clear"></div>
+							<footer>
+				<ul class="meta left">
+					<li>
+																											in																<span>
+                                        <a href="https://www.dataquest.io/blog/topics/data-science-tutorials/">
+	                                        Data Science Tutorials                                        </a>
+									                                    </span>
+																				
+																				by <a
+								href="https://www.dataquest.io/blog/author/sebastian-flennerhag/">Sebastian Flennerhag</a>
+											</li>
+																		<li class="sep">|</li>
+												<li>
+															January 11, 2018													</li>
+														</ul>
+								<div class="clear"></div>
+			</footer>
+					</div>
+
+</article>
+<div class="rltpi clearfix">
+	<div class="awr">
+		<h5>Related Posts</h5>
+					<a href="https://www.dataquest.io/blog/tutorial-install-linux-on-windows-wsl/" class="rlt left">
+				<div class="rlti"  style="background-image: url('https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/07/install-linux-on-windows-1-510x162.jpg')"></div>
+				<p>Tutorial: Install Linux on Windows with Windows Subsystem for Linux</p>
+			</a>
+					<a href="https://www.dataquest.io/blog/tutorial-advanced-for-loops-python-pandas/" class="rlt left">
+				<div class="rlti"  style="background-image: url('https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/07/python-forloop-1-100-510x162.jpg')"></div>
+				<p>Tutorial: Advanced For Loops in Python</p>
+			</a>
+					<a href="https://www.dataquest.io/blog/machine-learning-tutorial/" class="rlt left">
+				<div class="rlti"  style="background-image: url('https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2019/07/learn-machine-learning-airbnb-510x162.jpg')"></div>
+				<p>Python Machine Learning Tutorial: Predicting Airbnb Prices</p>
+			</a>
+					<a href="https://www.dataquest.io/blog/machine-learning-preparing-data/" class="rlt left">
+				<div class="rlti"  style="background-image: url('https://cdn.shortpixel.ai/client/q_glossy,ret_img/https://www.dataquest.io/wp-content/uploads/2016/12/lendingclub-cars-data-cleaning-510x162.jpg')"></div>
+				<p>Data Cleaning and Preparation for Machine Learning</p>
+			</a>
+					</div>
+</div><div class="spr"></div>																					
+	<script type="text/javascript">
+		_thriveCurrentPost = 1999;
+	</script>
+	<article id="comments">
+		<div class="awr">
+			
+			
+			<div id="thrive_container_list_comments">
+							</div>
+
+			
+					</div>
+	</article>
+	<div id="comment-bottom"></div>
+
+																			</section>
+			</div>
+			
+	<div class="sAsCont">
+		<aside class="sAs right">
+							<section id="custom_html-2"><div class="widget_text scn"><div class="textwidget custom-html-widget"><span style="display:none" class="tl-placeholder-f-type-shortcode_11317"></span></div></div></section><section id="search-3"><div class="scn"><form action="https://www.dataquest.io/" method="get" class="srh">
+	<div>
+		<input type="text" placeholder="Search" class="search-field" name="s"/>
+		<button type="submit" class="search-button sBn"></button>
+		<div class="clear"></div>
+	</div>
+</form>
+</div></section><section id="nav_menu-3"><div class="scn"><p class="ttl">Browse by topic:</p><div class="menu-left-container"><ul id="menu-left" class="menu"><li id="menu-item-14042" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-14042"><a href="https://www.dataquest.io/blog/data-science-career-guide/">Career Guide — NEW!</a></li>
+<li id="menu-item-5973" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-5973"><a href="https://www.dataquest.io/blog/topics/data-science-tutorials/">Tutorials</a></li>
+<li id="menu-item-5979" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5979"><a href="https://www.dataquest.io/blog/topics/building-a-data-science-portfolio/">How to Build a Portfolio</a></li>
+<li id="menu-item-5977" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5977"><a href="https://www.dataquest.io/blog/topics/data-science-projects/">Data Science Projects</a></li>
+<li id="menu-item-5974" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5974"><a href="https://www.dataquest.io/blog/topics/learning-and-motivation/">Learning and Motivation</a></li>
+<li id="menu-item-5978" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5978"><a href="https://www.dataquest.io/blog/topics/student-stories/">Student Stories</a></li>
+</ul></div></div></section>			
+		</aside>
+	</div>
+
+		<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+
+
+
+<footer>
+			<div class="ftw" id="dq_footer">
+			<div class="wrp cnt">
+									<div class="colm twc ">
+						<section id="text-5">			<div class="textwidget"><div style="margin: 20px 0px 20px 0px;">
+<p><a href="/"><noscript><img src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_170,h_28/https://www.dataquest.io/wp-content/uploads/2019/01/dq-1.png" width="170px" height="28px" /></noscript><img class="lazyload" src='https://cdn.shortpixel.ai/client/q_lqip,ret_wait,w_170,h_28/https://www.dataquest.io/wp-content/uploads/2019/01/dq-1.png' data-src="https://cdn.shortpixel.ai/client/q_glossy,ret_img,w_170,h_28/https://www.dataquest.io/wp-content/uploads/2019/01/dq-1.png" width="170px" height="28px" /></a></p>
+</div>
+<div style="margin: 20px 0px 20px 0px;">All rights reserved © 2019 – Dataquest Labs, Inc.</div>
+<div style="margin: 20px 50px 20px 0px;">We are committed to protecting your personal information and your right to privacy. Privacy Policy last updated June 13th, 2019 &#8211; <a style="color: #ffffff; font-size: 12px;" href="/privacy">review here</a>.</div>
+</div>
+		</section>					</div>
+									<div class="colm twc lst">
+						<section id="text-9">			<div class="textwidget"><div class="footer-links" style="font-size: 12px; margin: 20px 0px 0px 0px;">
+<div style="float: left; margin-right: 50px;"><a href="https://www.dataquest.io/help" target="_blank" rel="noopener noreferrer">Help</a><br />
+<a href="https://www.dataquest.io/blog" target="_blank" rel="noopener noreferrer">Blog</a><br />
+<a href="https://www.dataquest.io/directory">Directory</a><br />
+<a href="https://www.dataquest.io/forum">Forum</a></div>
+<div style="float: left; margin-right: 50px;"><a href="https://www.dataquest.io/subscribe">Pricing</a><br />
+<a href="https://www.dataquest.io/were-hiring">We&#8217;re Hiring</a><br />
+<a href="https://www.dataquest.io/terms">Legals</a><br />
+<a href="https://www.dataquest.io/privacy">Privacy</a></div>
+<div style="float: left; margin-bottom: 100px;"><a href="https://www.facebook.com/dataquestio" target="_blank" rel="noopener noreferrer">Facebook</a><br />
+<a href="https://twitter.com/dataquestio" target="_blank" rel="noopener noreferrer">Twitter</a><br />
+<a href="https://www.linkedin.com/company/dataquest-io" target="_blank" rel="noopener noreferrer">LinkedIn</a><br />
+<a href="https://www.dataquest.io/chat">Data Science Slack</a></div>
+</div>
+</div>
+		</section>					</div>
+								<div class="clear"></div>
+			</div>
+		</div>
+			<div class="copy">
+		<div class="wrp cnt">
+			<p>
+											</p>
+					</div>
+	</div>
+	</footer>
+
+
+	<script>
+  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
+  analytics.load("BJhKYEXejzjqXq7xQDFI6N0M5W7HBAH5");
+  analytics.page();
+  }}();
+</script><script type='text/javascript'>
+/* <![CDATA[ */
+var TVE_Ult_Data = {"ajaxurl":"https:\/\/www.dataquest.io\/wp-admin\/admin-ajax.php","ajax_load_action":"tve_ult_ajax_load","conversion_events_action":"tve_ult_conversion_event","shortcode_campaign_ids":[],"matched_display_settings":[],"campaign_ids":[],"post_id":1999,"is_singular":true,"tu_em":""};
+/* ]]> */
+</script>
+		<script type="text/javascript" src="https://www.dataquest.io/wp-content/plugins/thrive-ultimatum/js/dist/no-campaign.min.js?v=2.2.0"></script><style>.lazyload,.lazyloading{opacity:0;}.lazyloaded{opacity:1;transition:opacity 300ms;}</style><noscript><style>.lazyload{display:none;}</style></noscript><script data-noptimize="1">window.lazySizesConfig=window.lazySizesConfig||{};window.lazySizesConfig.loadMode=1;</script><script async data-noptimize="1" src='https://www.dataquest.io/wp-content/plugins/autoptimize/classes/external/js/lazysizes.min.js'></script><script data-noptimize="1">function c_webp(A){var n=new Image;n.onload=function(){var e=0<n.width&&0<n.height;A(e)},n.onerror=function(){A(!1)},n.src='data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=='}function s_webp(e){window.supportsWebP=e}c_webp(s_webp);document.addEventListener('lazybeforeunveil',function({target:c}){supportsWebP&&['data-src','data-srcset'].forEach(function(a){attr=c.getAttribute(a),null!==attr&&c.setAttribute(a,attr.replace(/\/client\//,'/client/to_webp,'))})});</script>        <script type='text/javascript'>
+        newContainer = document.createElement('span');
+        newContainer.style.setProperty('display','none','');
+        newNode = document.createElement('script');
+        newNode.type = 'math/tex';
+        newNode.innerHTML = '\\newcommand{\\eps}{\\varepsilon}\n\\newcommand{\\RR}{\\mathbb{R}}\n\\newcommand{\\rd}{\\operatorname{d}}\n\\newcommand{\\set}[1]{\\left\\{#1\\right\\}}';
+        newContainer.appendChild(newNode);
+        document.body.insertBefore(newContainer,document.body.firstChild);
+        </script>
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ["\\(","\\)"]],
+    displayMath: [['$$', '$$'], ["\\[", "\\]"]],
+    processEscapes: true
+  },
+  TeX: {
+    equationNumbers: {autoNumber: "AMS",
+    useLabelIds: true}
+  },
+}); 
+        </script>
+  <script data-cfasync="false" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_SVG.js"></script>
+<style type="text/css">.saboxplugin-wrap{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;border:1px solid #eee;width:100%;clear:both;display:block;overflow:hidden;word-wrap:break-word;position:relative}.saboxplugin-wrap .saboxplugin-gravatar{float:left;padding:20px}.saboxplugin-wrap .saboxplugin-gravatar img{max-width:100px;height:auto;border-radius:0;}.saboxplugin-wrap .saboxplugin-authorname{font-size:18px;line-height:1;margin:20px 0 0 20px;display:block}.saboxplugin-wrap .saboxplugin-authorname a{text-decoration:none}.saboxplugin-wrap .saboxplugin-authorname a:focus{outline:0}.saboxplugin-wrap .saboxplugin-desc{display:block;margin:5px 20px}.saboxplugin-wrap .saboxplugin-desc a{text-decoration:underline}.saboxplugin-wrap .saboxplugin-desc p{margin:5px 0 12px}.saboxplugin-wrap .saboxplugin-web{margin:0 20px 15px;text-align:left}.saboxplugin-wrap .sab-web-position{text-align:right}.saboxplugin-wrap .saboxplugin-web a{color:#ccc;text-decoration:none}.saboxplugin-wrap .saboxplugin-socials{position:relative;display:block;background:#fcfcfc;padding:5px;border-top:1px solid #eee}.saboxplugin-wrap .saboxplugin-socials a svg{width:20px;height:20px}.saboxplugin-wrap .saboxplugin-socials a svg .st2{fill:#fff}.saboxplugin-wrap .saboxplugin-socials a svg .st1{fill:rgba(0,0,0,.3)}.saboxplugin-wrap .saboxplugin-socials a:hover{opacity:.8;-webkit-transition:opacity .4s;-moz-transition:opacity .4s;-o-transition:opacity .4s;transition:opacity .4s;box-shadow:none!important;-webkit-box-shadow:none!important}.saboxplugin-wrap .saboxplugin-socials .saboxplugin-icon-color{box-shadow:none;padding:0;border:0;-webkit-transition:opacity .4s;-moz-transition:opacity .4s;-o-transition:opacity .4s;transition:opacity .4s;display:inline-block;color:#fff;font-size:0;text-decoration:inherit;margin:5px;-webkit-border-radius:0;-moz-border-radius:0;-ms-border-radius:0;-o-border-radius:0;border-radius:0;overflow:hidden}.saboxplugin-wrap .saboxplugin-socials .saboxplugin-icon-grey{text-decoration:inherit;box-shadow:none;position:relative;display:-moz-inline-stack;display:inline-block;vertical-align:middle;zoom:1;margin:10px 5px;color:#444}.clearfix:after,.clearfix:before{content:' ';display:table;line-height:0;clear:both}.ie7 .clearfix{zoom:1}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-twitch{border-color:#38245c}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-addthis{border-color:#e91c00}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-behance{border-color:#003eb0}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-delicious{border-color:#06c}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-deviantart{border-color:#036824}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-digg{border-color:#00327c}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-dribbble{border-color:#ba1655}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-facebook{border-color:#1e2e4f}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-flickr{border-color:#003576}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-github{border-color:#264874}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-google{border-color:#0b51c5}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-googleplus{border-color:#96271a}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-html5{border-color:#902e13}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-instagram{border-color:#1630aa}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-linkedin{border-color:#00344f}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-pinterest{border-color:#5b040e}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-reddit{border-color:#992900}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-rss{border-color:#a43b0a}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-sharethis{border-color:#5d8420}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-skype{border-color:#00658a}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-soundcloud{border-color:#995200}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-spotify{border-color:#0f612c}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-stackoverflow{border-color:#a95009}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-steam{border-color:#006388}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-user_email{border-color:#b84e05}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-stumbleUpon{border-color:#9b280e}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-tumblr{border-color:#10151b}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-twitter{border-color:#0967a0}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-vimeo{border-color:#0d7091}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-windows{border-color:#003f71}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-wordpress{border-color:#0f3647}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-yahoo{border-color:#14002d}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-youtube{border-color:#900}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-xing{border-color:#000202}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-mixcloud{border-color:#2475a0}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-vk{border-color:#243549}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-medium{border-color:#00452c}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-quora{border-color:#420e00}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-meetup{border-color:#9b181c}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-goodreads{border-color:#000}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-snapchat{border-color:#999700}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-500px{border-color:#00557f}.saboxplugin-socials.sabox-colored .saboxplugin-icon-color .sab-mastodont{border-color:#185886}.sabox-plus-item{margin-bottom:20px}@media screen and (max-width:480px){.saboxplugin-wrap{text-align:center}.saboxplugin-wrap .saboxplugin-gravatar{float:none;padding:20px 0;text-align:center;margin:0 auto;display:block}.saboxplugin-wrap .saboxplugin-gravatar img{float:none;display:inline-block;display:-moz-inline-stack;vertical-align:middle;zoom:1}.saboxplugin-wrap .saboxplugin-desc{margin:0 10px 20px;text-align:center}.saboxplugin-wrap .saboxplugin-authorname{text-align:center;margin:10px 0 20px}}body .saboxplugin-authorname a,body .saboxplugin-authorname a:hover{box-shadow:none;-webkit-box-shadow:none}a.sab-profile-edit{font-size:16px!important;line-height:1!important}.sab-edit-settings a,a.sab-profile-edit{color:#0073aa!important;box-shadow:none!important;-webkit-box-shadow:none!important}.sab-edit-settings{margin-right:15px;position:absolute;right:0;z-index:2;bottom:10px;line-height:20px}.sab-edit-settings i{margin-left:5px}.saboxplugin-socials{line-height:1!important}.rtl .saboxplugin-wrap .saboxplugin-gravatar{float:right}.rtl .saboxplugin-wrap .saboxplugin-authorname{display:flex;align-items:center}.rtl .saboxplugin-wrap .saboxplugin-authorname .sab-profile-edit{margin-right:10px}.rtl .sab-edit-settings{right:auto;left:0}img.sab-custom-avatar{max-width:75px;}.saboxplugin-wrap .saboxplugin-gravatar img {-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;-o-border-radius:50%;border-radius:50%;}.saboxplugin-wrap {margin-top:20px; margin-bottom:0px; padding: 0px 0px }.saboxplugin-wrap .saboxplugin-authorname {font-size:16px; line-height:23px;}.saboxplugin-wrap .saboxplugin-desc p, .saboxplugin-wrap .saboxplugin-desc {font-size:13px !important; line-height:20px !important;}.saboxplugin-wrap .saboxplugin-web {font-size:14px;}.saboxplugin-wrap .saboxplugin-socials a svg {width:18px;height:18px;}</style><link rel='stylesheet' id='tve_style_family_tve_flt-css'  href='https://www.dataquest.io/wp-content/plugins/thrive-visual-editor/editor/css/thrive_flat.css?ver=2.4.0' type='text/css' media='all' />
+<link rel='stylesheet' id='tve_leads_forms-css'  href='//www.dataquest.io/wp-content/plugins/thrive-leads/editor-layouts/css/frontend.css?ver=2.2.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/thrive-headline-optimizer/frontend/js/triggers.min.js?ver=1.1.26'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ThriveApp = {"ajax_url":"https:\/\/www.dataquest.io\/wp-admin\/admin-ajax.php","lazy_load_comments":"1","comments_loaded":"0","translations":{"ProductDetails":"Product Details"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/themes/ignition/js/script.min.js?ver=5.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var tve_dash_front = {"ajaxurl":"https:\/\/www.dataquest.io\/wp-admin\/admin-ajax.php","force_ajax_send":"","is_crawler":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/thrive-visual-editor/thrive-dashboard/js/dist/frontend.min.js?ver=2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ThriveApprentice = {"ajax_url":"https:\/\/www.dataquest.io\/wp-admin\/admin-ajax.php","current_post_id":"1999","lang":{"remove_from_fav":"Remove from Favorites","add_to_fav":"Mark as Favorite"},"progress_status":{"new":"new","started":"started","completed":"completed"}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/themes/ignition/appr/js/thrive-apprentice.js?ver=5.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var q2w3_sidebar_options = [{"sidebar":"sidebar-1","margin_top":0,"margin_bottom":0,"stop_id":"dq_footer","screen_max_width":500,"screen_max_height":0,"width_inherit":false,"refresh_interval":1500,"window_load_hook":false,"disable_mo_api":false,"widgets":["custom_html-2","search-3","nav_menu-3"]}];
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/q2w3-fixed-widget/js/q2w3-fixed-widget.min.js?ver=5.1.9'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/posts-data-table/assets/js/datatables/datatables.min.js?ver=1.10.18'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/posts-data-table/assets/js/posts-data-table.min.js?ver=1.2'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/ank-prism-for-wp/out/prism-js.min.js?ver=1550607458'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-includes/js/wp-embed.min.js?ver=5.2.2'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-includes/js/imagesloaded.min.js?ver=3.2.0'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-includes/js/masonry.min.js?ver=3.3.2'></script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-includes/js/jquery/jquery.masonry.min.js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var tve_frontend_options = {"is_editor_page":"","page_events":[],"is_single":"1","ajaxurl":"https:\/\/www.dataquest.io\/wp-admin\/admin-ajax.php","social_fb_app_id":"","dash_url":"https:\/\/www.dataquest.io\/wp-content\/plugins\/thrive-visual-editor\/thrive-dashboard","translations":{"Copy":"Copy"},"post_id":"1999"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.dataquest.io/wp-content/plugins/thrive-visual-editor/editor/js/dist/frontend.min.js?ver=2.4.0'></script>
+<script type='text/javascript' src='//www.dataquest.io/wp-content/plugins/thrive-leads/js/frontend.min.js?ver=2.2.1'></script>
+<script type="text/javascript">/*<![CDATA[*/var THO_Front = THO_Front || {}; THO_Front.data = {"end_of_content_id":"tho-end-content","is_single":true,"log_url":"https:\/\/www.dataquest.io\/wp-json\/tho\/v1\/logs","active_triggers":{"viewport":"thrive_headline"},"log_engagements":[],"post_id":1999,"test_id":0,"const":{"_e_click":1,"_e_scroll":2,"_e_time":3,"_impression":1,"_engagement":2}}/*]]> */</script><script type="text/javascript">var tcb_post_lists=JSON.parse('[]');</script><script type="text/javascript">/*<![CDATA[*/if ( !window.TL_Const ) {var TL_Const={"security":"a877f3fedd","ajax_url":"https:\/\/www.dataquest.io\/wp-admin\/admin-ajax.php","forms":[],"action_conversion":"tve_leads_ajax_conversion","action_impression":"tve_leads_ajax_impression","ajax_load":1,"main_group_id":15804,"display_options":{"allowed_post_types":[],"flag_url_match":false},"shortcode_ids":["11317"],"custom_post_data":[],"current_screen":{"screen_type":4,"screen_id":1999},"ignored_fields":["email","_captcha_size","_captcha_theme","_captcha_type","_submit_option","_use_captcha","g-recaptcha-response","__tcb_lg_fc","__tcb_lg_msg","_state","_form_type","_error_message_option","_back_url","_submit_option","url","_asset_group","_asset_option","mailchimp_optin"]};} else {ThriveGlobal.$j.extend(true, TL_Const, {"security":"a877f3fedd","ajax_url":"https:\/\/www.dataquest.io\/wp-admin\/admin-ajax.php","forms":[],"action_conversion":"tve_leads_ajax_conversion","action_impression":"tve_leads_ajax_impression","ajax_load":1,"main_group_id":15804,"display_options":{"allowed_post_types":[],"flag_url_match":false},"shortcode_ids":["11317"],"custom_post_data":[],"current_screen":{"screen_type":4,"screen_id":1999},"ignored_fields":["email","_captcha_size","_captcha_theme","_captcha_type","_submit_option","_use_captcha","g-recaptcha-response","__tcb_lg_fc","__tcb_lg_msg","_state","_form_type","_error_message_option","_back_url","_submit_option","url","_asset_group","_asset_option","mailchimp_optin"]})} /*]]> */</script></body>
+</html>
