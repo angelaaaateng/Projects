@@ -207,3 +207,12 @@ def rf_feat(rfc):
     plt.xlim([-1, X.shape[1]])
     plt.ylim([0, 0.5])
     return(plt.show())
+
+if __name__ == "__main__":
+    print(("* Loading gensim model and Flask starting server..."
+        "please wait until server has fully started"))
+    app.debug = True
+    #set app debug to true so that whenever a change is made on .py code,
+    #it reflects on server/client terminal tools
+    load_model()
+    app.run()
