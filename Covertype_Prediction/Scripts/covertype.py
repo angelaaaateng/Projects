@@ -56,7 +56,7 @@ data = open("./covtype.data")
 def read_data(data):
     data = pd.read_csv("covtype.data", header=None)
     return(data);
-print('Data loaded');
+print('* Data loaded');
 
 '''Create Dummy Variables and Normalize'''
 def create_dummies(data):
@@ -70,4 +70,44 @@ def create_dummies(data):
     x_scaled = min_max_scaler.fit_transform(x)
     df_normalized = pd.DataFrame(data=x_scaled, columns=df4_column_names)
     return(df_normalized);
-print('Dataframe normalized');
+print('* Dataframe normalized');
+
+'''Add Target Variable to Normalized Data'''
+def norm_target(df_normalized):
+    df_normalized_w_target = pd.concat([df_normalized, df4['Cover_Type']], axis=1)
+    df_dummy = df_normalized_w_target
+    df_dummy = df_dummy.drop(['Cover_Type'], axis=1)
+    return(df_dummy);
+print('* Normalized target variable added to dummy df')
+
+'''Get X and Y labels'''
+def xy_labels(df_normalized_w_target):
+    X=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
+    Y=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
+    return(X,Y)
+print('* X,Y defined')
+
+RANDOM_STATE = 42
+
+'''Split into training and testing sets'''
+def train_test(X,Y):
+    X, y = make_imbalance(X, Y,
+                      sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
+                      random_state=RANDOM_STATE)
+    print('Training target statistics: {}'.format(Counter(y_train)))
+    print('Testing target statistics: {}'.format(Counter(y_test)))
+    return(X_train, X_test, y_train, y_test)
+print('* Dataset split')
+
+'''Data Pre-processing'''
+def preprocessing(data):
+    data = read_data(data);
+    df_normalized = create_dummies(data);
+    df_dummy = norm_target(df_normalized);
+    X, Y = xy_labels(df_normalized_w_target);
+    RANDOM_STATE = 42
+    X_train, X_test, y_train, y_test = train_test(X,Y);
+    return(X_train, X_test, y_train, y_test)
+print('* Complete')
+#print('Training target statistics: {}'.format(Counter(y_train)))
+#print('Testing target statistics: {}'.format(Counter(y_test)))
