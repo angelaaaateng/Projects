@@ -52,14 +52,23 @@ os.getcwd()
 print('Directory navigated')
 data = open("./covtype.data")
 
-'''Read Data'''
+
 def read_data(data):
+    '''
+    Read Data
+    '''
     data = pd.read_csv("covtype.data", header=None)
     return(data);
 print('* Data loaded');
 
-'''Create Dummy Variables and Normalize'''
+#data = pd.read_csv("covtype.data", header=None)
+#print(data["Cover_Type"])
+
+
 def create_dummies(data):
+    '''
+    Create Dummy Variables and Normalize
+    '''
     cov_dummy = pd.get_dummies(data['Cover_Type'])
     df4 = pd.concat([cov_dummy, data], axis = 1)
     df4_column_names = list(df4.columns)
@@ -72,16 +81,22 @@ def create_dummies(data):
     return(df_normalized);
 print('* Dataframe normalized');
 
-'''Add Target Variable to Normalized Data'''
+
 def norm_target(df_normalized):
+    '''
+    Add Target Variable to Normalized Data
+    '''
     df_normalized_w_target = pd.concat([df_normalized, df4['Cover_Type']], axis=1)
     df_dummy = df_normalized_w_target
     df_dummy = df_dummy.drop(['Cover_Type'], axis=1)
     return(df_dummy);
 print('* Normalized target variable added to dummy df')
 
-'''Get X and Y labels'''
+
 def xy_labels(df_normalized_w_target):
+    '''
+    Get X and Y labels
+    '''
     X=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
     Y=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
     return(X,Y)
@@ -89,8 +104,11 @@ print('* X,Y defined')
 
 RANDOM_STATE = 42
 
-'''Split into training and testing sets'''
+
 def train_test(X,Y):
+    '''
+    Split into training and testing sets
+    '''
     X, y = make_imbalance(X, Y,
                       sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
                       random_state=RANDOM_STATE)
@@ -99,8 +117,11 @@ def train_test(X,Y):
     return(X_train, X_test, y_train, y_test)
 print('* Dataset split')
 
-'''Data Pre-processing'''
+
 def preprocessing(data):
+    '''
+    Data Pre-processing
+    '''
     data = read_data(data);
     df_normalized = create_dummies(data);
     df_dummy = norm_target(df_normalized);
@@ -111,3 +132,78 @@ def preprocessing(data):
 print('* Complete')
 #print('Training target statistics: {}'.format(Counter(y_train)))
 #print('Testing target statistics: {}'.format(Counter(y_test)))
+
+
+def dtree(X_train, X_test, y_train, y_test):
+    '''
+    Decision Tree
+    '''
+    clf = DecisionTreeClassifier(random_state=42)
+    clf = clf.fit(X_train, y_train)
+    dtree = DecisionTreeClassifier( random_state=42)
+    dtree.fit(X_train,y_train)
+    predictions = dtree.predict(X_test)
+    print ("Decision Tree Train Accuracy:", metrics.accuracy_score(y_train, dtree.predict(X_train)))
+    print ("Decision Tree Test Accuracy:", metrics.accuracy_score(y_test, dtree.predict(X_test)))
+    y_pred = dtree.predict(X_test)
+    print('Accuracy of decision tree classifier on test set: {:.2f}'.format(dtree.score(X_test, y_test)))
+    from sklearn.metrics import classification_report
+    print(classification_report(y_test, y_pred))
+    print(confusion_matrix(y_test,predictions))
+    return(y_pred)
+print('* Decision Tree Processed')
+
+#print(preprocessing(data))
+
+
+def print_tree(X_train, X_test, y_train, y_test, df_normalized_w_target):
+    '''
+    Visualize Decision Tree
+    '''
+    feature_list = list(df_normalized_w_target.columns)[7:-1]
+    features = list(feature_list)
+    dtree_baseline = DecisionTreeClassifier(max_depth=3, random_state=42)
+    dtree_baseline.fit(X_train,y_train)
+    dot_data = StringIO()
+    export_graphviz(dtree_baseline, out_file=dot_data,feature_names=features,filled=True,rounded=True)
+    graph = pydot.graph_from_dot_data(dot_data.getvalue())
+    return(Image(graph[0].create_png()))
+print('* Decision Tree Printed')
+
+
+def rf_baseline(X_train, X_test, y_train, y_test):
+    '''
+    Random Forest
+    '''
+    rfc = RandomForestClassifier(n_estimators=100)
+    rfc.fit(X_train, y_train)
+    rfc_pred = rfc.predict(X_test)
+    y_pred =  rfc.predict(X_test)
+    print ("Random Forest Train Accuracy Baseline:", metrics.accuracy_score(y_train, rfc.predict(X_train)))
+    print ("Random Forest Test Accuracy Baseline:", metrics.accuracy_score(y_test, rfc.predict(X_test)))
+    print(confusion_matrix(y_test,rfc_pred))
+    print(classification_report(y_test,rfc_pred))
+    return(y_pred)
+
+
+def rf_feat(rfc):
+    '''
+    Feature selection for RF
+    '''
+    from sklearn import inspection
+    import mlxtend
+    from mlxtend.evaluate import feature_importance_permutation
+    importance_vals = rfc.feature_importances_
+    std = np.std([tree.feature_importances_ for tree in rfc.estimators_],
+             axis=0)
+    indices = np.argsort(importance_vals)[::-1]
+    ranked_index = [feature_list[i] for i in indices]
+    plt.figure(figsize=(12,8))
+    plt.title("Random Forest feature importance")
+    plt.bar(range(X.shape[1]), importance_vals[indices],
+            yerr=std[indices], align="center")
+    #plt.xticks(range(X.shape[1]), indices)
+    plt.xticks(range(X.shape[1]), (ranked_index), rotation=90)
+    plt.xlim([-1, X.shape[1]])
+    plt.ylim([0, 0.5])
+    return(plt.show())
