@@ -150,5 +150,6 @@ def preprocess():
     df_normalized, df_normalized_w_target = normalize_data(df4, df4_column_names)
     #print(normalized_data)
     X_train, X_test, y_train, y_test = sample_data(df_normalized_w_target)
+    return(X_train, X_test, y_train, y_test)
     print('* Data Preprocessing Complete')
 preprocess()

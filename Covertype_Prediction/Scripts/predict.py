@@ -59,7 +59,7 @@ from preprocess_data_old import preprocess
 
 #preprocess()
 
-def decision_tree(X_train, y_train):
+def decision_tree(X_train, X_test, y_train, y_test):
     clf = DecisionTreeClassifier(random_state=42)
     clf = clf.fit(X_train, y_train)
     dtree = DecisionTreeClassifier( random_state=42)
@@ -67,11 +67,33 @@ def decision_tree(X_train, y_train):
     predictions = dtree.predict(X_test)
     print("Decision Tree Train Accuracy:", metrics.accuracy_score(y_train, dtree.predict(X_train)))
     print("Decision Tree Test Accuracy:", metrics.accuracy_score(y_test, dtree.predict(X_test)))
+    y_pred = dtree.predict(X_test)
+    print('* Decision Tree Classification Report')
+    print(classification_report(y_test, y_pred))
+    print('* Decision Tree Confusion Matrix')
+    print(confusion_matrix(y_test,predictions))
     dtree_train_accuracy = dtree.predict(X_train)
     dtree_test_accuracy = dtree.predict(X_test)
     return(dtree_train_accuracy, dtree_test_accuracy)
 
+def random_forest(X_train, X_test, y_train, y_test):
+    rfc = RandomForestClassifier(n_estimators=100)
+    rfc = rfc.fit(X_train, y_train)
+    rfc_pred = rfc.predict(X_test)
+    y_pred =  rfc.predict(X_test)
+    rf_train_acc = metrics.accuracy_score(y_train, rfc.predict(X_train))
+    rf_test_acc = metrics.accuracy_score(y_train, rfc.predict(X_test))
+    print ("Random Forest Train Accuracy Baseline:", metrics.accuracy_score(y_train, rfc.predict(X_train)))
+    print ("Random Forest Test Accuracy Baselsine:", metrics.accuracy_score(y_test, rfc.predict(X_test)))
+    print(confusion_matrix(y_test,rfc_pred))
+    print(classification_report(y_test,rfc_pred))
+    return(rf_train_acc, rf_test_acc)
+
 def predict():
-    X_train, y_train = preprocess()
-    dtree_train_accuracy, dtree_test_accuracy = decision_tree(X_train, y_train)
-    return(dtree_train_accuracy, dtree_test_accuracy)
+    X_train, X_test, y_train, y_test = preprocess()
+    dtree_train_accuracy, dtree_test_accuracy = decision_tree(X_train, X_test, y_train, y_test)
+    rf_train_acc, rf_test_acc = random_forest(X_train, X_test, y_train, y_test)
+    print('* Prediction Complete')
+    return(dtree_train_accuracy, dtree_test_accuracy,rf_train_acc, rf_test_acc )
+
+predict()
