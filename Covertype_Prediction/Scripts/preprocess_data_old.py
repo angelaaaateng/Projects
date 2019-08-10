@@ -27,23 +27,18 @@ from IPython.display import Image
 from sklearn.externals.six import StringIO
 from sklearn.tree import export_graphviz
 import pydot
-import mca
 from random import sample
 from sklearn import preprocessing
 from sklearn.model_selection import validation_curve
-from sklearn.pipeline import make_pipeline
-from sklearn.metrics import make_scorer
 from sklearn.metrics import accuracy_score
-from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from collections import Counter
 from imblearn.datasets import make_imbalance
-from imblearn.under_sampling import NearMiss
-from imblearn.pipeline import make_pipeline
 from imblearn.metrics import classification_report_imbalanced
 from sklearn import tree
 import pydotplus
 from sklearn.preprocessing import MinMaxScaler
+import os
 print(__doc__)
 
 
@@ -52,18 +47,20 @@ if __name__ == "__main__":
     Navigate Directory
     '''
     print("* Navigating through directory")
-    import os
     os.chdir('/Users/angelateng/Documents/GitHub/Projects/Covertype_Prediction/Data')
     print(os.getcwd())
+    print(__name__)
     print('Directory navigated')
-    data = open("./covtype.data")
+    input = open("./covtype.data")
+
 
 
 def read_data():
     '''
     Read Data
     '''
-    data = pd.read_csv("covtype.data", header=None)
+
+    data = pd.read_csv("./covtype.data", header=None)
     # set column names
     cols = ['elevation', 'aspect', 'slope', 'horizontal_distance_to_hydrology',
        'vertical_distance_to_hydrology', 'Horizontal_Distance_To_Roadways',
@@ -111,51 +108,47 @@ def read_data():
         'Soil_Type_40',
        'Cover_Type']
     data.columns = cols
+    #print(data['Cover_Type'])
     print('* Data loaded')
-    #print(read_data)
-    return(data);
-
-read_data()
-
-
-def create_dummies():
-    '''
-    Create Dummy Variables and Normalize
-    '''
-    data = read_data()
     cov_dummy = pd.get_dummies(data['Cover_Type'])
     df4 = pd.concat([cov_dummy, data], axis = 1)
     df4_column_names = list(df4.columns)
     df4_column_names.remove('Cover_Type')
-    # Normalize all columns
+    #pprint(data.columns)
+    #print(df4)
+    #print(read_data)
+    #print(df4_column_names)
+    return(data, df4, df4_column_names);
+
+#read_data()
+
+def normalize_data(df4, df4_column_names):
     x = df4.loc[:, df4.columns != 'Cover_Type'].values #returns a numpy array
     min_max_scaler = preprocessing.MinMaxScaler()
     x_scaled = min_max_scaler.fit_transform(x)
     df_normalized = pd.DataFrame(data=x_scaled, columns=df4_column_names)
-    #print(df4_column_names);
+    #print(df_normalized)
     df_normalized_w_target = pd.concat([df_normalized, df4['Cover_Type']], axis=1)
     df_dummy = df_normalized_w_target
     df_dummy = df_dummy.drop(['Cover_Type'], axis=1)
-    print(df_normalized)
-    print('* Dataframe normalized');
-    print(df_dummy)
-    print('* Normalized target variable added to dummy df')
-    return(df_normalized, df_dummy);
+    print('* Data Normalized')
+    return(df_normalized, df_normalized_w_target)
 
-create_dummies()
+def sample_data(df_normalized_w_target):
+    X=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
+    Y=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
+    X, y = make_imbalance(X, Y,
+                      sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
+                      random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+    #print(X_train, X_test, y_train, y_test
+    print('* Data Sampled')
+    return(X_train, X_test, y_train, y_test)
 
-def preprocessing():
-    '''
-    Data Pre-processing
-    '''
-    data = read_data();
-    df_normalized = create_dummies(data);
-    #df_dummy = norm_target(df_normalized);
-    #X, Y = xy_labels(df_normalized_w_target);
-    #RANDOM_STATE = 42
-    #X_train, X_test, y_train, y_test = train_test(X,Y);
-    #return(X_train, X_test, y_train, y_test)
-    #print(df_normalized)
-    print('* Complete');
-
-#preprocessing()
+def preprocess():
+    data, df4, df4_column_names = read_data()
+    df_normalized, df_normalized_w_target = normalize_data(df4, df4_column_names)
+    #print(normalized_data)
+    X_train, X_test, y_train, y_test = sample_data(df_normalized_w_target)
+    print('* Data Preprocessing Complete')
+preprocess()
