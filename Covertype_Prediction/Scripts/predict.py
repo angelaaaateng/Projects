@@ -88,19 +88,23 @@ def random_forest(df_normalized_w_target):
     Y=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
     print("Y Shape", Y.shape)
 
-    perm_feat_imp = X.iloc[:,[0,5,9,3,12,13,4,23,7,10]]
+    perm_feat_imp = X.iloc[:,[0,5,9,3,12,13,4,23,7,10,16,6,52]]
+    print("Perm Feat Impt Shape", perm_feat_imp.shape)
 
     X, y = make_imbalance(perm_feat_imp, Y,
                       sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
                       random_state=42)
     X_train_rf, X_test_rf, y_train_rf, y_test_rf = train_test_split(X, y, random_state=42)
-
+    print('Training target statistics: {}'.format(Counter(y_train_rf)))
+    print('Testing target statistics: {}'.format(Counter(y_test_rf)))
     rfc = RandomForestClassifier(n_estimators=100)
     rfc = rfc.fit(X_train_rf, y_train_rf)
-    #rfc_pred = rfc.predict(X_test_rf)
-    #print("rfc pred shape", rfc_pred.shape)
+    rfc_pred = rfc.predict(X_test_rf)
+    print("rfc pred shape", rfc_pred.shape)
     y_pred_rf =  rfc.predict(X_test_rf)
     print("y pred rf shape", y_pred_rf.shape)
+    print("y train rf shape", y_train_rf.shape)
+    print("y train rf shape", X_train_rf.shape)
 
     rf_train_acc = metrics.accuracy_score(y_train_rf, rfc.predict(X_train_rf))
     rf_test_acc = metrics.accuracy_score(y_train_rf, rfc.predict(X_test_rf))
@@ -108,6 +112,7 @@ def random_forest(df_normalized_w_target):
     print ("Random Forest Test Accuracy:", metrics.accuracy_score(y_test_rf, rfc.predict(X_test_rf)))
     print(confusion_matrix(y_test_rf,rfc_pred_rf))
     print(classification_report(y_test_rf,rfc_pred_rf))
+    print(classification_report(y_test,rfc_pred))
     return(rf_train_acc, rf_test_acc)
 
 def predict():
