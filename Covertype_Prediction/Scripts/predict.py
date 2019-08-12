@@ -84,35 +84,36 @@ def random_forest(df_normalized_w_target):
 
 
     X = df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
-    print(X.shape)
+    print("X Shape", X.shape)
     Y=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
-    print(Y.shape)
+    print("Y Shape", Y.shape)
 
     perm_feat_imp = X.iloc[:,[0,5,9,3,12,13,4,23,7,10]]
 
     X, y = make_imbalance(perm_feat_imp, Y,
                       sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
                       random_state=42)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+    X_train_rf, X_test_rf, y_train_rf, y_test_rf = train_test_split(X, y, random_state=42)
 
     rfc = RandomForestClassifier(n_estimators=100)
-    rfc = rfc.fit(X_train, y_train)
-    rfc_pred = rfc.predict(X_test)
-    print(rfc_pred.shape)
-    y_pred =  rfc.predict(X_test)
-    print(y_pred.shape)
+    rfc = rfc.fit(X_train_rf, y_train_rf)
+    #rfc_pred = rfc.predict(X_test_rf)
+    #print("rfc pred shape", rfc_pred.shape)
+    y_pred_rf =  rfc.predict(X_test_rf)
+    print("y pred rf shape", y_pred_rf.shape)
 
-    rf_train_acc = metrics.accuracy_score(y_train, rfc.predict(X_train))
-    rf_test_acc = metrics.accuracy_score(y_train, rfc.predict(X_test))
-    print ("Random Forest Train Accuracy:", metrics.accuracy_score(y_train, rfc.predict(X_train)))
-    print ("Random Forest Test Accuracy:", metrics.accuracy_score(y_test, rfc.predict(X_test)))
-    print(confusion_matrix(y_test,rfc_pred))
-    print(classification_report(y_test,rfc_pred))
+    rf_train_acc = metrics.accuracy_score(y_train_rf, rfc.predict(X_train_rf))
+    rf_test_acc = metrics.accuracy_score(y_train_rf, rfc.predict(X_test_rf))
+    print ("Random Forest Train Accuracy:", metrics.accuracy_score(y_train_rf, rfc.predict(X_train_rf)))
+    print ("Random Forest Test Accuracy:", metrics.accuracy_score(y_test_rf, rfc.predict(X_test_rf)))
+    print(confusion_matrix(y_test_rf,rfc_pred_rf))
+    print(classification_report(y_test_rf,rfc_pred_rf))
     return(rf_train_acc, rf_test_acc)
 
 def predict():
     X_train, X_test, y_train, y_test, df_normalized_w_target = preprocess()
     dtree_train_accuracy, dtree_test_accuracy = decision_tree(X_train, X_test, y_train, y_test)
+    #problem line
     rf_train_acc, rf_test_acc = random_forest(df_normalized_w_target)
     print('* Prediction Complete')
     return(dtree_train_accuracy, dtree_test_accuracy,rf_train_acc, rf_test_acc )
