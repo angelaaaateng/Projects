@@ -43,6 +43,7 @@ from sklearn.preprocessing import MinMaxScaler
 import os
 from sklearn import inspection
 import mlxtend
+from sklearn.model_selection import GridSearchCV
 
 from mlxtend.evaluate import feature_importance_permutation
 print(__doc__)
@@ -107,19 +108,48 @@ def random_forest(df_normalized_w_target):
     print("y train rf shape", X_train_rf.shape)
 
     rf_train_acc = metrics.accuracy_score(y_train_rf, rfc.predict(X_train_rf))
-    rf_test_acc = metrics.accuracy_score(y_train_rf, rfc.predict(X_test_rf))
+    rf_test_acc = metrics.accuracy_score(y_test_rf, rfc.predict(X_test_rf))
     print ("Random Forest Train Accuracy:", metrics.accuracy_score(y_train_rf, rfc.predict(X_train_rf)))
     print ("Random Forest Test Accuracy:", metrics.accuracy_score(y_test_rf, rfc.predict(X_test_rf)))
-    print(confusion_matrix(y_test_rf,rfc_pred_rf))
-    print(classification_report(y_test_rf,rfc_pred_rf))
-    print(classification_report(y_test,rfc_pred))
+    print(confusion_matrix(y_test_rf,rfc_pred))
+    print(classification_report(y_test_rf,rfc_pred))
+    print(classification_report(y_test_rf,rfc_pred))
     return(rf_train_acc, rf_test_acc)
+
+def hyper_param_rf(X_train, y_train):
+    rfc = RandomForestClassifier()
+    param_grid = {
+    'bootstrap': [True],
+    'max_depth': [10,15, 20, None],
+    'min_samples_leaf': [1, 10, 20, 50, 100],
+    'min_samples_split': [2, 30, 40],}
+    rfc_gs = RandomForestClassifier()
+    grid_search = GridSearchCV(estimator = rfc_gs, param_grid = param_grid,
+                          cv = 3, n_jobs = -1, verbose = 2)
+    grid_search.fit(X_train, y_train)
+    best_grid = grid_search.best_estimator_
+    grid_search_optimal = GridSearchCV(estimator = rfc, param_grid = optimal_param_grid,
+                          cv = 3, n_jobs = -1, verbose = 2)
+    grid_search_optimal.fit(X_train, y_train)
+    rfc_pred_gs = grid_search_optimal.predict(X_test)
+    print ("Random Forest Train Accuracy Baseline After Grid Search:", metrics.accuracy_score(y_train, grid_search_optimal.predict(X_train)))
+    print ("Random Forest Test Accuracy Baseline After Grid Search:", metrics.accuracy_score(y_test, grid_search_optimal.predict(X_test)))
+    print(confusion_matrix(y_test,rfc_pred_gs))
+    rfc_train_acc = metrics.accuracy_score(y_train, rfc.predict(X_train))
+    rfc_test_acc = metrics.accuracy_score(y_test, rfc.predict(X_test))
+    return(rfc_train_acc, rfc_test_acc)
+
+
+
+
+
 
 def predict():
     X_train, X_test, y_train, y_test, df_normalized_w_target = preprocess()
     dtree_train_accuracy, dtree_test_accuracy = decision_tree(X_train, X_test, y_train, y_test)
     #problem line
     rf_train_acc, rf_test_acc = random_forest(df_normalized_w_target)
+    rfc_train_acc, rfc_test_acc = hyper_param_rf(X_train, y_train)
     print('* Prediction Complete')
     return(dtree_train_accuracy, dtree_test_accuracy,rf_train_acc, rf_test_acc )
 
