@@ -1,50 +1,34 @@
 '''Import Libraries'''
 
 import numpy as np
-import scipy as sp
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from scipy.stats import norm
 from sklearn.preprocessing import StandardScaler
+from scipy import stats
 import warnings
 warnings.filterwarnings('ignore')
+from plotly import __version__
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 from pprint import pprint
-from yellowbrick.features import RFECV
-from sklearn.model_selection import train_test_split
-from IPython.display import Image
 from sklearn.externals.six import StringIO
-from sklearn.tree import export_graphviz
-import pydot
-from random import sample
-from collections import Counter
-from imblearn.datasets import make_imbalance
-from imblearn.metrics import classification_report_imbalanced
-from sklearn import tree
-import pydotplus
+from sklearn import preprocessing
 from sklearn.preprocessing import MinMaxScaler
 import os
-print(__doc__)
-
-
-if __name__ == "__main__":
-    '''
-    Navigate Directory
-    '''
-    print("* Navigating through directory")
-    os.chdir('/Users/angelateng/Documents/GitHub/Projects/Covertype_Prediction/Data')
-    print(os.getcwd())
-    print(__name__)
-    print('Directory navigated')
-    input = open("./covtype.data")
 
 
 
-def read_data():
+
+#doesn't work unless if name == main is the first module
+#from app.py import transform_view
+
+def read_data(csv_file):
     '''
     Read Data
     '''
 
-    data = pd.read_csv("./covtype.data", header=None)
+    data = pd.read_csv(csv_file, header=None)
     # set column names
     cols = ['elevation', 'aspect', 'slope', 'horizontal_distance_to_hydrology',
        'vertical_distance_to_hydrology', 'Horizontal_Distance_To_Roadways',
@@ -104,7 +88,8 @@ def read_data():
     #print(df4_column_names)
     return(data, df4, df4_column_names);
 
-#read_data()
+#read_data("./covtype.data")
+
 
 def normalize_data(df4, df4_column_names):
     x = df4.loc[:, df4.columns != 'Cover_Type'].values #returns a numpy array
@@ -115,25 +100,29 @@ def normalize_data(df4, df4_column_names):
     df_normalized_w_target = pd.concat([df_normalized, df4['Cover_Type']], axis=1)
     df_dummy = df_normalized_w_target
     df_dummy = df_dummy.drop(['Cover_Type'], axis=1)
+    X_test=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
+    Y_test=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
     print('* Data Normalized')
-    return(df_normalized, df_normalized_w_target)
+    #print(y_test)
+    return(df_normalized, df_normalized_w_target, X_test, y_test)
 
-def sample_data(df_normalized_w_target):
-    X=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
-    Y=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
-    X, y = make_imbalance(X, Y,
-                      sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
-                      random_state=42)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
-    #print(X_train, X_test, y_train, y_test
-    print('* Data Sampled')
-    return(X_train, X_test, y_train, y_test)
 
-def preprocess():
-    data, df4, df4_column_names = read_data()
+def preprocess(csv_file):
+    data, df4, df4_column_names = read_data(csv_file)
     df_normalized, df_normalized_w_target = normalize_data(df4, df4_column_names)
-    #print(normalized_data)
-    X_train, X_test, y_train, y_test = sample_data(df_normalized_w_target)
-    return(X_train, X_test, y_train, y_test, df_normalized_w_target)
     print('* Data Preprocessing Complete')
-preprocess()
+    return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
+
+#preprocess("./covtype.data")
+
+if __name__ == "__main__":
+    '''
+    Navigate Directory
+    '''
+    print('* Data Preprocessing Running')
+    #print("* Navigating through directory")
+    #os.chdir('/Users/angelateng/Documents/GitHub/Projects/Covertype_Prediction/Data')
+    #print(os.getcwd())
+    #print(__name__)
+    #print('Directory navigated')
+    #input = open("./covtype.data")
