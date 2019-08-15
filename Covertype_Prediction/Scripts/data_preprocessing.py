@@ -1,5 +1,5 @@
 '''Import Libraries'''
-
+import sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -17,7 +17,11 @@ from sklearn import preprocessing
 from sklearn.preprocessing import MinMaxScaler
 import os
 
-
+# os.chdir('/Users/angelateng/Documents/GitHub/Projects/Covertype_Prediction/Archive/Data')
+# print(os.getcwd())
+# print(__name__)
+# print('Directory navigated')
+# input = open("./covtype.data")
 
 
 #doesn't work unless if name == main is the first module
@@ -85,10 +89,10 @@ def read_data(csv_file):
     #pprint(data.columns)
     #print(df4)
     #print(read_data)
-    #print(df4_column_names)
+    print(df4_column_names)
     return(data, df4, df4_column_names);
 
-#read_data("./covtype.data")
+#data, df4, df4_column_names = read_data("./covtype.data")
 
 
 def normalize_data(df4, df4_column_names):
@@ -101,11 +105,12 @@ def normalize_data(df4, df4_column_names):
     df_dummy = df_normalized_w_target
     df_dummy = df_dummy.drop(['Cover_Type'], axis=1)
     X_test=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
-    Y_test=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
+    y_test=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
     print('* Data Normalized')
-    #print(y_test)
+    print(y_test)
     return(df_normalized, df_normalized_w_target, X_test, y_test)
 
+#normalize_data(df4, df4_column_names)
 
 def preprocess(csv_file):
     data, df4, df4_column_names = read_data(csv_file)
@@ -121,8 +126,3 @@ if __name__ == "__main__":
     '''
     print('* Data Preprocessing Running')
     #print("* Navigating through directory")
-    #os.chdir('/Users/angelateng/Documents/GitHub/Projects/Covertype_Prediction/Data')
-    #print(os.getcwd())
-    #print(__name__)
-    #print('Directory navigated')
-    #input = open("./covtype.data")

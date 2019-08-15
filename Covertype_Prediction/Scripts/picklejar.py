@@ -6,7 +6,7 @@ from sklearn import metrics
 from imblearn.metrics import classification_report_imbalanced
 from sklearn.metrics import accuracy_scores
 
-import pickle
+# import pickle
 
 #from data_preprocessing import preprocess
 
@@ -34,8 +34,8 @@ def hyper_param_rf(X_train, y_train, X_test, y_test):
     rfc_train_acc = metrics.accuracy_score(y_train, rfc.predict(X_train))
     rfc_test_acc = metrics.accuracy_score(y_test, rfc.predict(X_test))
 
-    filename = 'model.pkl'
-    pickle.dump(model, open(filename, 'wb'))
+    # filename = 'model.pkl'
+    # pickle.dump(model, open(filename, 'wb'))
     return(rfc_train_acc, rfc_test_acc, y_pred)
 
 if __name__ == "__main__":
