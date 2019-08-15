@@ -31,8 +31,9 @@ def read_data(csv_file):
     '''
     Read Data
     '''
-
-    data = pd.read_table(csv_file, header=None)
+    data = csv_file
+    # data = pd.DataFrame([csv_file], index=None)
+    # data = pd.read_data(csv_file, header=None)
     # set column names
     cols = ['elevation', 'aspect', 'slope', 'horizontal_distance_to_hydrology',
        'vertical_distance_to_hydrology', 'Horizontal_Distance_To_Roadways',
@@ -89,7 +90,7 @@ def read_data(csv_file):
     #pprint(data.columns)
     #print(df4)
     #print(read_data)
-    print(df4_column_names)
+    # print(df4_column_names)
     return(data, df4, df4_column_names);
 
 #data, df4, df4_column_names = read_data("./covtype.data")
@@ -107,14 +108,14 @@ def normalize_data(df4, df4_column_names):
     X_test=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
     y_test=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
     print('* Data Normalized')
-    print(y_test)
+    # print(y_test)
     return(df_normalized, df_normalized_w_target, X_test, y_test)
 
 #normalize_data(df4, df4_column_names)
 
 def preprocess(csv_file):
     data, df4, df4_column_names = read_data(csv_file)
-    df_normalized, df_normalized_w_target = normalize_data(df4, df4_column_names)
+    df_normalized, df_normalized_w_target, X_test, y_test = normalize_data(df4, df4_column_names)
     print('* Data Preprocessing Complete')
     return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
 

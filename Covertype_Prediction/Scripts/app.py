@@ -1,4 +1,5 @@
-from flask import Flask, make_response, request
+from flask import Flask, make_response, request, render_template
+import pandas as pd
 import io
 import csv
 
@@ -29,38 +30,52 @@ def form():
                     <center> <input type="file" name="data_file" />
                     <br>
                     <p> </p>
-                    <center> <input type="submit" />
+                    <center> <input type="submit"/>
                 </form>
             </body>
         </html>
     """)
 
-@app.route('/datafeecback', methods=["POST"])
+# @app.route('/datafeecback', methods=["POST"])
+@app.route('/datafeecback', methods=["GET", "POST"])
 def transform_view():
+    # if request.method == "POST":
+    #     df = pd.read_csv(request.files.get('data_file'))
+    print("* Requesting data")
     f = request.files['data_file']
-    #return(f)
+    # print(f)
     if not f:
         return("No file selected. Please choose a CSV file and try again.")
-
+    # stream = io.BytesIO(f.stream.read().decode("UTF8"), newline=None)
     stream = io.StringIO(f.stream.read().decode("UTF8"), newline=None)
     csv_input = csv.reader(stream)
+    print("* Processing csv_input")
+    # print(stream)
+    # print(csv_input)
+    df = pd.DataFrame(csv_input, index=None, columns=None)
+    # df = pd.DataFrame([csv_input], index=None, columns=None)
+    # print(df.head())
 
+    preprocess(df)
     #preprocess(f)
     #def preprocess(csv_file):
-    data, df4, df4_column_names = read_data(f)
-    df_normalized, df_normalized_w_target = normalize_data(df4, df4_column_names)
+    # data, df4, df4_column_names = read_data(df)
+    # data, df4, df4_column_names = read_data(stream)
+    # df_normalized, df_normalized_w_target, X_test, y_test = normalize_data(df4, df4_column_names)
     print('* Data Preprocessing Complete Flask')
-    return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
+    # print(df4.head())
+    # print(df4_column_names)
+    # return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
 
-    print('* API: Data Preprocessing Completed')
+    # print('* API: Data Preprocessing Completed')
 
     #return confusion matrix
     return('* CSV File Submitted -- Running')
     #return(f)
 
 # def preprocess(input):
-#     print('* CSV File Submitted -- Running')
-#     print([row for row in input])
+    # print('* CSV File Submitted -- Running')
+    # print([row for row in input])
 
 
 if __name__ == '__main__':
