@@ -105,19 +105,19 @@ def normalize_data(df4, df4_column_names):
     df_normalized_w_target = pd.concat([df_normalized, df4['Cover_Type']], axis=1)
     df_dummy = df_normalized_w_target
     df_dummy = df_dummy.drop(['Cover_Type'], axis=1)
-    X_test=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
-    y_test=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
+    X_test_new=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
+    y_test_new=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
     print('* Data Normalized')
     # print(y_test)
-    return(df_normalized, df_normalized_w_target, X_test, y_test)
+    return(df_normalized, df_normalized_w_target, X_test_new, y_test_new)
 
 #normalize_data(df4, df4_column_names)
 
 def preprocess(csv_file):
     data, df4, df4_column_names = read_data(csv_file)
-    df_normalized, df_normalized_w_target, X_test, y_test = normalize_data(df4, df4_column_names)
+    df_normalized, df_normalized_w_target, X_test_new, y_test_new = normalize_data(df4, df4_column_names)
     print('* Data Preprocessing Complete')
-    return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
+    return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test_new, y_test_new)
 
 #preprocess("./covtype.data")
 

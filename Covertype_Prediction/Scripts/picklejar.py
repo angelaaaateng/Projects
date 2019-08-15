@@ -6,6 +6,8 @@ from sklearn import metrics
 from imblearn.metrics import classification_report_imbalanced
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from imblearn.datasets import make_imbalance
+
 
 # import pickle
 
@@ -16,16 +18,16 @@ from joblib import dump, load
 
 
 # data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test = preprocess("./covtype.data")
-
-def initialize_sample(df_normalized_w_target, X_test, y_test):
-    # X, y = make_imbalance(X_test, y_test,
-    #                   sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
-    #                   random_state=42)
-    X_train, X_test_new, y_train, y_test_new = train_test_split(X_test, y_test, random_state=42)
-    #print(X_train, X_test, y_train, y_test
-    print('* Data Sampled')
-    print(X_train, X_test_new, y_train, y_test_new)
-    return(X_train, X_test_new, y_train, y_test_new)
+#
+# def initialize_sample(df_normalized_w_target, X_test, y_test):
+#     X, y = make_imbalance(X_test, y_test,
+#                       sampling_strategy={1: 2700, 2: 2700, 3: 2700, 4:2700, 5:2700, 6:2700, 7:2700},
+#                       random_state=42)
+#     X_train, X_test_new, y_train, y_test_new = train_test_split(X_test, y_test, random_state=42)
+#     #print(X_train, X_test, y_train, y_test
+#     print('* Data Sampled')
+#     print(X_train, X_test_new, y_train, y_test_new)
+#     return(X_train, X_test_new, y_train, y_test_new)
 
 
 def hyper_param_rf(X_train, y_train, X_test, y_test):
@@ -55,6 +57,7 @@ def hyper_param_rf(X_train, y_train, X_test, y_test):
 
     # filename = 'model.pkl'
     # pickle.dump(model, open(filename, 'wb'))
+    # print(rfc_train_acc, rfc_test_acc, y_pred)
     print("* File pickled using joblib")
     return(rfc_train_acc, rfc_test_acc, y_pred)
 

@@ -5,7 +5,8 @@ import csv
 
 from data_preprocessing import read_data, normalize_data, preprocess
 
-from picklejar import initialize_sample
+from picklejar import hyper_param_rf
+from build_model import sample_data
 
 app = Flask(__name__)
 
@@ -58,7 +59,7 @@ def transform_view():
     # df = pd.DataFrame([csv_input], index=None, columns=None)
     # print(df.head())
 
-    data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test = preprocess(df)
+    data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test_new, y_test_new = preprocess(df)
 
     #preprocess(f)
     #def preprocess(csv_file):
@@ -66,8 +67,14 @@ def transform_view():
     # data, df4, df4_column_names = read_data(stream)
     # df_normalized, df_normalized_w_target, X_test, y_test = normalize_data(df4, df4_column_names)
     print('* Data Preprocessing Complete Flask')
-    X_train, X_test_new, y_train, y_test_new = initialize_sample(df_normalized_w_target, X_test, y_test)
-    print("* Data Initialized for First Pickle")
+
+    # X_train, X_test, y_train, y_test = sample_data(df_normalized_w_target)
+    # print('* Data Sampled')
+    # X_train, X_test_new, y_train, y_test_new = initialize_sample(df_normalized_w_target, X_test, y_test)
+    # print("* Data Initialized for First Pickle")
+
+    rfc_train_acc, rfc_test_acc, y_pred = hyper_param_rf(X_train, y_train, X_test, y_test)
+    print("* Hyperparameter search complete")
     # print(df4.head())
     # print(df4_column_names)
     # return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
