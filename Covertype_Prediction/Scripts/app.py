@@ -5,6 +5,8 @@ import csv
 
 from data_preprocessing import read_data, normalize_data, preprocess
 
+from picklejar import initialize_sample
+
 app = Flask(__name__)
 
 #model = None
@@ -56,13 +58,16 @@ def transform_view():
     # df = pd.DataFrame([csv_input], index=None, columns=None)
     # print(df.head())
 
-    preprocess(df)
+    data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test = preprocess(df)
+
     #preprocess(f)
     #def preprocess(csv_file):
     # data, df4, df4_column_names = read_data(df)
     # data, df4, df4_column_names = read_data(stream)
     # df_normalized, df_normalized_w_target, X_test, y_test = normalize_data(df4, df4_column_names)
     print('* Data Preprocessing Complete Flask')
+    X_train, X_test_new, y_train, y_test_new = initialize_sample(df_normalized_w_target, X_test, y_test)
+    print("* Data Initialized for First Pickle")
     # print(df4.head())
     # print(df4_column_names)
     # return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
