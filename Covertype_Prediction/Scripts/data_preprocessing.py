@@ -32,7 +32,7 @@ def read_data(csv_file):
     Read Data
     '''
 
-    data = pd.read_csv(csv_file, header=None)
+    data = pd.read_table(csv_file, header=None)
     # set column names
     cols = ['elevation', 'aspect', 'slope', 'horizontal_distance_to_hydrology',
        'vertical_distance_to_hydrology', 'Horizontal_Distance_To_Roadways',
