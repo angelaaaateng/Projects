@@ -50,7 +50,7 @@ def transform_view():
     data, df4, df4_column_names = read_data(f)
     df_normalized, df_normalized_w_target = normalize_data(df4, df4_column_names)
     print('* Data Preprocessing Complete Flask')
-    #return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
+    return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
 
     print('* API: Data Preprocessing Completed')
 
