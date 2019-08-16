@@ -185,7 +185,7 @@ def preprocess():
     X_train, X_test, y_train, y_test = sample_data(df_normalized_w_target)
     return(X_train, X_test, y_train, y_test, df_normalized_w_target)
     print('* Data Preprocessing Complete')
-preprocess()
+# preprocess()
 
 
 
@@ -281,6 +281,6 @@ def predict():
     print('* Prediction Complete')
     return(dtree_train_accuracy, dtree_test_accuracy,rf_train_acc, rf_test_acc )
 
-predict()
+# predict()
 
 #evaluate.py?

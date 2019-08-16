@@ -82,7 +82,7 @@ def read_data(csv_file):
        'Cover_Type']
     data.columns = cols
     #print(data['Cover_Type'])
-    print('* Data loaded')
+    print('* Data loaded - preprocessing')
     cov_dummy = pd.get_dummies(data['Cover_Type'])
     df4 = pd.concat([cov_dummy, data], axis = 1)
     df4_column_names = list(df4.columns)
@@ -107,7 +107,7 @@ def normalize_data(df4, df4_column_names):
     df_dummy = df_dummy.drop(['Cover_Type'], axis=1)
     X_test_new=df_normalized_w_target[list(df_normalized_w_target.columns)[7:-1]]
     y_test_new=df_normalized_w_target[list(df_normalized_w_target.columns)[-1]]
-    print('* Data Normalized')
+    print('* Data Normalized - preprocessing')
     # print(y_test)
     return(df_normalized, df_normalized_w_target, X_test_new, y_test_new)
 
