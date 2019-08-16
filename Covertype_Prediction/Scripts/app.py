@@ -9,6 +9,9 @@ from picklejar import hyper_param_rf
 from build_model import sample_data
 from joblib import dump, load
 
+from imblearn.metrics import classification_report_imbalanced
+from sklearn.metrics import classification_report,confusion_matrix
+
 app = Flask(__name__)
 
 #model = None
@@ -30,7 +33,7 @@ def form():
             <body>
                 <h1><center>Random Forest Multi-Class Classifier</h1>
 
-                <form action="/datafeecback" method="post" enctype="multipart/form-data">
+                <form action="/datafeedback" method="post" enctype="multipart/form-data">
                     <center> <input type="file" name="data_file" />
                     <br>
                     <p> </p>
@@ -41,7 +44,7 @@ def form():
     """)
 
 # @app.route('/datafeecback', methods=["POST"])
-@app.route('/datafeecback', methods=["GET", "POST"])
+@app.route('/datafeedback', methods=["GET", "POST"])
 def transform_view():
     # if request.method == "POST":
     #     df = pd.read_csv(request.files.get('data_file'))
@@ -63,8 +66,8 @@ def transform_view():
     data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test_new, y_test_new = preprocess(df)
     print('* Data Preprocessing Complete Flask -- API')
 
-    # model = load('./grid_search_optimal.joblib')
-    # print('* Joblib model loaded -- API')
+    model = load('./grid_search_optimal.joblib')
+    print('* Joblib model loaded -- API')
     #preprocess(f)
     #def preprocess(csv_file):
     # data, df4, df4_column_names = read_data(df)
@@ -77,8 +80,10 @@ def transform_view():
     # X_train, X_test_new, y_train, y_test_new = initialize_sample(df_normalized_w_target, X_test, y_test)
     # print("* Data Initialized for First Pickle")
 
-    rfc_test_acc, y_pred = hyper_param_rf(X_test_new, y_test_new)
+    rfc_test_acc, y_pred, class_rept, conf_mat = hyper_param_rf(X_test_new, y_test_new)
     print("* Hyperparameter search complete -- API")
+    conf_mat = confusion_matrix(y_test_new,y_pred)
+    class_rept = classification_report(y_test_new,y_pred )
     # print(df4.head())
     # print(df4_column_names)
     # return(data, df4, df4_column_names, df_normalized, df_normalized_w_target, X_test, y_test)
@@ -86,8 +91,21 @@ def transform_view():
     # print('* API: Data Preprocessing Completed')
 
     #return confusion matrix
-    return('* CSV File Submitted -- Running API')
+    return("""
+        <html>
+            <body>
+                <h1> Model Performance Results </h1>
+                <h2><center>Classification Report</h2>
+                <form action="/datafeedback" method="post" enctype="multipart/form-data">
+                <p>{class_rept}</p>
+                <h2><center>Confusion Matrix</h2>
+                <p>{conf_mat}</p>
+            </body>
+        </html>
+    """)
+    # return('* CSV File Submitted -- Running API')
     #return(f)
+    # return(rfc_test_acc, y_pred, class_rept, conf_mat)
 
 # def preprocess(input):
     # print('* CSV File Submitted -- Running')

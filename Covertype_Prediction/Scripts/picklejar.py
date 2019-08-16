@@ -54,6 +54,8 @@ def hyper_param_rf(X_test, y_test):
     y_pred = rfc.predict(X_test)
     # print ("Random Forest Train Accuracy Baseline After Grid Search:", metrics.accuracy_score(y_train, grid_search_optimal.predict(X_train)))
     print ("Random Forest Test Accuracy Baseline After Grid Search:", metrics.accuracy_score(y_test, rfc.predict(X_test)))
+    conf_mat = confusion_matrix(y_test,y_pred)
+    class_rept = classification_report(y_test,y_pred )
     print(confusion_matrix(y_test,y_pred ))
     print(classification_report(y_test,y_pred ))
     # rfc_train_acc = metrics.accuracy_score(y_train, rfc.predict(X_train))
@@ -66,7 +68,7 @@ def hyper_param_rf(X_test, y_test):
     # pickle.dump(model, open(filename, 'wb'))
     # print(rfc_train_acc, rfc_test_acc, y_pred)
     print("* File pickled using joblib -- picklejar")
-    return(rfc_test_acc, y_pred)
+    return(rfc_test_acc, y_pred, class_rept, conf_mat)
 
 if __name__ == "__main__":
     '''
