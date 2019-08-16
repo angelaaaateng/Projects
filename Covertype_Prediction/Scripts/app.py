@@ -96,7 +96,7 @@ def transform_view():
             <body>
                 <h1> Model Performance Results </h1>
                 <h2><center>Classification Report</h2>
-                <form action="/datafeedback" method="post" enctype="multipart/form-data">
+                <form action="/datafeedback" method="post" enctype="application/x-www-form-urlencoded">
                 <p>{class_rept}</p>
                 <h2><center>Confusion Matrix</h2>
                 <p>{conf_mat}</p>
