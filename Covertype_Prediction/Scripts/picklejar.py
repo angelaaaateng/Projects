@@ -66,7 +66,7 @@ def hyper_param_rf(X_test, y_test):
     # pickle.dump(model, open(filename, 'wb'))
     # print(rfc_train_acc, rfc_test_acc, y_pred)
     print("* File pickled using joblib -- picklejar")
-    return(rfc_train_acc, rfc_test_acc, y_pred)
+    return(rfc_test_acc, y_pred)
 
 if __name__ == "__main__":
     '''

@@ -77,7 +77,7 @@ def transform_view():
     # X_train, X_test_new, y_train, y_test_new = initialize_sample(df_normalized_w_target, X_test, y_test)
     # print("* Data Initialized for First Pickle")
 
-    rfc_train_acc, rfc_test_acc, y_pred = hyper_param_rf(X_test_new, y_test_new)
+    rfc_test_acc, y_pred = hyper_param_rf(X_test_new, y_test_new)
     print("* Hyperparameter search complete -- API")
     # print(df4.head())
     # print(df4_column_names)
