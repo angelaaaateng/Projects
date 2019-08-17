@@ -11,6 +11,9 @@ from joblib import dump, load
 
 from imblearn.metrics import classification_report_imbalanced
 from sklearn.metrics import classification_report,confusion_matrix
+import os
+
+import jinja2
 
 app = Flask(__name__)
 
@@ -97,21 +100,26 @@ def transform_view():
     class_rept = "hello i am class_rept"
     conf_mat = "hello i am conf_mat"
     #return confusion matrix
-    return("""
-        <html>
-            <body>
-                <h1> Model Performance Results </h1>
-                <h2><center>Classification Report</h2>
-                <form action="/datafeedback" method="post" enctype="application/x-www-form-urlencoded">
-                <p>{{class_rept}}</p>
-                <h2><center>Confusion Matrix</h2>
-                <p>{conf_mat}</p>
-            </body>
-        </html>
-    """)
+    # return("""
+    #     <html>
+    #         <body>
+    #             <h1> Model Performance Results </h1>
+    #             <h2><center>Classification Report</h2>
+    #             <form action="/datafeedback" method="post" enctype="application/x-www-form-urlencoded">
+    #             <p>{{class_rept}}</p>
+    #             <h2><center>Confusion Matrix</h2>
+    #             <p>{conf_mat}</p>
+    #         </body>
+    #     </html>
+    # """)
     # return('* CSV File Submitted -- Running API')
     #return(f)
     # return(rfc_test_acc, y_pred, class_rept, conf_mat)
+    template_dir = '/Users/angelateng/Documents/GitHub/Projects/Covertype_Prediction/Scripts'
+    loader = jinja2.FileSystemLoader(template_dir)
+    environment = jinja2.Environment(loader=loader)
+
+    return(render_template('page.html', conf_mat=conf_mat, class_rept=class_rept))
 
 # def preprocess(input):
     # print('* CSV File Submitted -- Running')
