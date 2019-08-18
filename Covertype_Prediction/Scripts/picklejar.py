@@ -41,6 +41,7 @@ def hyper_param_rf_pickle(X_test, y_test, model):
 
     df_mat = pd.DataFrame(conf_mat)
     print("* Saved conf mat in df")
+    print(df_mat)
 
 
     fig = plt.figure()
@@ -50,8 +51,8 @@ def hyper_param_rf_pickle(X_test, y_test, model):
     print("* Plot rfc")
     cmap = sns.cubehelix_palette(light=1, as_cmap=True)
     print("* Set SNS hue")
-    res = sns.heatmap(conf_mat, annot=True, vmin=0.0, vmax=100.0, fmt='.2f', cmap=cmap)
-    res.invert_yaxis()
+    res = sns.heatmap(df_mat, annot=True, vmin=0.0, vmax=100.0, fmt='.2f', cmap=cmap)
+    # res.invert_yaxis()
 
     # plt.matshow(conf_mat)
     print("* confmat plotted in picklejar")
