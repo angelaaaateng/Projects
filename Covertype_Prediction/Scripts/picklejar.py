@@ -9,8 +9,11 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from imblearn.datasets import make_imbalance
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 from joblib import dump, load
+import matplotlib as mpl
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
 
 def hyper_param_rf_pickle(X_test, y_test, model):
     # rfc = RandomForestClassifier(n_estimators=300, max_depth=20,
@@ -32,21 +35,34 @@ def hyper_param_rf_pickle(X_test, y_test, model):
     rf_model = dump(rfc, './grid_search_optimal.joblib')
     print("* RF model dumped!")
     # saved_model = pickle.dumps(grid_search_optimal)
-
-    # filename = 'model.pkl'
-    # pickle.dump(model, open(filename, 'wb'))
-    # print(rfc_train_acc, rfc_test_acc, y_pred)
     print("* Saving results in an image in picklejar...")
+    mpl.style.use('seaborn')
+    print("* Style set as seaborn")
+
+    df_mat = pd.DataFrame(conf_mat)
+    print("* Saved conf mat in df")
+
+
     fig = plt.figure()
     print("* fig plotted in picklejar")
-    plt.matshow(conf_mat)
+    plt.clf()
+    #close figure
+    print("* Plot rfc")
+    cmap = sns.cubehelix_palette(light=1, as_cmap=True)
+    print("* Set SNS hue")
+    res = sns.heatmap(conf_mat, annot=True, vmin=0.0, vmax=100.0, fmt='.2f', cmap=cmap)
+    res.invert_yaxis()
+
+    # plt.matshow(conf_mat)
     print("* confmat plotted in picklejar")
     plt.title('Confusion Matrix')
     print("* title plotted in picklejar")
-    plt.show()
+    # plt.show()
     print("* Plot printed -- now saving")
-    plt.savefig('./confusion_matrix.jpg')
+    plt.savefig('confusion_matrix.png')
     print("* Figure saved!")
+    plt.close()
+    print("* plt closed")
 
     print("* File pickled using joblib -- picklejar process complete")
     return(rfc_test_acc, y_pred, class_rept, conf_mat)
