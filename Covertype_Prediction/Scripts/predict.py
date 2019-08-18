@@ -39,10 +39,12 @@ import os
 from sklearn import inspection
 import mlxtend
 from sklearn.model_selection import GridSearchCV
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from mlxtend.evaluate import feature_importance_permutation
 
-def hyper_param_rf(X_train, y_train, X_test, y_test):
+def hyper_param_rf_predict(X_train, y_train, X_test, y_test):
     rfc = RandomForestClassifier()
     #rfc.fit(X_train, y_train)
     n_optimal_param_grid = {
@@ -63,4 +65,15 @@ def hyper_param_rf(X_train, y_train, X_test, y_test):
     print(classification_report(y_test,rfc_pred_gs))
     rfc_train_acc = metrics.accuracy_score(y_train, rfc.predict(X_train))
     rfc_test_acc = metrics.accuracy_score(y_test, rfc.predict(X_test))
-    return(rfc_train_acc, rfc_test_acc)
+
+
+    conf_mat = confusion_matrix(y_test_new,y_pred)
+    class_rept = classification_report(y_test_new,y_pred )
+    fig = plt.figure()
+    plt.matshow(conf_mat)
+    plt.title('Confusion Matrix')
+    plt.show()
+    plt.savefig('confusion_matrix.jpg')
+
+    # plt.
+    return(rfc_train_acc, rfc_test_accs)
