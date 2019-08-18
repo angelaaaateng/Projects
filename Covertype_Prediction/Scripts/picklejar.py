@@ -28,8 +28,9 @@ def hyper_param_rf_pickle(X_test, y_test, model):
     print(classification_report(y_test,y_pred ))
     # rfc_train_acc = metrics.accuracy_score(y_train, rfc.predict(X_train))
     rfc_test_acc = metrics.accuracy_score(y_test, rfc.predict(X_test))
-
+    print("* Dumping RF_model")
     rf_model = dump(rfc, './grid_search_optimal.joblib')
+    print("* RF model dumped!")
     # saved_model = pickle.dumps(grid_search_optimal)
 
     # filename = 'model.pkl'
@@ -40,9 +41,11 @@ def hyper_param_rf_pickle(X_test, y_test, model):
     plt.matshow(conf_mat)
     plt.title('Confusion Matrix')
     plt.show()
+    print("* Plot printed -- now saving")
     plt.savefig('./confusion_matrix.jpg')
+    print("* Figure saved!")
 
-    print("* File pickled using joblib -- picklejar")
+    print("* File pickled using joblib -- picklejar process complete")
     return(rfc_test_acc, y_pred, class_rept, conf_mat)
 
 if __name__ == "__main__":

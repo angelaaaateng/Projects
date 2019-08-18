@@ -15,6 +15,11 @@ from sklearn.metrics import classification_report,confusion_matrix
 import os
 
 import jinja2
+import matplotlib
+
+matplotlib.use("TKAgg")
+print(matplotlib.get_backend())
+
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
@@ -97,6 +102,7 @@ def transform_view():
     print("* Hyperparameter search complete -- API")
     conf_mat = confusion_matrix(y_test_new,y_pred)
     class_rept = classification_report(y_test_new,y_pred )
+    print("* Conf Mat and Class Rept Defined -- API")
     # END COMMENT BLOCK
 
     # print(df4.head())
@@ -121,11 +127,11 @@ def transform_view():
     #     </html>
     # """)
     print("* Saving results in an image....")
-    fig = plt.figure()
-    plt.matshow(conf_mat)
-    plt.title('Confusion Matrix')
-    plt.show()
-    plt.savefig('./confusion_matrix.jpg')
+    # fig = plt.figure()
+    # plt.matshow(conf_mat)
+    # plt.title('Confusion Matrix')
+    # plt.show()
+    # plt.savefig('./confusion_matrix.jpg')
 
     return('* CSV File Submitted -- Running API')
 

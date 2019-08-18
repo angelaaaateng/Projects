@@ -82,11 +82,12 @@ def read_data(csv_file):
        'Cover_Type']
     data.columns = cols
     #print(data['Cover_Type'])
-    print('* Data loaded - preprocessing')
+    print('* Data loaded - preprocessing...')
     cov_dummy = pd.get_dummies(data['Cover_Type'])
     df4 = pd.concat([cov_dummy, data], axis = 1)
     df4_column_names = list(df4.columns)
     df4_column_names.remove('Cover_Type')
+    print('* Data loaded - preprocessing complete')
     #pprint(data.columns)
     #print(df4)
     #print(read_data)
