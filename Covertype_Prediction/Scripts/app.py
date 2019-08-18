@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 IMAGE_FOLDER = os.path.join('static', 'people_photo')
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates', static_folder='Static')
 # app.config['UPLOAD_FOLDER'] = IMAGE_FOLDER
 
 
@@ -90,7 +90,7 @@ def transform_view():
 
     # return('* CSV File Submitted -- Running API')
     # full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'confusion_matrix.png')
-    return render_template("page.html", matrix_image = './Scripts/confusion_matrix.png')
+    return render_template("page.html", matrix_image = './Static/confusion_matrix.png')
 
 
 if __name__ == '__main__':

@@ -60,7 +60,7 @@ def hyper_param_rf_pickle(X_test, y_test, model):
     print("* title plotted in picklejar")
     # plt.show()
     print("* Plot printed -- now saving")
-    plt.savefig('confusion_matrix.png')
+    plt.savefig('./Static/confusion_matrix.png')
     print("* Figure saved!")
     plt.close()
     print("* plt closed")
