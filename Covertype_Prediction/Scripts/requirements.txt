@@ -289,7 +289,7 @@ tweepy==3.7.0
 twitter==1.18.0
 typed-ast==1.4.0
 unicodecsv==0.14.1
-urllib3==1.24.2
+urllib3==1.26.5
 Wand==0.5.4
 wcwidth==0.1.7
 webencodings==0.5.1
