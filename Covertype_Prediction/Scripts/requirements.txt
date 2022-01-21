@@ -97,7 +97,7 @@ imbalanced-learn==0.5.0.dev0
 imblearn==0.0
 importlib-metadata==0.17
 ipykernel==5.1.1
-ipython==7.5.0
+ipython==7.16.3
 ipython-cypher==0.2.6
 ipython-genutils==0.2.0
 ipywidgets==7.4.2
